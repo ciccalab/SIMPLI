@@ -7,6 +7,15 @@ from imctools.io import mcdparser
 import numpy
 
 def get_arguments():	
+	"""
+	Parses and checks command line arguments, and provides an help text.
+	Assumes 6 and returns 6 positional command line arguments:
+		sample_name = Name of the sample
+		roi_name = Name of the ROI to extract
+		single_tiff_path = Path to output the single tiff files to
+		channel_metadata_file = Path to the metadata file with the metadata of the channels to extract
+		output_metadata_file = Path to output the metadata file to
+	"""
 	parser = argparse.ArgumentParser(description = "Converts raw .mcd/.txt files into single tiff images")
 	parser.add_argument("sample_name", help = "name of the sample")
 	parser.add_argument("roi_name", help = "name of the ROI")
@@ -19,6 +28,12 @@ def get_arguments():
 		args.output_metadata_file
 
 def parse_channel_metadata(file_name):
+	"""
+	Parses The channel metadata file. Assumes the files has an header with 2 columns:
+		channel_metal = Metal the channel is associated to. Used to select which channels to extract from the IMC acquisition
+		channel_label = Marker associated to the meta. Used to give meaningful names to the single tiff files.
+	Returns a list of dicts, one dict per line of the metadata file, containing the values for the two columns.	
+	"""
 	with open(file_name) as metadata_file:
 		reader = csv.DictReader(metadata_file)
 		if "channel_metal" not in reader.fieldnames or "channel_label" not in reader.fieldnames:
@@ -33,6 +48,7 @@ def get_txt_aquisition(file_name):
 	return txt.get_imc_acquisition()
 
 def get_mcd_aquisition(file_name, roi_name):
+	"""	Extracts the acquisition specified by the ROI name from a mcd file"""
 	mcd = mcdparser.McdParser(file_name)
 	roi_ids = {mcd.get_acquisition_description(id) : id for id in mcd.acquisition_ids}
 	if roi_name not in roi_ids.keys():
@@ -42,6 +58,14 @@ def get_mcd_aquisition(file_name, roi_name):
 	return mcd.get_imc_acquisition(roi_ids[roi_name])
 
 def output_tiffs(acquisition, output_path, sample_name, roi_name, channel_metadata):
+	"""	
+	Extracts from an IMC acquisition all the channels specified in the channel metadata,
+	from the parse_channel_metadata function.
+	For each channel a 16bit tiff image in imagej compatible format is extracted.
+	The tiff files are named with this pattern: samplename-label-raw.tiff
+	Returns a list of dicts, one per tiff file, with the following metadata:
+	sample_name, roi_name, metal, label, raw_tiff_file_name (absolute path)
+	"""
 	single_metadata = []
 	for metal, label in channel_metadata.items():
 		tiff_file_name = os.path.abspath(os.path.join(output_path, sample_name + "-" + label + "-raw.tiff"))
