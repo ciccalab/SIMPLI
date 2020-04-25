@@ -5,10 +5,13 @@
 - Raw metadata table (.csv file with input/output paths and sample metadata)
 - Channel metadata table (.csv file with the metal and labels of the channels to convert)
 - .txt or .mcd data files
+- Output type flag specifyng if otput should be an ome.tiff or single tiff files
 
 ### Output
-- Single tiff raw data
-- Single tiff raw metadata table (.csv file with paths to the single tiff files)
+- Raw data as an .ome.tiff file or single tiff files 
+- Single tiff raw metadata table (.csv file with paths to the tiff files)
+The order of channels in the .ome.tiff file is the same as the order they are reported in
+the metadata file.
 
 ### Tools
 - Python3 script using the [imctools](https://github.com/BodenmillerGroup/imctools) python3 library.
