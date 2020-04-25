@@ -10,6 +10,7 @@ params.output_folder ="$baseDir/example_output"
 params.data_folder = "$baseDir/example_data"
 params.channel_metadata = "$params.data_folder/channel_metadata.csv" 
 params.raw_metadata_file = "$baseDir/example_data/sample_metadata.csv" 
+params.tiff_type = "single" 
 
 /* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
    It expects an header line and it extracts the following fields into the sample_metadata channel:
@@ -18,6 +19,7 @@ params.raw_metadata_file = "$baseDir/example_data/sample_metadata.csv"
    - raw_path -> Converted to a file type 
    - tiff_path
 */
+
 Channel
     .fromPath(params.raw_metadata_file)
     .splitCsv(header:true)
@@ -30,9 +32,11 @@ Channel
     - Extracts the raw tiff files into the working directory
     - Generates the raw tiff .csv metadata file in the working directory
     - Copies the output files into $tiff_path 
+  For ome.tiff output the channels in the .ome are in the same order they are
+  written in the metadata.
 */
 
-process convert_raw_data_to_single_tiffs {
+process convert_raw_data_to_tiffs {
 
     publishDir "$tiff_path", mode:'copy', overwrite: true
 
@@ -53,6 +57,7 @@ process convert_raw_data_to_single_tiffs {
         $sample_name \\
         '$roi_name' \\
         $raw_path \\
+        $params.tiff_type \\
         . \\
         $params.channel_metadata \\
         ${sample_name}_raw_tiff_metadata.txt > $sample_name/extract_log.txt 2>&1

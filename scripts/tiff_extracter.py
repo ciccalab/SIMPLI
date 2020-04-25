@@ -13,6 +13,7 @@ def get_arguments():
 		sample_name = Name of the sample
 		roi_name = Name of the ROI to extract
 		single_tiff_path = Path to output the single tiff files to
+		output_type = Output format: 'single' for single tiffs or 'ome' for a ome.tiff
 		channel_metadata_file = Path to the metadata file with the metadata of the channels to extract
 		output_metadata_file = Path to output the metadata file to
 	"""
@@ -20,12 +21,13 @@ def get_arguments():
 	parser.add_argument("sample_name", help = "name of the sample")
 	parser.add_argument("roi_name", help = "name of the ROI")
 	parser.add_argument("raw_path", help = "path to the raw data .mcd/.txt file")
+	parser.add_argument("output_type", help = "output format: 'single' for single tiffs or 'ome' for a ome.tiff")
 	parser.add_argument("single_tiff_path", help = "path to a folder for single tiff output")
 	parser.add_argument("channel_metadata_file", help = "path to a .csv file with the metadata")
 	parser.add_argument("output_metadata_file", help = "path to a .csv file with the metadata")
 	args = parser.parse_args()
-	return args.sample_name, args.roi_name, args.raw_path, args.single_tiff_path, args.channel_metadata_file, \
-		args.output_metadata_file
+	return args.sample_name, args.roi_name, args.raw_path, args.output_type, args.single_tiff_path, \
+		args.channel_metadata_file, args.output_metadata_file
 
 def parse_channel_metadata(file_name):
 	"""
@@ -74,9 +76,26 @@ def output_tiffs(acquisition, output_path, sample_name, roi_name, channel_metada
 		single_metadata.append({"sample_name" : sample_name, "roi_name" : roi_name, "metal" : metal, "label" : label,
 			"raw_tiff_file_name" : tiff_file_name})
 	return single_metadata	
+
+def output_ome_tiff(acquisition, output_path, sample_name, roi_name, channel_metadata):
+	"""	
+	Extracts from an IMC acquisition all the channels specified in the channel metadata,
+	from the parse_channel_metadata function.
+	For each channel a 16bit tiff image in imagej compatible format is extracted.
+	The ome tiff file is named with this pattern: samplename-all_raw.ome.tiff
+	Returns a list of dicts, one per tiff file, with the following metadata:
+	sample_name, roi_name, metal, label, raw_tiff_file_name (absolute path)
+	"""
+	tiff_file_name = os.path.abspath(os.path.join(output_path, sample_name + "-all_raw.ome.tiff"))
+	tiff_image_writer = acquisition.get_image_writer(tiff_file_name, metals = channel_metadata.keys(), mass = None)
+	tiff_image_writer.save_image(mode = "ome", compression = 0, dtype = numpy.int16().dtype, bigtiff = False)
+	single_metadata = [{"sample_name" : sample_name, "roi_name" : roi_name, "metal" : metal, "label" : label,
+		"raw_tiff_file_name" : tiff_file_name} for metal, label in channel_metadata.items()]
+	return single_metadata	
 					
 if __name__ == "__main__":
-	sample_name, roi_name, raw_path, single_tiff_path, channel_metadata_file, output_metadata_file = get_arguments()
+	sample_name, roi_name, raw_path, output_type, single_tiff_path, channel_metadata_file, \
+		output_metadata_file = get_arguments()
 	if not os.path.isfile(raw_path):
 		print(f'The raw data file path specified does not exist: {raw_path}')
 		sys.exit(1)
@@ -95,7 +114,14 @@ if __name__ == "__main__":
 	else:
 		print(f'The raw data file extension is not .mcd or .txt: {extension}')
 		sys.exit(1)
-	single_tiff_metadata = output_tiffs(acquisition, single_tiff_path, sample_name, roi_name, channel_metadata)
+	
+	if output_type == "single":	
+		single_tiff_metadata = output_tiffs(acquisition, single_tiff_path, sample_name, roi_name, channel_metadata)
+	elif output_type == "ome":	
+		single_tiff_metadata = output_ome_tiff(acquisition, single_tiff_path, sample_name, roi_name, channel_metadata)
+	else:
+		print(f'output_type selected: {output_type} not ome or single!')
+		sys.exit(1)
 	with open(output_metadata_file, mode = 'w') as output_metadata:
 		metadata_writer = csv.DictWriter(output_metadata, fieldnames = single_tiff_metadata[0].keys())
 		metadata_writer.writeheader()
