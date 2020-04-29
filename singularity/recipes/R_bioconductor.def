@@ -4,6 +4,8 @@ From: bioconductor/bioconductor_docker:RELEASE_3_10
 %post
 R --slave -e 'install.packages("data.table", repos="https://cloud.r-project.org/")'
 R --slave -e 'install.packages("devtools", repos="https://cloud.r-project.org/")'
+R --slave -e 'BiocManager::install("multtest")'
+R --slave -e 'devtools::install_url("https://cran.r-project.org/src/contrib/Archive/SDMTools/SDMTools_1.1-221.2.tar.gz")'
 R --slave -e 'devtools::install_version(package = "Seurat", version = package_version("2.3.0"))'
 R --slave -e 'BiocManager::install("EBImage")'
 
