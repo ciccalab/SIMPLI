@@ -1,7 +1,7 @@
 # Exclude the python3.7 virtual bnvironment folder 
 venv
 
-# Exclude nextflow files and folders
+# Exclude example output files and folders
 example_output
 
 # Exclude example data for now.
@@ -10,3 +10,9 @@ example_data
 # Exclude nextflow files 
 .nextflow*
 work
+
+# Exclude built singularity containers
+singularity/containers
+
+# Exclude vim swap files 
+*.swp
