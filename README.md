@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
 # IMC_Pipeline
 
 ## Requirements
@@ -7,6 +12,12 @@
 
 ## Setup
 1. Setup the python3 virtual environment using the pip3_requirements.txt file
+```
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r pip3_requirements.txt
+deactivate
+```
 2. Install nextlow
 
 ## Run
