@@ -1,4 +1,5 @@
 script_folder = "$baseDir/scripts"
+cp3_pipeline_folder = "$baseDir/cell_profiler_pipelines"
 
 // Paths to activate a python3 virtual environment with imctools
 python_environment_folder = "$baseDir/venv"
@@ -11,6 +12,7 @@ params.data_folder = "$baseDir/example_data"
 params.channel_metadata = "$params.data_folder/channel_metadata.csv" 
 params.raw_metadata_file = "$baseDir/example_data/sample_metadata.csv" 
 params.tiff_type = "single" 
+params.cp3_preprocessing_cppipe = "preprocessing_example.cppipe"
 
 /* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
    It expects an header line and it extracts the following fields into the sample_metadata channel:
@@ -46,14 +48,12 @@ process convert_raw_data_to_tiffs {
 
     output:
         file "$sample_name*raw*tiff" into raw_tiff_images
-        file "${sample_name}_raw_tiff_metadata.csv" into raw_tiff_metadata_by_sample
+        file "${sample_name}-raw_tiff_metadata.csv" into raw_tiff_metadata_by_sample
     script:
     """
     export PATH="$python_path:$PATH"
     export LD_LIBRARY_PATH="$py_library_path:$LD_LIBRARY_PATH"
     source $python_environment_folder/bin/activate
-    mkdir -p $tiff_path
-    mkdir -p $sample_name
     python3 $script_folder/tiff_extracter.py \\
         $sample_name \\
         '$roi_name' \\
@@ -61,9 +61,11 @@ process convert_raw_data_to_tiffs {
         $params.tiff_type \\
         . \\
         $params.channel_metadata \\
-        ${sample_name}_raw_tiff_metadata.csv > $sample_name/extract_log.txt 2>&1
+        ${sample_name}-raw_tiff_metadata.csv > extract_log.txt 2>&1
     """
 }
+
+raw_tiff_metadata_by_sample.into{raw_tiff_metadata_to_collect; raw_tiff_metadata_to_normalize}
 
 /* Collects all the raw_tiff_metadata_by_sample metadata files:
     - Concatenates them into a single $raw_tiff_metadata file
@@ -76,7 +78,7 @@ process collect_raw_tiff_metadata {
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
-        file metadata_list from raw_tiff_metadata_by_sample.collect()
+        file metadata_list from raw_tiff_metadata_to_collect.collect()
     
     output:
         file "raw_tiff_metadata.csv" into raw_tiff_metadata
@@ -88,33 +90,38 @@ process collect_raw_tiff_metadata {
     """
 }
 
-Channel
-    .fromPath(params.raw_metadata_file)
-    .splitCsv(header:true)
-    .map{row -> tuple(row.sample_name, row.roi_name, row.tiff_path)}
-    .set{sample_metadata_normalized}
+raw_tiff_metadata_to_normalize
+    .map{file ->
+            def key = file.name.toString().tokenize('-').get(0)
+            return tuple(key, file)
+         }
+    .groupTuple()
+    .set{normalize_tiff_metadata}
 
 process normalize_tiff {
+    
     container = 'library://michelebortol/default/imcpipeline-rbioconductor:test'
     containerOptions = "--bind $script_folder:/opt"
-    publishDir "$tiff_path/normalized", mode:'copy', overwrite: true
+    
+    publishDir "$params.output_folder/$sample_name/normalized", mode:'copy', overwrite: true
     
     input:
-        set sample_name, roi_name, tiff_path from sample_metadata_normalized
-        file raw_metadata from raw_tiff_metadata
+        set sample_name, file(raw_metadata_file) from normalize_tiff_metadata
 
     output:
         file "$sample_name*normalized*tiff" into normalized_tiff_images
-        file "${sample_name}_normalized_tiff_metadata.csv" into normalized_tiff_metadata_by_sample
+        file "${sample_name}-normalized_tiff_metadata.csv" into normalized_tiff_metadata_by_sample
+        file "${sample_name}-cp3_normalized_tiff_metadata.csv" into cp3_normalized_tiff_metadata_by_sample
     script:
     """
     mkdir -p $sample_name
     Rscript /opt/tiff_normalizer.R \\
         $sample_name \\
-        $raw_metadata\\
+        $raw_metadata_file \\
         $params.tiff_type \\
-        . \\
-        ${sample_name}_normalized_tiff_metadata.csv > $sample_name/normalization_log.txt 2>&1
+        ./ \\
+        ${sample_name}-normalized_tiff_metadata.csv \\
+        ${sample_name}-cp3_normalized_tiff_metadata.csv > normalization_log.txt 2>&1
     """
 }
 
@@ -132,5 +139,60 @@ process collect_normalized_tiff_metadata {
     """
     cat $metadata_list > normalized_tiff_metadata.csv
     sed -i '1!{/sample_name,metal,label,normalized_file/d;}' normalized_tiff_metadata.csv
+    """
+}
+
+cp3_normalized_tiff_metadata_by_sample
+    .map { file ->
+            def key = file.name.toString().tokenize('-').get(0)
+            return tuple(key, file)
+            }
+    .groupTuple()
+    .set{ cp3_preprocessing_metadata  }
+
+process cell_profiler_image_preprocessing {
+
+    container = 'library://michelebortol/default/cellprofiler3_imcplugins:test'
+    containerOptions = "--bind $cp3_pipeline_folder:/mnt"
+
+    publishDir "$params.output_folder/$sample_name/cleaned", mode:'copy', overwrite: true
+                                                                                                
+    input:
+        set sample_name, file(cp3_normalized_metadata) from cp3_preprocessing_metadata 
+
+    output:
+        file "*.tiff" into preprocessed_tiff_files
+        file "${sample_name}-preprocessed_metadata.csv" into preprocessed_tiff_metadata_by_sample
+    script:
+    """
+    cellprofiler \\
+        --run-headless \\
+        --data-file $cp3_normalized_metadata \\
+        --pipeline /mnt/$params.cp3_preprocessing_cppipe \\
+        --image-directory ./ \\
+        --output-directory ./ \\
+        --log-level DEBUG \\
+        --temporary-directory ./tmp > cp3_preprocessing_log.txt 2>&1
+
+    echo "sample_name,preprocessed_file_name" > "${sample_name}-preprocessed_metadata.csv"
+    find $PWD -name "*tiff" >> "${sample_name}-preprocessed_metadata.csv"
+    sed -i -e "1!{s/^/${sample_name},/}" "${sample_name}-preprocessed_metadata.csv"
+    """
+}
+
+process collect_cp3_preprocessed_metadata {
+
+    publishDir "$params.output_folder", mode:'copy', overwrite: true
+    
+    input:
+        file metadata_list from preprocessed_tiff_metadata_by_sample.collect()
+    
+    output:
+        file "preprocessed_tiff_metadata.csv" into preprocessed_tiff_metadata
+
+    script:
+    """
+    cat $metadata_list > preprocessed_tiff_metadata.csv
+    sed -i '1!{/sample_name,roi_name,metal,label,raw_tiff_file_name/d;}' preprocessed_tiff_metadata.csv
     """
 }

@@ -9,6 +9,7 @@ raw_metadata_file_name <- args[[2]]
 file_type<- args[[3]]
 output_path <- args[[4]]
 output_metadata <- args[[5]]
+cellprofiler_metadata <- args[[6]]
 
 ####### Helper Functions #######
 tiff_loader <- function(file_name, all = FALSE)
@@ -69,3 +70,18 @@ if (file_type == "ome") {
   quit(status = 99)
 }
 fwrite(metadata, file = output_metadata, sep = ",")
+
+file_columns <- grep("file", colnames(metadata), value = T)
+cp_metatada <- dcast(metadata, sample_name ~ label, value.var = file_columns)
+setnames(cp_metatada, unique(metadata$label), paste0("Image_FileName_", unique(metadata$label)))
+
+metadata_columns <- grep("file", colnames(metadata), invert = T, value = T)
+metadata_columns <- metadata_columns[!(metadata_columns %in% c("sample_name", "label", "metal"))]
+if (length(metadata_columns) > 0) {
+  metadata <- unique(metadata[, c("sample_name", metadata_columns), with = F])
+  cp_metatada <- merge(cp_metatada, metadata, by = "sample_name")
+  setnames(cp_metatada, metadata_columns, paste0("Metadata_", metadata_columns))
+  
+}
+setnames(cp_metatada, "sample_name", "Metadata_sample_name")
+fwrite(cp_metatada, cellprofiler_metadata)
