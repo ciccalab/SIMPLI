@@ -35,6 +35,8 @@ deactivate
   - roi_name = Name of the ROI to extract the acquisition for
   - raw_path = Path to the raw IMC acquisition file
   - tiff_path = Path where to output the single tiff images
+  
+- CellProfiler3 preprocessing pipeline 
 
 ### Output
 - Raw tiff images in either:
@@ -43,6 +45,16 @@ deactivate
     are reported in the metadata file.
 - Single raw tiff .csv metadata file.
 
+- Normalized tiff images in either:
+  - Single tiff files: one for each of the selected channels.
+  - One .ome.tiff file: the order of channels in the .ome.tiff file is the same as the order they
+    are reported in the metadata file.
+- Normalized tiff .csv metadata file.
 
+- Preprocessed tiff images in either:
+  - Single tiff files: one for each of the selected channels.
+  - One .ome.tiff file: the order of channels in the .ome.tiff file is the same as the order they
+    are reported in the metadata file.
+- Preprocessed tiff .csv metadata file.
 
 
