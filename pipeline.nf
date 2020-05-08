@@ -161,7 +161,7 @@ process cell_profiler_image_preprocessing {
         set sample_name, file(cp3_normalized_metadata) from cp3_preprocessing_metadata 
 
     output:
-        file "*.tiff" into preprocessed_tiff_files
+        file "*-Preprocessed.tiff" into preprocessed_tiff_files
         file "${sample_name}-preprocessed_metadata.csv" into preprocessed_tiff_metadata_by_sample
     script:
     """
@@ -174,9 +174,12 @@ process cell_profiler_image_preprocessing {
         --log-level DEBUG \\
         --temporary-directory ./tmp > cp3_preprocessing_log.txt 2>&1
 
-    echo "sample_name,preprocessed_file_name" > "${sample_name}-preprocessed_metadata.csv"
-    find $PWD -name "*tiff" >> "${sample_name}-preprocessed_metadata.csv"
+    echo "sample_name,label,preprocessed_file_name" > "${sample_name}-preprocessed_metadata.csv"
+    find "\$(pwd)" -name "*-Preprocessed.tiff" > filename.csv
+    sed "s@.*-\\(.*\\)-Preprocessed.*tiff@\\1@" filename.csv > label.csv
+    paste -d , label.csv filename.csv >> "${sample_name}-preprocessed_metadata.csv"
     sed -i -e "1!{s/^/${sample_name},/}" "${sample_name}-preprocessed_metadata.csv"
+    rm filename.csv label.csv
     """
 }
 
@@ -193,6 +196,6 @@ process collect_cp3_preprocessed_metadata {
     script:
     """
     cat $metadata_list > preprocessed_tiff_metadata.csv
-    sed -i '1!{/sample_name,roi_name,metal,label,raw_tiff_file_name/d;}' preprocessed_tiff_metadata.csv
+    sed -i '1!{/sample_name,label,preprocessed_file_name/d;}' preprocessed_tiff_metadata.csv
     """
 }
