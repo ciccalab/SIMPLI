@@ -34,13 +34,14 @@ Channel
     - Creates the $tiff_path directory if it doesn't already exist
     - Extracts the raw tiff files into the working directory
     - Generates the raw tiff .csv metadata file in the working directory
-    - Copies the output files into $tiff_path 
+    - Copies the output files into "$tiff_path/raw" 
   For ome.tiff output the channels in the .ome are in the same order they are
   written in the metadata.
 */
 
 process convert_raw_data_to_tiffs {
 
+    label 'big_memory'
     publishDir "$tiff_path/raw", mode:'copy', overwrite: true
 
     input:
@@ -68,13 +69,15 @@ process convert_raw_data_to_tiffs {
 raw_tiff_metadata_by_sample.into{raw_tiff_metadata_to_collect; raw_tiff_metadata_to_normalize}
 
 /* Collects all the raw_tiff_metadata_by_sample metadata files:
-    - Concatenates them into a single $raw_tiff_metadata file
+    - Concatenates them into raw_tiff_metadata.csv 
     - Removes extra header lines from the middle of the file, as each of the
         original files starts with an header line.
+    - Copies the metadata to "$params.output_folder/raw_tiff_metadata.csv" 
 */
 
 process collect_raw_tiff_metadata {
 
+    label 'small_memory'
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
@@ -98,8 +101,16 @@ raw_tiff_metadata_to_normalize
     .groupTuple()
     .set{normalize_tiff_metadata}
 
+/* For each sample:
+    - Performs 99th percentile normalization and scaling
+    - Copies the results to "$params.output_folder/$sample_name/normalized"
+  For ome.tiff output the channels in the .ome are in the same order they are
+  written in the metadata.
+*/
+
 process normalize_tiff {
     
+    label 'big_memory'
     container = 'library://michelebortol/default/imcpipeline-rbioconductor:test'
     containerOptions = "--bind $script_folder:/opt"
     
@@ -125,8 +136,16 @@ process normalize_tiff {
     """
 }
 
+/* Collects all the normalized_tiff_metadata_by_sample metadata files:
+    - Concatenates them into normalized_tiff_metadata.csv
+    - Removes extra header lines from the middle of the file, as each of the
+        original files starts with an header line.
+    - Copies the metadata to "$params.output_folder/normalized_tiff_metadata.csv" 
+*/
+
 process collect_normalized_tiff_metadata {
 
+    label 'small_memory'
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
@@ -152,6 +171,7 @@ cp3_normalized_tiff_metadata_by_sample
 
 process cell_profiler_image_preprocessing {
 
+    label 'big_memory'
     container = 'library://michelebortol/default/cellprofiler3_imcplugins:test'
     containerOptions = "--bind $cp3_pipeline_folder:/mnt"
 
@@ -183,8 +203,16 @@ process cell_profiler_image_preprocessing {
     """
 }
 
+/* Collects all the preprocessed_tiff_metadata_by_sample metadata files:
+    - Concatenates them into preprocessed_tiff_metadata.csv
+    - Removes extra header lines from the middle of the file, as each of the
+        original files starts with an header line.
+    - Copies the metadata to "$params.output_folder/preprocessed_tiff_metadata.csv" 
+*/
+
 process collect_cp3_preprocessed_metadata {
 
+    label 'small_memory'
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
