@@ -12,6 +12,7 @@ IncludeCmd: yes
 	apt-get update
 	apt-get -y upgrade
 	apt-get -y install \
+		libbz2-dev \
 		build-essential \
 		cython \
 		git \
@@ -58,7 +59,13 @@ IncludeCmd: yes
 	pip install .
 
 # ImcPluginsCP are installed just by copying them into the CellProfiler/plugins folder
+	pip install \
+		tiffile \
+		omero-py
 	cd /opt
 	git clone https://github.com/BodenmillerGroup/ImcPluginsCP.git
 	cp ImcPluginsCP/plugins/*.py /opt/CellProfiler/plugins
 	rm -r ImcPluginsCP
+
+# make directory to mount the data
+	mkdir /data

@@ -11,8 +11,8 @@ params.output_folder ="$baseDir/example_output"
 params.data_folder = "$baseDir/example_data"
 params.channel_metadata = "$params.data_folder/channel_metadata.csv" 
 params.raw_metadata_file = "$baseDir/example_data/sample_metadata.csv" 
-params.tiff_type = "single" 
-params.cp3_preprocessing_cppipe = "preprocessing_example.cppipe"
+params.tiff_type = "ome" 
+params.cp3_preprocessing_cppipe = "ome_preprocessing_example.cppipe"
 
 /* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
    It expects an header line and it extracts the following fields into the sample_metadata channel:
@@ -172,10 +172,10 @@ cp3_normalized_tiff_metadata_by_sample
 process cell_profiler_image_preprocessing {
 
     label 'big_memory'
-    container = 'library://michelebortol/default/cellprofiler3_imcplugins:test'
+    container = 'library://michelebortol/default/cellprofiler3_imcplugins:example'
     containerOptions = "--bind $cp3_pipeline_folder:/mnt"
 
-    publishDir "$params.output_folder/$sample_name/cleaned", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/$sample_name/preprocessed", mode:'copy', overwrite: true
                                                                                                 
     input:
         set sample_name, file(cp3_normalized_metadata) from cp3_preprocessing_metadata 
@@ -189,7 +189,8 @@ process cell_profiler_image_preprocessing {
         --run-headless \\
         --data-file $cp3_normalized_metadata \\
         --pipeline /mnt/$params.cp3_preprocessing_cppipe \\
-        --image-directory ./ \\
+        --plugins-directory /opt/CellProfiler/plugins/ \\
+        --image-directory /data \\
         --output-directory ./ \\
         --log-level DEBUG \\
         --temporary-directory ./tmp > cp3_preprocessing_log.txt 2>&1
