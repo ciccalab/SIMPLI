@@ -2,7 +2,7 @@
 
 ## Requirements
 - nextflow
-- python3, pip3 (updated to latest), venv
+- python3 (you may need `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/python/lib/`, pip3 (updated to latest), venv
 - imctools
 
 ## Setup
