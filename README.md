@@ -1,9 +1,10 @@
 # IMC_Pipeline
 
 ## Requirements
-- nextflow
+- [nextflow](https://www.nextflow.io/)
 - python3 (you may need `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/python/lib/`, pip3 (updated to latest), venv
-- imctools
+- [imctools](https://github.com/BodenmillerGroup/imctools)
+- [singularity](https://sylabs.io/docs/)
 
 ## Setup
 1. Setup the python3 virtual environment using the pip3_requirements.txt file
@@ -30,13 +31,18 @@ deactivate
       tiff files. 
 - Output format flag: 'single' for single tiffs or 'ome' for a ome.tiff"
 
-- Raw IMC acquisition metadata, .csv with an header and the following columns:
+- Raw IMC acquisition metadata, .csv with an header with the following columns:
   - sample_name = Unique sample identifier
   - roi_name = Name of the ROI to extract the acquisition for
   - raw_path = Path to the raw IMC acquisition file
   - tiff_path = Path where to output the single tiff images
   
-- CellProfiler3 preprocessing pipeline 
+- CellProfiler3 preprocessing pipeline
+
+- Area measurements metadata, .csv with an header with the two following columns:
+  - marker = marker or combination of markers to measure (markers can be combined with the logical operators: "&", "|", "!" and "()")
+  - main_marker = marker or combination of markers to measure
+  The ratio of marker/main_marker area will be reported as a percentage
 
 ### Output
 - Raw tiff images in either:
@@ -56,5 +62,7 @@ deactivate
   - One .ome.tiff file: the order of channels in the .ome.tiff file is the same as the order they
     are reported in the metadata file.
 - Preprocessed tiff .csv metadata file.
+
+- Area measurements, and area ratios between user defined markers or their combinations.
 
 
