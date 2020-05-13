@@ -10,7 +10,7 @@ py_library_path = "/share/apps/python-3.7.2-shared/lib"
 params.output_folder ="$baseDir/example_output"
 params.data_folder = "$baseDir/example_data"
 params.channel_metadata = "$params.data_folder/channel_metadata.csv" 
-params.raw_metadata_file = "$baseDir/example_data/sample_metadata.csv" 
+params.raw_metadata_file = "$params.data_folder/sample_metadata.csv" 
 params.tiff_type = "ome" 
 params.cp3_preprocessing_cppipe = "ome_preprocessing_example.cppipe"
 
