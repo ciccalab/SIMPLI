@@ -2,7 +2,7 @@
 
 ## Requirements
 - nextflow
-- python3, pip3, venv
+- python3, pip3 (updated to latest), venv
 - imctools
 
 ## Setup
