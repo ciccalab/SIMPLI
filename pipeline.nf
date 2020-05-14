@@ -10,9 +10,10 @@ py_library_path = "/share/apps/python-3.7.2-shared/lib"
 params.output_folder ="$baseDir/example_output"
 params.data_folder = "$baseDir/example_data"
 params.channel_metadata = "$params.data_folder/channel_metadata.csv" 
-params.raw_metadata_file = "$params.data_folder/sample_metadata.csv" 
-params.tiff_type = "ome" 
-params.cp3_preprocessing_cppipe = "ome_preprocessing_example.cppipe"
+params.raw_metadata_file = "$baseDir/example_data/sample_metadata.csv" 
+params.tiff_type = "single" 
+params.cp3_preprocessing_cppipe = "single_preprocessing_example.cppipe"
+params.area_measurements_metadata = "$baseDir/example_data/marker_area_metadata.csv"
 
 /* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
    It expects an header line and it extracts the following fields into the sample_metadata channel:
@@ -213,7 +214,7 @@ process cell_profiler_image_preprocessing {
 
 process collect_cp3_preprocessed_metadata {
 
-    label 'small_memory'
+    label 'big_memory'
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
@@ -226,5 +227,31 @@ process collect_cp3_preprocessed_metadata {
     """
     cat $metadata_list > preprocessed_tiff_metadata.csv
     sed -i '1!{/sample_name,label,preprocessed_file_name/d;}' preprocessed_tiff_metadata.csv
+    """
+}
+
+measurement_metadata = Channel.fromPath(params.area_measurements_metadata)
+
+process pixel_area_measurements {
+
+    label 'big_memory'
+    container = 'library://michelebortol/default/imcpipeline-rbioconductor:test'
+    containerOptions = "--bind $script_folder:/opt"
+
+    publishDir "$params.output_folder", mode:'copy', overwrite: true
+    
+    input:
+        file tiff_metadata from preprocessed_tiff_metadata 
+        file area_metadata from measurement_metadata
+    
+    output:
+        file "area_measurements.csv" into area_measurements
+
+    script:
+    """
+    Rscript /opt/pixel_measurements.R \\
+        $area_metadata \\
+        $tiff_metadata \\
+        area_measurements.csv > pixel_area_measurements.log 2>&1
     """
 }
