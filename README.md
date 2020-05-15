@@ -2,18 +2,10 @@
 
 ## Requirements
 - [nextflow](https://www.nextflow.io/)
-- python3 (you may need `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/python/lib/`, pip3 (updated to latest), venv
-- [imctools](https://github.com/BodenmillerGroup/imctools)
 - [singularity](https://sylabs.io/docs/)
 
 ## Setup
-1. Setup the python3 virtual environment using the pip3_requirements.txt file
-```
-python3 -m venv venv
-source venv/bin/activate
-pip3 install -r pip3_requirements.txt
-deactivate
-```
+1. Install singularity
 2. Install nextlow
 
 ## Run
