@@ -58,6 +58,7 @@ if (file_type == "ome") {
   metadata <- copy(raw_metadata)
   metadata[, normalized_file := output_file_name]
   metadata[, raw_tiff_file_name := NULL]
+  metadata[, Frame := .I - 1]
 } else if (file_type == "single") {
   metadata <- lapply(seq(1, raw_metadata[, .N]), function(n){
     meta <- raw_metadata[n]
@@ -66,17 +67,19 @@ if (file_type == "ome") {
                          output_path)  
   })
   metadata <- rbindlist(lapply(metadata, function(x){as.data.table(t(x))}))
+  metadata[, Frame := 0]
 } else {
   print(paste0("file type: " , file_type, "not 'single' or 'ome'"))
   quit(status = 99)
 }
 
 ##### Prepare CellProfiler3 compatible wide format metadata
-file_columns <- grep("file", colnames(metadata), value = T)
-cp_metadata <- dcast(metadata, sample_name ~ label, value.var = file_columns)
-setnames(cp_metadata, unique(metadata$label), paste0("Image_FileName_", unique(metadata$label)))
+cast_columns <- c("URL", "Frame")
+metadata[, URL := paste0("file:///", normalized_file)]
+metadata[, normalized_file := NULL]
+cp_metadata <- dcast(metadata, sample_name ~ label, value.var = cast_columns)
 
-metadata_columns <- grep("file", colnames(metadata), invert = T, value = T)
+metadata_columns <- colnames(metadata)[!(colnames(metadata) %in% cast_columns)]
 metadata_columns <- metadata_columns[!(metadata_columns %in% c("sample_name", "label", "metal"))]
 if (length(metadata_columns) > 0) {
   metadata <- unique(metadata[, c("sample_name", metadata_columns), with = F])

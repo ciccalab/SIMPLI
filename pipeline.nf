@@ -24,7 +24,6 @@ Channel
     .map{row -> tuple(row.sample_name, row.roi_name, file(row.raw_path), row.tiff_path)}
     .set{sample_metadata_raw}
 
-
 /* For each aquisition spefied in the $raw_metadata_file:
     - Activates a python3 virtual environment with the imctools modules
     - Creates the $tiff_path directory if it doesn't already exist
