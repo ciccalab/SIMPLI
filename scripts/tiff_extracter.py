@@ -39,7 +39,7 @@ def parse_channel_metadata(file_name):
 	with open(file_name) as metadata_file:
 		reader = csv.DictReader(metadata_file)
 		if "channel_metal" not in reader.fieldnames or "channel_label" not in reader.fieldnames:
-			print(f'"channel_metal" or channel_label missing in the channel metadata header:')
+			print('"channel_metal" or "channel_label" missing in the channel metadata header:')
 			print("Channel metadata header: " + " ".join(reader.fieldnames))
 			sys.exit(1)
 		channel_metadata = {row["channel_metal"] : row["channel_label"] for row in reader} 
@@ -54,7 +54,7 @@ def get_mcd_aquisition(file_name, roi_name):
 	mcd = mcdparser.McdParser(file_name)
 	roi_ids = {mcd.get_acquisition_description(id) : id for id in mcd.acquisition_ids}
 	if roi_name not in roi_ids.keys():
-		print(f'ROI not present: {roi_name}')
+		print(f"ROI not present: {roi_name}")
 		print("Available ROIs: " + "\n".join(roi_ids.keys()))
 		sys.exit(1)
 	return mcd.get_imc_acquisition(roi_ids[roi_name])

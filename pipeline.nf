@@ -1,11 +1,6 @@
 script_folder = "$baseDir/scripts"
 cp3_pipeline_folder = "$baseDir/cell_profiler_pipelines"
 
-// Paths to activate a python3 virtual environment with imctools
-python_environment_folder = "$baseDir/venv"
-python_path = "/share/apps/python-3.7.2-shared/bin"
-py_library_path = "/share/apps/python-3.7.2-shared/lib"
-
 // Input parameters: the default values will be moved to a test profile nextflow configuration
 params.output_folder ="$baseDir/example_output"
 params.data_folder = "$baseDir/example_data"
@@ -44,24 +39,23 @@ process convert_raw_data_to_tiffs {
 
     label 'big_memory'
     publishDir "$tiff_path/raw", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/imctools1.0.7:test'
+    containerOptions = "--bind $script_folder:/opt"
 
     input:
-        set sample_name, roi_name, raw_path, tiff_path from sample_metadata_raw
+        set sample_name, roi_name, file(raw_path), tiff_path from sample_metadata_raw
 
     output:
         file "$sample_name*raw*tiff" into raw_tiff_images
         file "${sample_name}-raw_tiff_metadata.csv" into raw_tiff_metadata_by_sample
     script:
     """
-    export PATH="$python_path:$PATH"
-    export LD_LIBRARY_PATH="$py_library_path:$LD_LIBRARY_PATH"
-    source $python_environment_folder/bin/activate
-    python3 $script_folder/tiff_extracter.py \\
+    python3.8 /opt/tiff_extracter.py \\
         $sample_name \\
         '$roi_name' \\
         $raw_path \\
         $params.tiff_type \\
-        . \\
+        ./ \\
         $params.channel_metadata \\
         ${sample_name}-raw_tiff_metadata.csv > extract_log.txt 2>&1
     """
