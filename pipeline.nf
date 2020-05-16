@@ -198,16 +198,19 @@ process cell_profiler_image_preprocessing {
     """
 }
 
-/* Collects all the preprocessed_tiff_metadata_by_sample metadata files:
+/* Processess all the preprocessed_tiff_metadata_by_sample metadata files:
+    
     - Concatenates them into preprocessed_tiff_metadata.csv
     - Removes extra header lines from the middle of the file, as each of the
         original files starts with an header line.
     - Copies the metadata to "$params.output_folder/preprocessed_tiff_metadata.csv" 
 */
 
-process collect_cp3_preprocessed_metadata {
+process process_cp3_preprocessed_metadata {
 
-    label 'big_memory'
+    label 'mid_memory'
+    container = 'library://michelebortol/default/imcpipeline-rbioconductor:test'
+    containerOptions = "--bind $script_folder:/opt"
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
@@ -215,13 +218,23 @@ process collect_cp3_preprocessed_metadata {
     
     output:
         file "preprocessed_tiff_metadata.csv" into preprocessed_tiff_metadata
+        file "*-cp3-preprocessed_metadata.csv" into CP3_preprocessed_tiff_metadata_list
 
     script:
     """
+    Rscript /opt/CP3_metadata_maker.R \\
+        $params.tiff_type \\
+        ./ \\
+        $metadata_list
     cat $metadata_list > preprocessed_tiff_metadata.csv
     sed -i '1!{/sample_name,label,preprocessed_file_name/d;}' preprocessed_tiff_metadata.csv
     """
 }
+
+/* Measures the user specified areas and their ratios:
+    - Measures the areas specified in: $params.area_measurements_metadata
+    - Copies the results to "$params.output_folder/area_measurements.csv" 
+*/
 
 measurement_metadata = Channel.fromPath(params.area_measurements_metadata)
 
