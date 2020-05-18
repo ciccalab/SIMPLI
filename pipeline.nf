@@ -8,6 +8,7 @@ params.channel_metadata = "$params.data_folder/channel_metadata.csv"
 params.raw_metadata_file = "$baseDir/example_data/sample_metadata.csv" 
 params.tiff_type = "single" 
 params.cp3_preprocessing_cppipe = "single_preprocessing_example.cppipe"
+params.cp3_segmentation_cppipe = "example_segmentation_pipeline.cppipe" 
 params.area_measurements_metadata = "$baseDir/example_data/marker_area_metadata.csv"
 
 /* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
@@ -161,7 +162,7 @@ cp3_normalized_tiff_metadata_by_sample
             return tuple(key, file)
             }
     .groupTuple()
-    .set{ cp3_preprocessing_metadata  }
+    .set{ cp3_preprocessing_metadata }
 
 process cell_profiler_image_preprocessing {
 
@@ -218,7 +219,7 @@ process process_cp3_preprocessed_metadata {
     
     output:
         file "preprocessed_tiff_metadata.csv" into preprocessed_tiff_metadata
-        file "*-cp3-preprocessed_metadata.csv" into CP3_preprocessed_tiff_metadata_list
+        file "*-cp3-preprocessed_metadata.csv" into cp3_preprocessed_tiff_metadata_by_sample
 
     script:
     """
@@ -259,5 +260,49 @@ process pixel_area_measurements {
         $area_metadata \\
         $tiff_metadata \\
         area_measurements.csv > pixel_area_measurements.log 2>&1
+    """
+}
+
+/* Perform cell segmentation and size, shape, position and intensity measurements
+    - For each sample produce:
+        - A table with single cell measurements.
+        - A uint16 cell mask
+    - Copies the results to "$params.output_folder/$ample_name/" 
+*/
+
+cp3_preprocessed_tiff_metadata_by_sample
+    .flatten()
+    .map { file ->
+            def key = file.name.toString().tokenize('-').get(0)
+            return tuple(key, file)
+            }
+    .groupTuple()
+    .set{ cp3_segmentation_metadata }
+
+process cell_segmentation {
+
+    label 'big_memory'
+    container = 'library://michelebortol/default/cellprofiler3_imcplugins:example'
+    containerOptions = "--bind $cp3_pipeline_folder:/mnt"
+
+    publishDir "$params.output_folder/$sample_name/cell_data", mode:'copy', overwrite: true
+                                                                                                
+    input:
+        set sample_name, file(cp3_preprocessed_metadata) from cp3_segmentation_metadata 
+
+    output:
+        file "${sample_name}-Cells.csv" into cell_data_csv
+        file "${sample_name}-Cell_Mask.tiff" into cell_mask_tiff
+script:
+    """
+    cellprofiler \\
+        --run-headless \\
+        --data-file $cp3_preprocessed_metadata \\
+        --pipeline /mnt/$params.cp3_segmentation_cppipe \\
+        --plugins-directory /opt/CellProfiler/plugins/ \\
+        --image-directory /data \\
+        --output-directory ./ \\
+        --log-level DEBUG \\
+        --temporary-directory ./tmp > cp3_segmentation_log.txt 2>&1
     """
 }
