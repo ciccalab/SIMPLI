@@ -10,6 +10,7 @@ params.tiff_type = "single"
 params.cp3_preprocessing_cppipe = "single_preprocessing_example.cppipe"
 params.cp3_segmentation_cppipe = "example_segmentation_pipeline.cppipe" 
 params.area_measurements_metadata = "$baseDir/example_data/marker_area_metadata.csv"
+params.cell_threshold_metadata = "$baseDir/example_data/cell_threshold_metadata.csv"
 
 /* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
    It expects an header line and it extracts the following fields into the sample_metadata channel:
@@ -211,7 +212,6 @@ process process_cp3_preprocessed_metadata {
     label 'mid_memory'
     container = 'library://michelebortol/default/imcpipeline-rbioconductor:test'
     containerOptions = "--bind $script_folder:/opt"
-    publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
         file metadata_list from preprocessed_tiff_metadata_by_sample.collect()
@@ -328,3 +328,31 @@ process collect_single_cell_data {
     sed -i '1!{/ImageNumber,ObjectNumber,.*/d;}' unannotated_cells.csv
     """
 }
+
+/* Assign each cell to a main cell population
+    - Outputs annotated_cells.csv
+*/
+
+cell_threshold_metadata = Channel.fromPath(params.cell_threshold_metadata)
+process cell_population_identification {
+    label 'mid_memory'
+    container = 'library://michelebortol/default/imcpipeline-rbioconductor:test'
+    containerOptions = "--bind $script_folder:/opt"
+    publishDir "$params.output_folder", mode:'copy', overwrite: true
+    
+    input:
+        file unannotated_cell_data_file from unannotated_cell_data 
+        file cell_threshold_metadata_file from cell_threshold_metadata
+    
+    output:
+        file "annotated_cells.csv" into annotated_cell_data
+
+    script:
+    """
+    Rscript /opt/cell_selecter.R \\
+        $unannotated_cell_data_file \\
+        $cell_threshold_metadata_file \\
+        annotated_cells.csv
+    """
+}
+
