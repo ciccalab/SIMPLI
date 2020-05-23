@@ -200,7 +200,6 @@ process cell_profiler_image_preprocessing {
 }
 
 /* Processess all the preprocessed_tiff_metadata_by_sample metadata files:
-    
     - Concatenates them into preprocessed_tiff_metadata.csv
     - Removes extra header lines from the middle of the file, as each of the
         original files starts with an header line.
@@ -291,7 +290,7 @@ process cell_segmentation {
         set sample_name, file(cp3_preprocessed_metadata) from cp3_segmentation_metadata 
 
     output:
-        file "${sample_name}-Cells.csv" into cell_data_csv
+        file "${sample_name}-Cells.csv" into cell_data_csv_by_sample
         file "${sample_name}-Cell_Mask.tiff" into cell_mask_tiff
 script:
     """
@@ -304,5 +303,28 @@ script:
         --output-directory ./ \\
         --log-level DEBUG \\
         --temporary-directory ./tmp > cp3_segmentation_log.txt 2>&1
+    """
+}
+
+/* Collects all the cell_data_csv single cell data files:
+    - Concatenates them into unannotated_cells.csv
+    - Removes extra header lines from the middle of the file, as each of the
+        original files starts with an header line.
+*/
+
+process collect_single_cell_data {
+
+    label 'small_memory'
+    
+    input:
+        file cell_data_list from cell_data_csv_by_sample.collect()
+    
+    output:
+        file "unannotated_cells.csv" into unannotated_cell_data
+
+    script:
+    """
+    cat $cell_data_list > unannotated_cells.csv
+    sed -i '1!{/ImageNumber,ObjectNumber,.*/d;}' unannotated_cells.csv
     """
 }
