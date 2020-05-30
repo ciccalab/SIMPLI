@@ -11,6 +11,7 @@ params.cp3_preprocessing_cppipe = "single_preprocessing_example.cppipe"
 params.cp3_segmentation_cppipe = "example_segmentation_pipeline.cppipe" 
 params.area_measurements_metadata = "$baseDir/example_data/marker_area_metadata.csv"
 params.cell_threshold_metadata = "$baseDir/example_data/cell_threshold_metadata.csv"
+params.cell_clustering_metadata = "$baseDir/example_data/cell_clustering_metadata.csv"
 
 /* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
    It expects an header line and it extracts the following fields into the sample_metadata channel:
@@ -27,7 +28,6 @@ Channel
     .set{sample_metadata_raw}
 
 /* For each aquisition spefied in the $raw_metadata_file:
-    - Activates a python3 virtual environment with the imctools modules
     - Creates the $tiff_path directory if it doesn't already exist
     - Extracts the raw tiff files into the working directory
     - Generates the raw tiff .csv metadata file in the working directory
@@ -356,3 +356,48 @@ process cell_population_identification {
     """
 }
 
+/* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
+   It expects an header line and it extracts the following fields into the sample_metadata channel:
+   - sample_name
+   - roi_name
+   - raw_path -> Converted to a file type 
+   - tiff_path
+*/
+
+Channel
+    .fromPath(params.cell_clustering_metadata)
+    .splitCsv(header:true)
+    .map{row -> tuple(row.population_name, row.markers, row.resolutions)}
+    .combine(annotated_cell_data)
+    .set{clustering_metadata}
+
+/* For each population in the params.cell_clustering_metadata file:
+    - Performs clustering with Seurat with the given markers for the given resolutions 
+    - Copies the output files into params.output_folder/CellClusters
+*/
+
+process cluster_cells {
+
+    label 'big_memory'
+    publishDir "$params.output_folder/CellClusters", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/imcpipeline-rbioconductor:test'
+    containerOptions = "--bind $script_folder:/opt"
+
+    input:
+        set population_name, markers, resolutions, file(annotated_cell_file) from clustering_metadata
+
+    output:
+        file "*_clusters.csv" into clusters_csf_files
+        file "*_clusters.RData" into clusters_rdata_files
+    
+    script:
+    """
+    Rscript /opt/Seurat_Runner.R \\
+        $annotated_cell_file \\
+        $population_name \\
+        $markers \\
+        $resolutions \\
+        $population_name \\
+        . > clustering_log.txt 2>&1
+    """
+}
