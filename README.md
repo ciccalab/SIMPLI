@@ -5,8 +5,8 @@
 - [singularity](https://sylabs.io/docs/)
 
 ## Setup
-1. Install singularity
-2. Install nextlow
+1. Install singularity.
+2. Install nextlow.
 
 ## Run
 
@@ -18,23 +18,41 @@
 - Raw IMC aquisition data. (.mcd or .txt formats accepted)
 - Channel metadata table, .csv file with an header and the following columns:
   - channel_metal = Metal the channel is associated to. Used to select which channels to extract
-      from the IMC acquisition
+      from the IMC acquisition.
   - channel_label = Marker associated to the meta. Used to give meaningful names to the single
       tiff files. 
-- Output format flag: 'single' for single tiffs or 'ome' for a ome.tiff"
+- Output format flag: 'single' for single tiffs or 'ome' for a ome.tiff".
 
-- Raw IMC acquisition metadata, .csv with an header with the following columns:
-  - sample_name = Unique sample identifier
-  - roi_name = Name of the ROI to extract the acquisition for
-  - raw_path = Path to the raw IMC acquisition file
-  - tiff_path = Path where to output the single tiff images
+- Raw IMC acquisition metadata, .csv file with an header with the following columns:
+  - sample_name = Unique sample identifier.
+  - roi_name = Name of the ROI to extract the acquisition for.
+  - raw_path = Path to the raw IMC acquisition file.
+  - tiff_path = Path where to output the single tiff images.
   
-- CellProfiler3 preprocessing pipeline
+- CellProfiler3 pipelines:
+  - Image preprocessing
+  - Cell segmentation
 
-- Area measurements metadata, .csv with an header with the two following columns:
-  - marker = marker or combination of markers to measure (markers can be combined with the logical operators: "&", "|", "!" and "()")
-  - main_marker = marker or combination of markers to measure
-  The ratio of marker/main_marker area will be reported as a percentage
+- Area measurements metadata, .csv file with an header with the two following columns:
+  - marker = marker or combination of markers to measure (markers can be combined with the logical operators: "&", "|", "!" and "()").
+  - main_marker = marker or combination of markers to measure.
+  The ratio of marker/main_marker area will be reported as a percentage.
+  
+- Cell type and expression threshold metadata, .csv file with an header with the following columns:
+  - cell_type = name of the cell type to identify.
+  - marker = name of the marker to use as threshold (column name of the cellprofiler exported single cell data).
+  - threshold = value to use as threshold for a cell to be of this cell type.
+
+- Cell type and expression threshold metadata, .csv file with an header with the following columns:
+  - cell_type = name of the cell type to identify.
+  - marker = name of the marker to use as threshold (column name of the cellprofiler exported single cell data).
+  - threshold = value to use as threshold for a cell to be of this cell type.
+  
+- Cell clustering metadata, .csv file with an header with the following columns: 
+  - population_name = cell type to cluster (from the cell type and expression threshold metadata).
+  - markers = markers to include in the clusterin (column names of the cellprofiler exported single cell data).
+  - resolutions = resolutions values at which to cut the nearest neighbour graph.
+  Values in the markers and resolution columns should be separated by '@'.
 
 ### Output
 - Raw tiff images in either:
@@ -57,4 +75,11 @@
 
 - Area measurements, and area ratios between user defined markers or their combinations.
 
+- Single Cell measurements in .csv format.
+
+- Cell masks in uint16 tiff format.
+
+- Annotated cell measurements in .csv format.
+  Cell measuremetnts annotated with the clusters each cell belongs to at the different levels of
+  resolution selected by the user. One .csv file for each clustered cell type.
 
