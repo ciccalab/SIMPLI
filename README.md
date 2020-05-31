@@ -1,4 +1,4 @@
-# IMC_Pipeline
+# SIMPLI: Single-cell Identification from Multiplexed Images
 
 ## Requirements
 - [nextflow](https://www.nextflow.io/)
