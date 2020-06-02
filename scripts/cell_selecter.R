@@ -35,7 +35,7 @@ cells[, (expression_columns) := lapply(cell_types, function(type){
 
 cells[, cell_type := apply(.SD, 1, which.max), .SDcols = expression_columns]
 cells[, cell_type := cell_types[as.numeric(cell_type)]]
-cells[is.na(cell_type), cell_type := "UNASSIGED"]
+cells[is.na(cell_type), cell_type := "UNASSIGNED"]
 cells[, (c(expression_columns, bool_columns)) := NULL]
 
 ########## Output ###################
