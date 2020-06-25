@@ -122,7 +122,7 @@ raw_tiff_metadata_to_normalize
 process normalize_tiff {
     
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:reupload'
+    container = 'library://michelebortol/default/simpli_rbioconductor:uwot'
     containerOptions = "--bind $script_folder:/opt"
     
     publishDir "$params.output_folder/$sample_name/normalized", mode:'copy', overwrite: true
@@ -225,7 +225,7 @@ process cell_profiler_image_preprocessing {
 process process_cp3_preprocessed_metadata {
 
     label 'mid_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:reupload'
+    container = 'library://michelebortol/default/simpli_rbioconductor:uwot'
     containerOptions = "--bind $script_folder:/opt"
     
     input:
@@ -256,7 +256,7 @@ measurement_metadata = Channel.fromPath(params.area_measurements_metadata)
 process pixel_area_measurements {
 
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:reupload'
+    container = 'library://michelebortol/default/simpli_rbioconductor:uwot'
     containerOptions = "--bind $script_folder:/opt"
 
     publishDir "$params.output_folder", mode:'copy', overwrite: true
@@ -351,7 +351,7 @@ process collect_single_cell_data {
 cell_threshold_metadata = Channel.fromPath(params.cell_threshold_metadata)
 process cell_population_identification {
     label 'mid_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:reupload'
+    container = 'library://michelebortol/default/simpli_rbioconductor:uwot'
     containerOptions = "--bind $script_folder:/opt"
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
@@ -395,7 +395,7 @@ process cluster_cells {
 
     label 'big_memory'
     publishDir "$params.output_folder/CellClusters", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:reupload'
+    container = 'library://michelebortol/default/simpli_rbioconductor:uwot'
     containerOptions = "--bind $script_folder:/opt"
 
     input:
