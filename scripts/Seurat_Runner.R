@@ -2,7 +2,7 @@
 rm(list = ls())
 library(dplyr)
 library(data.table)
-source(file = "/opt/RunMultiCCA_Changed.R")
+source(file = "scripts/RunMultiCCA_Changed.R")
 library(Seurat)
 
 arguments <- commandArgs(trailingOnly = TRUE)
@@ -43,19 +43,33 @@ total_dimensions <- length(markers) - 1
 if (length(sample_names) > 1){
   if(length(sample_names) > 2){
     cat("Running the multiple CCA analysis.\n")
-    seurats_integrated <- RunMultiCCA_Changed(seurats_by_sample, genes.use = markers,
-      num.cc = total_dimensions)
+    seurats_integrated <- try(RunMultiCCA_Changed(seurats_by_sample, genes.use = markers,
+      num.cc = total_dimensions, check_duplicates = FALSE))
+	while(class(seurats_integrated) == "try-error" & total_dimensions > 0)
+	{
+		total_dimensions <- total_dimensions - 1	
+		cat(paste0("Reduced dimensions: ", total_dimensions, "\n"))
+		seurats_integrated <- try(RunMultiCCA_Changed(seurats_by_sample, genes.use = markers,
+		num.cc = total_dimensions))
+	}
   }
   if(length(sample_names) == 2){
     cat("Running the CCA analysis.\n")
-    seurats_integrated <- RunCCA(seurats_by_sample[[1]], seurats_by_sample[[2]],
-      genes.use = markers, num.cc = total_dimensions)
+    seurats_integrated <- try(RunCCA(seurats_by_sample[[1]], seurats_by_sample[[2]],
+      genes.use = markers, num.cc = total_dimensions))
+	while(class(seurats_integrated) == "try-error" & total_dimensions > 0)
+	{
+		total_dimensions <- total_dimensions - 1	
+		cat(paste0("Reduced dimensions: ", total_dimensions, "\n"))
+		seurats_integrated <- try(RunCCA(seurats_by_sample[[1]], seurats_by_sample[[2]],
+		genes.use = markers, num.cc = total_dimensions))
+	}
   }
   reduction.type = "cca"
-  cat("Aligning Subspaces\n")
+  cat(paste0("Aligning Subspaces, dimensions: ", total_dimensions, "\n"))
   seurats_integrated <- AlignSubspace(seurats_integrated, reduction.type = reduction.type,
     grouping.var = "Metadata_sample_name", verbose = F, dims.align = 1:total_dimensions,
-    num.genes = length(markers))
+    num.genes = max(total_dimensions / 2, 2))
 }else{
   reduction.type = "pca"
   cat("Performing PCA\n")
