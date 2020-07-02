@@ -2,7 +2,7 @@
 rm(list = ls())
 library(dplyr)
 library(data.table)
-source(file = "scripts/RunMultiCCA_Changed.R")
+source(file = "/opt/RunMultiCCA_Changed.R")
 library(Seurat)
 
 arguments <- commandArgs(trailingOnly = TRUE)
