@@ -32,6 +32,7 @@ SIMPLI: Single-cell Identification from Multiplexed Images is a image processing
   - roi_name = Name of the ROI to extract the acquisition for.
   - raw_path = Path to the raw IMC acquisition file.
   - tiff_path = Path where to output the single tiff images.
+  - category = Categorical variable for grouping the sample.
   
 - CellProfiler3 pipelines:
   - Image preprocessing
@@ -87,3 +88,7 @@ SIMPLI: Single-cell Identification from Multiplexed Images is a image processing
   Cell measuremetnts annotated with the clusters each cell belongs to at the different levels of
   resolution selected by the user. One .csv file for each clustered cell type.
 
+- Single cell data plots.
+  - UMAPs: UMAPs coloured by cluster, and by marker.
+  - Heatmaps: Heatmaps of mean marker intensities for every cluster.
+  - Boxplots: Comparison of the fraction of cells in its main population in the two groups (Samples must be grouped in exactly 2 groups).  
