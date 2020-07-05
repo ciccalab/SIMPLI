@@ -96,6 +96,7 @@ seurats_integrated@meta.data <- merge(seurats_integrated@meta.data, clustering_d
  by = c("CellName", "Metadata_sample_name"))
 
 ####### Align the CCA subspaces #######
+dir.create(output_folder, recursive = T, showWarnings = F)
 out_name <- paste0(output_folder, "/", output_prefix, "_clusters")
 save(seurats_integrated, file = paste0(out_name, ".RData"))
 fwrite(seurats_integrated@meta.data, file = paste0(out_name, ".csv"))
