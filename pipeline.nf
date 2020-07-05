@@ -12,6 +12,9 @@ params.cp3_segmentation_cppipe = "example_segmentation_pipeline.cppipe"
 params.area_measurements_metadata = "$baseDir/example_data/marker_area_metadata.csv"
 params.cell_threshold_metadata = "$baseDir/example_data/cell_threshold_metadata.csv"
 params.cell_clustering_metadata = "$baseDir/example_data/cell_clustering_metadata.csv"
+params.category_column = "category"
+params.high_color = "'#FF0000'"
+params.low_color = "'#0000FF'"
 
 process get_singularity_key {
 
@@ -122,7 +125,7 @@ raw_tiff_metadata_to_normalize
 process normalize_tiff {
     
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:uwot'
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
     
     publishDir "$params.output_folder/$sample_name/normalized", mode:'copy', overwrite: true
@@ -225,7 +228,7 @@ process cell_profiler_image_preprocessing {
 process process_cp3_preprocessed_metadata {
 
     label 'mid_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:uwot'
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
     
     input:
@@ -256,7 +259,7 @@ measurement_metadata = Channel.fromPath(params.area_measurements_metadata)
 process pixel_area_measurements {
 
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:uwot'
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
 
     publishDir "$params.output_folder", mode:'copy', overwrite: true
@@ -351,7 +354,7 @@ process collect_single_cell_data {
 cell_threshold_metadata = Channel.fromPath(params.cell_threshold_metadata)
 process cell_population_identification {
     label 'mid_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:uwot'
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
@@ -359,7 +362,7 @@ process cell_population_identification {
         file unannotated_cell_data_file from unannotated_cell_data 
         file cell_threshold_metadata_file from cell_threshold_metadata
     
-    output:
+    output:               
         file "annotated_cells.csv" into annotated_cell_data
 
     script:
@@ -371,7 +374,7 @@ process cell_population_identification {
     """
 }
 
-/* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
+/* Reads the clustering metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
    It expects an header line and it extracts the following fields into the sample_metadata channel:
    - sample_name
    - roi_name
@@ -395,15 +398,15 @@ process cluster_cells {
 
     label 'big_memory'
     publishDir "$params.output_folder/CellClusters", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:uwot'
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
 
     input:
         set population_name, markers, resolutions, file(annotated_cell_file) from clustering_metadata
 
     output:
-        file "*_clusters.csv" into clusters_csf_files
-        file "*_clusters.RData" into clusters_rdata_files
+        file "$population_name/*_clusters.csv" into cluster_csv_files
+        file "$population_name/*_clusters.RData" into cluster_rdata_files
     
     script:
     """
@@ -413,6 +416,61 @@ process cluster_cells {
         $markers \\
         $resolutions \\
         $population_name \\
-        . > clustering_log.txt 2>&1
+        $population_name > clustering_log.txt 2>&1
+    """
+}
+
+process collect_clustering_data {
+
+    label 'small_memory'
+    publishDir "$params.output_folder/CellClusters", mode:'copy', overwrite: true
+    
+    input:
+        file cluster_list from cluster_csv_files.collect()
+    
+    output:
+        file "clustered_cells.csv" into clustered_cell_data
+
+    script:
+    """
+    cat $cluster_list > clustered_cells.csv
+    sed -i '1!{/.*Metadata_sample_name.*/d;}' clustered_cells.csv
+    """
+}
+
+Channel
+    .fromPath(params.cell_clustering_metadata)
+    .splitCsv(header:true)
+    .map{row -> tuple(row.population_name, row.markers, row.resolutions)}
+    .combine(clustered_cell_data)
+    .set{visualization_metadata}
+
+process visualization {
+
+    label 'mid_memory'
+    publishDir "$params.output_folder/Plots", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
+    containerOptions = "--bind $script_folder:/opt"
+
+    input:
+        set population_name, markers, resolutions, file(clustered_cell_file) from visualization_metadata
+        file sample_metadata_file from file(params.raw_metadata_file)
+
+    output:
+        file "$population_name/**/*.pdf" into plots
+    
+    script:
+    """
+    Rscript /opt/Visualizer.R \\
+        $clustered_cell_file \\
+        $sample_metadata_file \\
+        $params.category_column \\
+        $population_name \\
+        $markers \\
+        $resolutions \\
+        $params.high_color \\
+        $params.low_color \\
+        $population_name \\
+        $population_name > visualization.txt 2>&1
     """
 }
