@@ -14,6 +14,7 @@ params.cell_threshold_metadata = "$baseDir/example_data/cell_threshold_metadata.
 params.cell_clustering_metadata = "$baseDir/example_data/cell_clustering_metadata.csv"
 params.category_column = "category"
 params.high_color = "'#FF0000'"
+params.mid_color = "'#FFFFFF'"
 params.low_color = "'#0000FF'"
 
 process get_singularity_key {
@@ -280,6 +281,30 @@ process pixel_area_measurements {
     """
 }
 
+process area_visualization {
+
+    label 'mid_memory'
+    publishDir "$params.output_folder/Area_Plots", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
+    containerOptions = "--bind $script_folder:/opt"
+
+    input:
+        file area_file from area_measurements 
+        file sample_metadata_file from file(params.raw_metadata_file)
+
+    output:
+        file "*/**/*.pdf" optional true into area_plots
+    
+    script:
+    """
+    Rscript /opt/Area_Plotter.R \\
+        $area_file \\
+        $sample_metadata_file \\
+        $params.category_column \\
+        . > area_plotting_log.txt 2>&1
+    """
+}
+
 /* Perform cell segmentation and size, shape, position and intensity measurements
     - For each sample produce:
         - A table with single cell measurements.
@@ -443,25 +468,25 @@ Channel
     .splitCsv(header:true)
     .map{row -> tuple(row.population_name, row.markers, row.resolutions)}
     .combine(clustered_cell_data)
-    .set{visualization_metadata}
+    .set{cell_visualization_metadata}
 
-process visualization {
+process cell_visualization {
 
     label 'mid_memory'
-    publishDir "$params.output_folder/Plots", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/Cell_Plots", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
 
     input:
-        set population_name, markers, resolutions, file(clustered_cell_file) from visualization_metadata
+        set population_name, markers, resolutions, file(clustered_cell_file) from cell_visualization_metadata
         file sample_metadata_file from file(params.raw_metadata_file)
 
     output:
-        file "$population_name/**/*.pdf" into plots
+        file "$population_name/**/*.pdf" into cell_plots
     
     script:
     """
-    Rscript /opt/Visualizer.R \\
+    Rscript /opt/Single_Cell_Plotter.R \\
         $clustered_cell_file \\
         $sample_metadata_file \\
         $params.category_column \\
@@ -469,8 +494,9 @@ process visualization {
         $markers \\
         $resolutions \\
         $params.high_color \\
+        $params.mid_color \\
         $params.low_color \\
         $population_name \\
-        $population_name > visualization.txt 2>&1
+        $population_name > cell_plotting_log.txt 2>&1
     """
 }
