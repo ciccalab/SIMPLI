@@ -16,12 +16,12 @@ heatmapper <- function(plot_dataset, res_column, cols, high_color, mid_color, lo
   ggplot(data = plot_data) +
     geom_tile(mapping = aes(x = cluster, y = gene, fill = scaled_expression)) +
     geom_text(mapping = aes(x = cluster, y = gene, label = formatC(expression, digits = 2, format = "g")),
-              color = "black", size = 5) + 
+              color = "black", size = 2) + 
     scale_x_discrete(limits = x_labels, labels = x_labels, name = element_blank()) +
     scale_fill_gradient2(low = low_color, high = high_color, mid = mid_color, midpoint = 0.5, name = element_blank()) +
     scale_y_discrete(name = element_blank(), limits = rev(markers)) +
-    theme_classic() + theme(text = element_text(size = 20), plot.margin = margin(t = 0, r = 0, b = 0,l = 0,
-    unit = "pt"), plot.title = element_text(hjust = 0.5), axis.text.x = element_text(size = 15))
+    theme_classic() + theme(text = element_text(size = 8), plot.margin = margin(t = 0, r = 0, b = 0,l = 0,
+    unit = "pt"), plot.title = element_text(hjust = 0.5), axis.text.x = element_text(size = 8))
 }
 
 ####### Scatterplots #######
@@ -162,8 +162,7 @@ cell_overlayer <- function(picture, mask, cell_list, color_list)
 	pics <- lapply(seq_along(cell_list), function(n){
 		cell_mask <- mask * (2^16 - 1)
 		pic <- Image(dim = c(dim(cell_mask),3), colormode = "Color")
-		cell_ns <- cell_list[[n]][, as.integer(sub(".+-", "", Cell_ID))]
-		cell_mask[which(!(cell_mask %in% cell_ns), arr.ind = T)] <- 0
+		cell_mask[which(!(cell_mask %in% cell_list[[n]]), arr.ind = T)] <- 0
 		paintObjects(cell_mask, pic, col = color_list[[n]], thick = T)
 	})
 	pic <- Reduce(`+`, pics)
