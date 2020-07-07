@@ -284,7 +284,7 @@ process pixel_area_measurements {
 process area_visualization {
 
     label 'mid_memory'
-    publishDir "$params.output_folder/Area_Plots", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/Plots/Area_Plots", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
 
@@ -334,7 +334,7 @@ process cell_segmentation {
 
     output:
         file "${sample_name}-Cells.csv" into cell_data_csv_by_sample
-        file "${sample_name}-Cell_Mask.tiff" into cell_mask_tiff
+        file "${sample_name}-Cell_Mask.tiff" into cell_mask_tiffs
 script:
     """
     cellprofiler \\
@@ -399,6 +399,37 @@ process cell_population_identification {
     """
 }
 
+annotated_cell_data.into { cell_data_to_plot; cell_data_to_cluster }
+
+process cell_type_visualization {
+
+    label 'big_memory'
+    publishDir "$params.output_folder/Plots/Cell_Population_Plots", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
+    containerOptions = "--bind $script_folder:/opt"
+
+    input:
+        file annotated_cell_file from cell_data_to_plot
+        file sample_metadata_file from file(params.raw_metadata_file)
+        file cell_metadata_file from file(params.cell_threshold_metadata)
+        file cell_mask_list from cell_mask_tiffs.collect()
+
+    output:
+        file "*/*.pdf" into cell_type_plots
+        file "*/*.tiff" into cell_type_overlays
+    
+    script:
+    """
+    Rscript /opt/Population_Plotter.R \\
+        $annotated_cell_file \\
+        $sample_metadata_file \\
+        $params.category_column \\
+        $cell_metadata_file \\
+        . \\
+        $cell_mask_list > population_plotting_log.txt 2>&1
+    """
+}
+
 /* Reads the clustering metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
    It expects an header line and it extracts the following fields into the sample_metadata channel:
    - sample_name
@@ -411,7 +442,7 @@ Channel
     .fromPath(params.cell_clustering_metadata)
     .splitCsv(header:true)
     .map{row -> tuple(row.population_name, row.markers, row.resolutions)}
-    .combine(annotated_cell_data)
+    .combine(cell_data_to_cluster)
     .set{clustering_metadata}
 
 /* For each population in the params.cell_clustering_metadata file:
@@ -470,10 +501,10 @@ Channel
     .combine(clustered_cell_data)
     .set{cell_visualization_metadata}
 
-process cell_visualization {
+process cell_cluster_visualization {
 
     label 'mid_memory'
-    publishDir "$params.output_folder/Cell_Plots", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/Plots/Cell_Cluster_Plots", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
 
