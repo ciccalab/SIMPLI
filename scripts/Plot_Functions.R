@@ -62,31 +62,32 @@ Barplotter <- function(plot_dataset, x_column, annotation_column, color_column, 
 {
 	plot_data <- copy(plot_dataset)
 	if(x_column == annotation_column){ # Plot by sample
-		setnames(plot_data, c(x_column, color_column), c("x_column", "color_column"))
-		annotations <- sort(unique(plot_data$x_column))
+		setnames(plot_data, c(x_column, color_column), c("annotation_column", "color_column"))
+		annotations <- sort(unique(plot_data$annotation_column))
 	} else{ # Plot by category
 		setnames(plot_data, c(x_column, annotation_column, color_column), c("x_column", "annotation_column", "color_column"))
 		annotations <- sort(unique(plot_data$annotation_column))
 		annotations <- sapply(annotations, function(annotation){
-			paste0(annotation, " (", plot_data[annotation_column == annotation, .N], ")")
+			paste0(annotation, " (", length(unique(plot_data[annotation_column == annotation, x_column])), ")")
 		})	
 	}
+	names(annotations) <- sort(unique(plot_data$annotation_column))
 	plot_data[, count := .N, by = c("color_column", "annotation_column")]	
 	plot_data[, total := .N, by = annotation_column]
 	plot_data[, percent := count / total * 100]
 	plot_data <- unique(plot_data[, .(annotation_column, color_column, percent)])
 	plot_data <- plot_data[, percent_text := paste0(round(percent), " %")]
 	plot_data[, color_column := factor(color_column, levels = names(annotation_colors))]
-	plot_data[order(color_column, decreasing = T), percent_y := cumsum(percent) - percent * 0.5, by = "color_column"]
+	plot_data[order(color_column, decreasing = T), percent_y := cumsum(percent) - percent * 0.5, by = annotation_column]
 	plot_data <- plot_data[, .SD, keyby = color_column]
-		    
+
 	ggplot(data = plot_data) +
 		geom_bar(aes(x = annotation_column, y = percent, fill = color_column), stat = "identity", color = "#000000") +
-		geom_text(aes(x = annotation_column, y = percentage_y, label = percent_text), size = 4) +
-	    scale_x_discrete(labels = annotations, name = element_blank()) +
+		geom_text(aes(x = annotation_column, y = percent_y, label = percent_text), size = 2) +
+	    scale_x_discrete(labels = annotations, breaks = sort(unique(plot_data$annotation_column)), name = element_blank()) +
 		scale_y_continuous(name = y_axis_title) +
-		scale_fill_manual(values = annotations_colors, name = element_blank(), labels = names(annotations_colors)) +
-		theme_bw(base_size = 16, base_family = "sans") +
+		scale_fill_manual(values = annotation_colors, name = element_blank(), labels = names(annotation_colors)) +
+		theme_bw(base_size = 8, base_family = "sans") +
 		theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(), legend.position = "right",
 			panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
 			axis.line = element_line(colour = "black", size = 0.75), strip.background = element_rect(colour = NA, fill = NA))

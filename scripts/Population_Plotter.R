@@ -30,8 +30,8 @@ names(color_list) <- c(population_color$cell_type, "UNASSIGNED")
 rm(population_color)
 
 ###################### Barplots ##########################
-category_barplot <- Barplotter(Cells, "Metadata_sample_name", category_column, cell_type, color_list, "Cell type cells / total cells %")
-sample_barplot <- Barplotter(Cells, "Metadata_sample_name", "Metadata_sample_name", cell_type, color_list, "Cell type cells / total cells %")
+category_barplot <- Barplotter(Cells, "Metadata_sample_name", category_column, "cell_type", color_list, "Cell type cells / total cells %")
+sample_barplot <- Barplotter(Cells, "Metadata_sample_name", "Metadata_sample_name", "cell_type", color_list, "Cell type cells / total cells %")
 
 ###################### Boxplots by Population ##########################
 n_categories <- length(unique(Cells[[category_column]]))
@@ -64,6 +64,7 @@ names(cell_overlays) <- Samples
 
 # Barlots
 barplot_output_folder <- file.path(output_folder, "Barplots")  
+dir.create(barplot_output_folder, recursive = T, showWarnings = F)
 pdf_plotter(category_barplot, filename =  paste0(barplot_output_folder,	"/barplot_by_category.pdf"))
 pdf_plotter(sample_barplot, filename =  paste0(barplot_output_folder,	"/barplot_by_sample.pdf"))
 
