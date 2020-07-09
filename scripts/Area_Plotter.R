@@ -23,7 +23,7 @@ marker_combinations <- unique(Areas$marker_combination)
 n_categories <- length(unique(Samples[[category_column]]))
 # Boxplots should be made only when we have 2 groups to compare
 if(n_categories == 2){
-		area_boxplots <- list_boxplotter(Areas, "sample_name", "marker_combination", "category", "percentage")
+		area_boxplots <- list_boxplotter(Areas, "sample_name", "marker_combination", "category", "percentage", "Marker area / normaliser area %")
 		area_boxplots <- lapply(area_boxplots, function(x){x$Plot})
 }
 

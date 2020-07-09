@@ -71,7 +71,7 @@ if(n_categories == 2){
 		plot_dataset[, n_cells := .N, by = c("Metadata_sample_name", res)]
 		plot_dataset[, total := .N, by = "Metadata_sample_name"]
 		plot_dataset[, frac := n_cells / total * 100]
-		cluster_boxplots <- list_boxplotter(plot_dataset, "Metadata_sample_name", res, "category", "frac")
+		cluster_boxplots <- list_boxplotter(plot_dataset, "Metadata_sample_name", res, "category", "frac", "Cells in cluster / total cells %")
 		cluster_boxplots <- lapply(cluster_boxplots, function(x){x$Plot})
 		return(cluster_boxplots)
 	})

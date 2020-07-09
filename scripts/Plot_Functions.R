@@ -57,18 +57,55 @@ gradient_dot_plotter <- function(data, x_name, y_name, marker, highcol, lowcol)
   return(my_plot)
 }
 
-####### Boxplots #######
-threshold_e = 0.01
-round_format_2 <- function(number, threshold = threshold_e)
+######### Barplots  ############
+Barplotter <- function(plot_dataset, x_column, annotation_column, color_column, annotation_colors, y_axis_title)
 {
-	if (is.nan(number)) return("Nan")
-	if (number == 0) return("0")
-	if (number >= threshold) return(as.character(round(number, 2)))
-	return(paste0(round(as.numeric(sub("e.*", "", formatC(number, format = "e"))), 2), "×10^", sub("^[^-]*", "",
-		formatC(number, format = "e"))))
+	plot_data <- copy(plot_dataset)
+	if(x_column == annotation_column){ # Plot by sample
+		setnames(plot_data, c(x_column, color_column), c("x_column", "color_column"))
+		annotations <- sort(unique(plot_data$x_column))
+	} else{ # Plot by category
+		setnames(plot_data, c(x_column, annotation_column, color_column), c("x_column", "annotation_column", "color_column"))
+		annotations <- sort(unique(plot_data$annotation_column))
+		annotations <- sapply(annotations, function(annotation){
+			paste0(annotation, " (", plot_data[annotation_column == annotation, .N], ")")
+		})	
+	}
+	plot_data[, count := .N, by = c("color_column", "annotation_column")]	
+	plot_data[, total := .N, by = annotation_column]
+	plot_data[, percent := count / total * 100]
+	plot_data <- unique(plot_data[, .(annotation_column, color_column, percent)])
+	plot_data <- plot_data[, percent_text := paste0(round(percent), " %")]
+	plot_data[, color_column := factor(color_column, levels = names(annotation_colors))]
+	plot_data[order(color_column, decreasing = T), percent_y := cumsum(percent) - percent * 0.5, by = "color_column"]
+	plot_data <- plot_data[, .SD, keyby = color_column]
+		    
+	ggplot(data = plot_data) +
+		geom_bar(aes(x = annotation_column, y = percent, fill = color_column), stat = "identity", color = "#000000") +
+		geom_text(aes(x = annotation_column, y = percentage_y, label = percent_text), size = 4) +
+	    scale_x_discrete(labels = annotations, name = element_blank()) +
+		scale_y_continuous(name = y_axis_title) +
+		scale_fill_manual(values = annotations_colors, name = element_blank(), labels = names(annotations_colors)) +
+		theme_bw(base_size = 16, base_family = "sans") +
+		theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(), legend.position = "right",
+			panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+			axis.line = element_line(colour = "black", size = 0.75), strip.background = element_rect(colour = NA, fill = NA))
 }
 
-boxplotter <- function(data, yaxis_variable_name, yaxis_title, group_variable_name, sample_column_name, bp_title,
+####### Boxplots #######
+threshold_e = 0.01
+round_format_n <- function(numbers, n = 2, threshold = threshold_e)
+{
+	sapply(numbers, function(number){
+		if (is.nan(number)) return("Nan")
+		if (number == 0) return("0")
+		if (number >= threshold) return(as.character(round(number, n)))
+		return(paste0(round(as.numeric(sub("e.*", "", formatC(number, format = "e"))), n), "×10^", sub("^[^-]*", "",
+			formatC(number, format = "e"))))
+	})
+}
+
+boxplotter <- function(data, y_axis_variable_name, y_axis_title, group_variable_name, sample_column_name, bp_title,
   axis_stroke = 0.75) 
 {
 	local_data <- as.data.frame(copy(data))
@@ -84,26 +121,26 @@ boxplotter <- function(data, yaxis_variable_name, yaxis_title, group_variable_na
 	sum_samples_g1 <- sum(uss[,group_variable_name] == levels(uss[,group_variable_name])[1])
 	sum_samples_g2 <- sum(uss[,group_variable_name] == levels(uss[,group_variable_name])[2])
 	# Two-tailed Wilcoxon test between the two groups:
-	g1 <- local_data[local_data[,group_variable_name] == levels(local_data[,group_variable_name])[1], yaxis_variable_name]
-	g2 <- local_data[local_data[,group_variable_name] == levels(local_data[,group_variable_name])[2], yaxis_variable_name]
+	g1 <- local_data[local_data[,group_variable_name] == levels(local_data[,group_variable_name])[1], y_axis_variable_name]
+	g2 <- local_data[local_data[,group_variable_name] == levels(local_data[,group_variable_name])[2], y_axis_variable_name]
 	wilcox_groups <- wilcox.test(g1, g2)
 	list_return[["pval"]] <- wilcox_groups$p.value
-	# Creating BP:
-	list_return[["bp"]] <- ggplot(data = local_data, aes_string(x = group_variable_name, y = yaxis_variable_name,
+	# Creating Boxplot:
+	y_ticks <- seq(from = 0, to = max(local_data[,y_axis_variable_name]), length.out = 10)
+	list_return[["bp"]] <- ggplot(data = local_data, aes_string(x = group_variable_name, y = y_axis_variable_name,
 		label = sample_column_name)) +
 	geom_boxplot(fill = NA, width = 0.35, outlier.shape = NA) +
 	geom_point(fill = "black") +
 	geom_text_repel(data = subset(local_data, get(group_variable_name) == levels(local_data[, group_variable_name])[1]),
 		nudge_x = 0.3, direction = "y", hjust = 0, size = 2) +
-	geom_text_repel(data = subset(local_data, get(group_variable_name) == levels(local_data[,group_variable_name])[2]),
+	geom_text_repel(data = subset(local_data, get(group_variable_name) == levels(local_data[, group_variable_name])[2]),
 		nudge_x = 1.7, direction = "y", hjust = 1, size = 2) +
 	scale_x_discrete(labels = c(paste0(toupper(abbreviate(levels(local_data[,group_variable_name])[1])),
 		" (", sum_samples_g1, ")"), paste0(toupper(abbreviate(levels(local_data[, group_variable_name])[2])),
 		" (", sum_samples_g2, ")")), name = element_blank()) +  
-	scale_y_continuous(name = yaxis_title, limits = c(0, max(local_data[,yaxis_variable_name])),
-		breaks = seq(from = 0, to = round(max(local_data[,yaxis_variable_name])),
-		length.out = 10), labels = round(seq(from = 0, to = round(max(local_data[,yaxis_variable_name])), length.out = 10))) +
-	ggtitle(bp_title) + labs(subtitle = paste0("p = ", round_format_2(list_return[["pval"]]))) +
+	scale_y_continuous(name = y_axis_title, limits = c(0, max(local_data[,y_axis_variable_name])), breaks = y_ticks,
+		labels = round_format_n(y_ticks, 1)) +
+	ggtitle(bp_title) + labs(subtitle = paste0("p = ", round_format_n(list_return[["pval"]]))) +
 	theme_bw(base_size = 8, base_family = "sans") +
 	theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(), legend.position = "none",
 			panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -112,7 +149,7 @@ boxplotter <- function(data, yaxis_variable_name, yaxis_title, group_variable_na
 	return(list_return)
 }
 
-list_boxplotter <- function(data, sample_column, type_column, group_variable_name, y_column, axis_stroke = 0.75, correct = TRUE)
+list_boxplotter <- function(data, sample_column, type_column, group_variable_name, y_column, y_axis_title, axis_stroke = 0.75, correct = TRUE)
 {
   types <- sort(unique(data[[type_column]]))
   plot_dataset <- copy(data)[, .SD, .SDcols = c(sample_column, group_variable_name, type_column, y_column)]
@@ -121,7 +158,7 @@ list_boxplotter <- function(data, sample_column, type_column, group_variable_nam
   plot_dataset <- unique(plot_dataset[, .(sample_column, x_column, y_column), keyby = type_column])
   plots <- lapply(types, function(type)
   {
-    boxplotter(plot_dataset[type_column == type], "y_column", "Cells %", group_variable_name = "x_column",
+    boxplotter(plot_dataset[type_column == type], "y_column", y_axis_title, group_variable_name = "x_column",
       sample_column_name = "sample_column", bp_title = type, axis_stroke = axis_stroke)
   })
   if (correct)
@@ -131,7 +168,7 @@ list_boxplotter <- function(data, sample_column, type_column, group_variable_nam
       pval <- plots[[n]][["pval"]]
       plt <- plots[[n]][["bp"]]
       FDR <- FDRs[[n]]
-      plt <- plt + labs(subtitle =  paste0("p = ", round_format_2(pval), "\nFDR = ", round_format_2(FDR))) +
+      plt <- plt + labs(subtitle =  paste0("p = ", round_format_n(pval), "\nFDR = ", round_format_n(FDR))) +
         theme(plot.subtitle = element_text(size = 8, hjust = 0.5, vjust = 1))
       return(list(pvalue = pval, FDR_BH = FDR, Plot = plt))        
     })
