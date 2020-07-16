@@ -12,10 +12,12 @@ params.cp3_segmentation_cppipe = "example_segmentation_pipeline.cppipe"
 params.area_measurements_metadata = "$baseDir/example_data/marker_area_metadata.csv"
 params.cell_threshold_metadata = "$baseDir/example_data/cell_threshold_metadata.csv"
 params.cell_clustering_metadata = "$baseDir/example_data/cell_clustering_metadata.csv"
-params.category_column = "category"
+
 params.high_color = "'#FF0000'"
 params.mid_color = "'#FFFFFF'"
 params.low_color = "'#0000FF'"
+
+image_folder = "$params.output_folder/Images"
 
 process get_singularity_key {
 
@@ -30,26 +32,23 @@ process get_singularity_key {
     """                             
 }
 
-
 /* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
    It expects an header line and it extracts the following fields into the sample_metadata channel:
    - sample_name
    - roi_name
    - raw_path -> Converted to a file type 
-   - tiff_path
 */
 
 Channel
     .fromPath(params.raw_metadata_file)
     .splitCsv(header:true)
-    .map{row -> tuple(row.sample_name, row.roi_name, file(row.raw_path), row.tiff_path)}
+    .map{row -> tuple(row.sample_name, row.roi_name, file(row.raw_path))}
     .set{sample_metadata_raw}
 
-/* For each aquisition spefied in the $raw_metadata_file:
-    - Creates the $tiff_path directory if it doesn't already exist
+/* For each aquisition specified in the $raw_metadata_file:
     - Extracts the raw tiff files into the working directory
     - Generates the raw tiff .csv metadata file in the working directory
-    - Copies the output files into "$tiff_path/raw" 
+    - Copies the output files into "$image_folder" 
   For ome.tiff output the channels in the .ome are in the same order they are
   written in the metadata.
 */
@@ -57,17 +56,18 @@ Channel
 process convert_raw_data_to_tiffs {
 
     label 'big_memory'
-    publishDir "$tiff_path/raw", mode:'copy', overwrite: true
+    publishDir "$image_folder/Raw/$sample_name", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_imctools:reupload'
     containerOptions = "--bind $script_folder:/opt"
 
     input:
         val flag from singularity_key_got
-        set sample_name, roi_name, file(raw_path), tiff_path from sample_metadata_raw
+        set sample_name, roi_name, file(raw_path) from sample_metadata_raw
 
     output:
         file "$sample_name*raw*tiff" into raw_tiff_images
         file "${sample_name}-raw_tiff_metadata.csv" into raw_tiff_metadata_by_sample
+
     script:
     """
     python3.8 /opt/tiff_extracter.py \\
@@ -93,7 +93,7 @@ raw_tiff_metadata_by_sample.into{raw_tiff_metadata_to_collect; raw_tiff_metadata
 process collect_raw_tiff_metadata {
 
     label 'small_memory'
-    publishDir "$params.output_folder", mode:'copy', overwrite: true
+    publishDir "$image_folder/Raw/", mode:'copy', overwrite: true
     
     input:
         file metadata_list from raw_tiff_metadata_to_collect.collect()
@@ -118,7 +118,7 @@ raw_tiff_metadata_to_normalize
 
 /* For each sample:
     - Performs 99th percentile normalization and scaling
-    - Copies the results to "$params.output_folder/$sample_name/normalized"
+    - Copies the results to "$image_folder/Normalized/$sample_name"
   For ome.tiff output the channels in the .ome are in the same order they are
   written in the metadata.
 */
@@ -129,7 +129,7 @@ process normalize_tiff {
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
     
-    publishDir "$params.output_folder/$sample_name/normalized", mode:'copy', overwrite: true
+    publishDir "$image_folder/Normalized/$sample_name", mode:'copy', overwrite: true
     
     input:
         set sample_name, file(raw_metadata_file) from normalize_tiff_metadata
@@ -155,13 +155,13 @@ process normalize_tiff {
     - Concatenates them into normalized_tiff_metadata.csv
     - Removes extra header lines from the middle of the file, as each of the
         original files starts with an header line.
-    - Copies the metadata to "$params.output_folder/normalized_tiff_metadata.csv" 
+    - Copies the metadata to "$image_folder/Normalized/" 
 */
 
 process collect_normalized_tiff_metadata {
 
     label 'small_memory'
-    publishDir "$params.output_folder", mode:'copy', overwrite: true
+    publishDir "$image_folder/Normalized", mode:'copy', overwrite: true
     
     input:
         file metadata_list from normalized_tiff_metadata_by_sample.collect()
@@ -190,7 +190,7 @@ process cell_profiler_image_preprocessing {
     container = 'library://michelebortol/default/simpli_cp3:reupload'
     containerOptions = "--bind $cp3_pipeline_folder:/mnt"
 
-    publishDir "$params.output_folder/$sample_name/preprocessed", mode:'copy', overwrite: true
+    publishDir "$image_folder/Preprocessed/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
         set sample_name, file(cp3_normalized_metadata) from cp3_preprocessing_metadata 
@@ -281,14 +281,25 @@ process pixel_area_measurements {
     """
 }
 
+Channel
+    .fromPath(params.raw_metadata_file)
+    .splitCsv(header:false)
+    .first()
+    .map{row -> row.drop(4)}
+    .map{ls -> [ls, 0 .. ls.size()-1]} 
+    .transpose()
+    .map{tpl -> [tpl[0], tpl[1] == 0]}
+    .into{categories_area; categories_type; categories_cluster}
+
 process area_visualization {
 
     label 'mid_memory'
-    publishDir "$params.output_folder/Plots/Area_Plots", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/Plots/Area_Plots/", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
 
     input:
+        each category_column from categories_area
         file area_file from area_measurements 
         file sample_metadata_file from file(params.raw_metadata_file)
 
@@ -300,7 +311,7 @@ process area_visualization {
     Rscript /opt/Area_Plotter.R \\
         $area_file \\
         $sample_metadata_file \\
-        $params.category_column \\
+        ${category_column[0]} \\
         . > area_plotting_log.txt 2>&1
     """
 }
@@ -327,7 +338,7 @@ process cell_segmentation {
     container = 'library://michelebortol/default/simpli_cp3:reupload'
     containerOptions = "--bind $cp3_pipeline_folder:/mnt"
 
-    publishDir "$params.output_folder/$sample_name/cell_data", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/cell_data/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
         set sample_name, file(cp3_preprocessed_metadata) from cp3_segmentation_metadata 
@@ -400,6 +411,8 @@ process cell_population_identification {
 }
 
 annotated_cell_data.into { cell_data_to_plot; cell_data_to_cluster }
+categories_type.combine(cell_data_to_plot)
+    .set{cell_type_visualization_metadata}
 
 process cell_type_visualization {
 
@@ -409,21 +422,22 @@ process cell_type_visualization {
     containerOptions = "--bind $script_folder:/opt"
 
     input:
-        file annotated_cell_file from cell_data_to_plot
+        set category_column, plot_me, file(annotated_cell_file) from cell_type_visualization_metadata
         file sample_metadata_file from file(params.raw_metadata_file)
         file cell_metadata_file from file(params.cell_threshold_metadata)
         file cell_mask_list from cell_mask_tiffs.collect()
 
     output:
-        file "*/*.pdf" into cell_type_plots
-        file "*/*.tiff" into cell_type_overlays
+        file "*/*.pdf" optional true into cell_type_plots
+        file "*/*.tiff" optional true into cell_type_overlays
     
     script:
     """
     Rscript /opt/Population_Plotter.R \\
         $annotated_cell_file \\
         $sample_metadata_file \\
-        $params.category_column \\
+        $plot_me \\
+        $category_column \\
         $cell_metadata_file \\
         . \\
         $cell_mask_list > population_plotting_log.txt 2>&1
@@ -499,6 +513,7 @@ Channel
     .splitCsv(header:true)
     .map{row -> tuple(row.population_name, row.markers, row.resolutions)}
     .combine(clustered_cell_data)
+    .combine(categories_cluster)
     .set{cell_visualization_metadata}
 
 process cell_cluster_visualization {
@@ -509,18 +524,19 @@ process cell_cluster_visualization {
     containerOptions = "--bind $script_folder:/opt"
 
     input:
-        set population_name, markers, resolutions, file(clustered_cell_file) from cell_visualization_metadata
+        set population_name, markers, resolutions, file(clustered_cell_file), category_column, plot_me from cell_visualization_metadata
         file sample_metadata_file from file(params.raw_metadata_file)
 
     output:
-        file "$population_name/**/*.pdf" into cell_plots
+        file "$population_name/**/*.pdf" optional true into cell_plots
     
     script:
     """
     Rscript /opt/Single_Cell_Plotter.R \\
         $clustered_cell_file \\
         $sample_metadata_file \\
-        $params.category_column \\
+        $plot_me \\
+        $category_column \\
         $population_name \\
         $markers \\
         $resolutions \\

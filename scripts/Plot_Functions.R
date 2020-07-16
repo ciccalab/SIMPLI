@@ -107,13 +107,10 @@ round_format_n <- function(numbers, n = 2, threshold = threshold_e)
 }
 
 boxplotter <- function(data, y_axis_variable_name, y_axis_title, group_variable_name, sample_column_name, bp_title,
-  axis_stroke = 0.75) 
+	color_variable_name, color_list, axis_stroke = 0.75) 
 {
 	local_data <- as.data.frame(copy(data))
 	list_return <- list()
-	# Make sure no hyphen is in the name of the group levels:
-	local_data[, group_variable_name] <- as.character(local_data[, group_variable_name])
-	local_data[, group_variable_name] <- gsub(pattern = "-", replacement = " ", local_data[, group_variable_name])
 	# Coerce group variable into alphabetically ordered factor:
 	local_data[, group_variable_name] <- factor(local_data[, group_variable_name],
 	levels = as.character(sort(unique(local_data[, group_variable_name]))))
@@ -131,7 +128,7 @@ boxplotter <- function(data, y_axis_variable_name, y_axis_title, group_variable_
 	list_return[["bp"]] <- ggplot(data = local_data, aes_string(x = group_variable_name, y = y_axis_variable_name,
 		label = sample_column_name)) +
 	geom_boxplot(fill = NA, width = 0.35, outlier.shape = NA) +
-	geom_point(fill = "black") +
+	geom_point(mapping = aes_string(color = color_variable_name)) +
 	geom_text_repel(data = subset(local_data, get(group_variable_name) == levels(local_data[, group_variable_name])[1]),
 		nudge_x = 0.3, direction = "y", hjust = 0, size = 2) +
 	geom_text_repel(data = subset(local_data, get(group_variable_name) == levels(local_data[, group_variable_name])[2]),
@@ -141,6 +138,7 @@ boxplotter <- function(data, y_axis_variable_name, y_axis_title, group_variable_
 		" (", sum_samples_g2, ")")), name = element_blank()) +  
 	scale_y_continuous(name = y_axis_title, limits = c(0, max(local_data[,y_axis_variable_name])), breaks = y_ticks,
 		labels = round_format_n(y_ticks, 1)) +
+	scale_color_manual(values = color_list) +		   
 	ggtitle(bp_title) + labs(subtitle = paste0("p = ", round_format_n(list_return[["pval"]]))) +
 	theme_bw(base_size = 8, base_family = "sans") +
 	theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(), legend.position = "none",
@@ -150,17 +148,18 @@ boxplotter <- function(data, y_axis_variable_name, y_axis_title, group_variable_
 	return(list_return)
 }
 
-list_boxplotter <- function(data, sample_column, type_column, group_variable_name, y_column, y_axis_title, axis_stroke = 0.75, correct = TRUE)
+list_boxplotter <- function(data, sample_column, type_column, group_variable_name, y_column, y_axis_title, color_variable_name,
+	color_list, axis_stroke = 0.75, correct = TRUE)
 {
   types <- sort(unique(data[[type_column]]))
-  plot_dataset <- copy(data)[, .SD, .SDcols = c(sample_column, group_variable_name, type_column, y_column)]
-  setnames(plot_dataset, c(sample_column, group_variable_name, type_column, y_column),
-    c("sample_column", "x_column", "type_column", "y_column"))
-  plot_dataset <- unique(plot_dataset[, .(sample_column, x_column, y_column), keyby = type_column])
+  plot_dataset <- copy(data)[, .SD, .SDcols = c(sample_column, group_variable_name, type_column, y_column, color_variable_name)]
+  setnames(plot_dataset, c(sample_column, group_variable_name, type_column, y_column, color_variable_name),
+    c("sample_column", "x_column", "type_column", "y_column", "color_column"))
+  plot_dataset <- unique(plot_dataset[, .(sample_column, x_column, y_column, color_column), keyby = type_column])
   plots <- lapply(types, function(type)
   {
     boxplotter(plot_dataset[type_column == type], "y_column", y_axis_title, group_variable_name = "x_column",
-      sample_column_name = "sample_column", bp_title = type, axis_stroke = axis_stroke)
+      sample_column_name = "sample_column", "color_column", color_list, bp_title = type, axis_stroke = axis_stroke)
   })
   if (correct)
   {
