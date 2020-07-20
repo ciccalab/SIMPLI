@@ -65,12 +65,14 @@ legend_plot <- ggplot(data = legend_table) +
 sample_barplot <- Barplotter(Cells, "Metadata_sample_name", "Metadata_sample_name", "cell_type",
 	color_list, "Cell type cells / total cells %")
 
-comparison_barplots <- lapply(comparison_columns, function(comparison_column){
-	Barplotter(Cells[Cells[[comparison_column]] != "NA"], "Metadata_sample_name",
-		comparison_column, "cell_type",	color_list, "Cell type cells / total cells %")
-})	
-names(comparison_barplots) <- comparison_columns
-
+comparison_barplots <- NULL
+if(length(sample_names) > 1){
+	comparison_barplots <- lapply(comparison_columns, function(comparison_column){
+		Barplotter(Cells[Cells[[comparison_column]] != "NA"], "Metadata_sample_name",
+			comparison_column, "cell_type",	color_list, "Cell type cells / total cells %")
+	})
+	names(comparison_barplots) <- comparison_columns
+}
 
 ###################### Boxplots by Population ##########################
 comparison_boxplots <- lapply(comparison_columns, function(comparison_column){
