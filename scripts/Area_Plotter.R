@@ -20,6 +20,7 @@ Areas <- merge(Areas, Samples, by = "sample_name")
 
 Areas[, marker_combination := paste0(marker, "_ON_", main_marker)]
 marker_combinations <- unique(Areas$marker_combination)
+main_markers <- unique(Areas[, main_marker]) 
 
 for(comparison_column in comparison_columns){
 	###################### Boxplots by Marker ##########################
@@ -28,13 +29,18 @@ for(comparison_column in comparison_columns){
 	if(n_categories == 2){
 		sample_colors <- Samples[, color]
 		names(sample_colors) <- Samples[, color]
-		area_boxplots <- list_boxplotter(Areas[Areas[[comparison_column]] != "NA"], "sample_name", "marker_combination",
-			comparison_column, "percentage", "Marker area %", "color", sample_colors)
-		area_boxplots <- lapply(area_boxplots, function(x){x$Plot})
+		area_boxplots <- lapply(main_markers, function(mm){
+			boxplots <- list_boxplotter(Areas[Areas[[comparison_column]] != "NA" & main_marker == mm], "sample_name",
+				"marker_combination", comparison_column, "percentage", "Marker area %", "color", sample_colors)
+			boxplots <- lapply(boxplots, function(x){x$Plot})
+		})
+		names(area_boxplots) <- main_markers
 	###################### PDF output ##########################
-		boxplot_output_folder <- file.path(output_folder, "Boxplots")  
-		dir.create(boxplot_output_folder, recursive = T, showWarnings = F)
-		multi_pdf_plotter(plots = area_boxplots, filename = file.path(boxplot_output_folder,
-			paste0("all_boxplots-", comparison_column, ".pdf")))
+		for (mm in main_markers){
+			boxplot_output_folder <- file.path(output_folder, "Boxplots", mm)  
+			dir.create(boxplot_output_folder, recursive = T, showWarnings = F)
+			multi_pdf_plotter(plots = area_boxplots[[mm]], filename = file.path(boxplot_output_folder,
+				paste0(mm, "_boxplots-", comparison_column, ".pdf")))
+		}
 	}
 }	
