@@ -285,10 +285,7 @@ Channel
     .fromPath(params.raw_metadata_file)
     .splitCsv(header:false)
     .first()
-    .map{row -> row.drop(4)}
-    .map{ls -> [ls, 0 .. ls.size()-1]} 
-    .transpose()
-    .map{tpl -> [tpl[0], tpl[1] == 0]}
+    .map{row -> row.drop(4).join(",")}
     .into{categories_area; categories_type; categories_cluster}
 
 process area_visualization {
@@ -299,19 +296,19 @@ process area_visualization {
     containerOptions = "--bind $script_folder:/opt"
 
     input:
-        each category_column from categories_area
+        val category_columns from categories_area
         file area_file from area_measurements 
         file sample_metadata_file from file(params.raw_metadata_file)
 
     output:
-        file "*/**/*.pdf" optional true into area_plots
+        file "**/*.pdf" optional true into area_plots
     
     script:
     """
     Rscript /opt/Area_Plotter.R \\
         $area_file \\
         $sample_metadata_file \\
-        ${category_column[0]} \\
+        $category_columns \\
         . > area_plotting_log.txt 2>&1
     """
 }
@@ -410,9 +407,7 @@ process cell_population_identification {
     """
 }
 
-annotated_cell_data.into { cell_data_to_plot; cell_data_to_cluster }
-categories_type.combine(cell_data_to_plot)
-    .set{cell_type_visualization_metadata}
+annotated_cell_data.into{cell_data_to_plot; cell_data_to_cluster}
 
 process cell_type_visualization {
 
@@ -422,7 +417,8 @@ process cell_type_visualization {
     containerOptions = "--bind $script_folder:/opt"
 
     input:
-        set category_column, plot_me, file(annotated_cell_file) from cell_type_visualization_metadata
+        val category_columns from categories_type
+        file(annotated_cell_file) from cell_data_to_plot
         file sample_metadata_file from file(params.raw_metadata_file)
         file cell_metadata_file from file(params.cell_threshold_metadata)
         file cell_mask_list from cell_mask_tiffs.collect()
@@ -436,8 +432,7 @@ process cell_type_visualization {
     Rscript /opt/Population_Plotter.R \\
         $annotated_cell_file \\
         $sample_metadata_file \\
-        $plot_me \\
-        $category_column \\
+        $category_columns \\
         $cell_metadata_file \\
         . \\
         $cell_mask_list > population_plotting_log.txt 2>&1
@@ -513,7 +508,6 @@ Channel
     .splitCsv(header:true)
     .map{row -> tuple(row.population_name, row.markers, row.resolutions)}
     .combine(clustered_cell_data)
-    .combine(categories_cluster)
     .set{cell_visualization_metadata}
 
 process cell_cluster_visualization {
@@ -524,7 +518,8 @@ process cell_cluster_visualization {
     containerOptions = "--bind $script_folder:/opt"
 
     input:
-        set population_name, markers, resolutions, file(clustered_cell_file), category_column, plot_me from cell_visualization_metadata
+        val category_columns from categories_cluster
+        set population_name, markers, resolutions, file(clustered_cell_file) from cell_visualization_metadata
         file sample_metadata_file from file(params.raw_metadata_file)
 
     output:
@@ -535,8 +530,7 @@ process cell_cluster_visualization {
     Rscript /opt/Single_Cell_Plotter.R \\
         $clustered_cell_file \\
         $sample_metadata_file \\
-        $plot_me \\
-        $category_column \\
+        $category_columns \\
         $population_name \\
         $markers \\
         $resolutions \\

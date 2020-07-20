@@ -1,6 +1,7 @@
 library(data.table)
 library(ggplot2)
 library(ggrepel)
+library(gridExtra)
 
 ######## Heatmaps #######
 heatmapper <- function(plot_dataset, res_column, cols, high_color, mid_color, low_color)
@@ -19,9 +20,9 @@ heatmapper <- function(plot_dataset, res_column, cols, high_color, mid_color, lo
               color = "black", size = 2) + 
     scale_x_discrete(limits = x_labels, labels = x_labels, name = element_blank()) +
     scale_fill_gradient2(low = low_color, high = high_color, mid = mid_color, midpoint = 0.5, name = element_blank()) +
-    scale_y_discrete(name = element_blank(), limits = rev(markers)) +
+    scale_y_discrete(name = element_blank(), limits = rev(markers)) + coord_flip() +
     theme_classic() + theme(text = element_text(size = 8), plot.margin = margin(t = 0, r = 0, b = 0,l = 0,
-    unit = "pt"), plot.title = element_text(hjust = 0.5), axis.text.x = element_text(size = 8))
+    unit = "pt"), plot.title = element_text(hjust = 0.5), axis.text.x = element_text(size = 8, angle = 90))
 }
 
 ####### Scatterplots #######
@@ -30,9 +31,9 @@ label_dot_plotter <- function(data, x_name, y_name, marker_name)
   plot_data <- copy(data)
   data[[marker_name]] <- as.character(data[[marker_name]])	
   my_plot <- ggplot(data) +
-    geom_point(mapping = aes_string(x = x_name, y = y_name, color = marker_name)) +
+    geom_point(mapping = aes_string(x = x_name, y = y_name, color = marker_name), size = 0.25) +
     labs(x = x_name, y = y_name) +
-    theme_bw(base_size = 12, base_family = "sans") +
+    theme_bw(base_size = 8, base_family = "sans") +
     theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(),
           legend.position = "right", panel.border = element_blank(), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(), axis.line = element_line(colour = "black", size = 0.75),
@@ -46,9 +47,9 @@ gradient_dot_plotter <- function(data, x_name, y_name, marker, highcol, lowcol)
   setnames(plot_data, c(x_name, y_name, marker), c("x_name", "y_name", "marker"))
   plot_data[, marker := marker / max(marker)]
   my_plot <- ggplot(plot_data) +
-    geom_point(mapping = aes(x = x_name, y = y_name, color = marker)) +
+    geom_point(mapping = aes(x = x_name, y = y_name, color = marker), size = 0.25) +
     scale_color_gradient(low = lowcol, high = highcol) +
-    theme_bw(base_size = 12, base_family = "sans") +
+    theme_bw(base_size = 8, base_family = "sans") +
     labs(x = x_name, y = y_name) +
     theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(),
           legend.position = "right", panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -128,11 +129,11 @@ boxplotter <- function(data, y_axis_variable_name, y_axis_title, group_variable_
 	list_return[["bp"]] <- ggplot(data = local_data, aes_string(x = group_variable_name, y = y_axis_variable_name,
 		label = sample_column_name)) +
 	geom_boxplot(fill = NA, width = 0.35, outlier.shape = NA) +
-	geom_point(mapping = aes_string(color = color_variable_name)) +
+	geom_point(mapping = aes_string(color = color_variable_name), size = 1) +
 	geom_text_repel(data = subset(local_data, get(group_variable_name) == levels(local_data[, group_variable_name])[1]),
-		nudge_x = 0.3, direction = "y", hjust = 0, size = 2) +
+		nudge_x = 0.3, direction = "y", hjust = 0, size = 2, segment.size = 0.5) +
 	geom_text_repel(data = subset(local_data, get(group_variable_name) == levels(local_data[, group_variable_name])[2]),
-		nudge_x = 1.7, direction = "y", hjust = 1, size = 2) +
+		nudge_x = 1.7, direction = "y", hjust = 1, size = 2, segment.size = 0.5) +
 	scale_x_discrete(labels = c(paste0(toupper(abbreviate(levels(local_data[,group_variable_name])[1])),
 		" (", sum_samples_g1, ")"), paste0(toupper(abbreviate(levels(local_data[, group_variable_name])[2])),
 		" (", sum_samples_g2, ")")), name = element_blank()) +  
@@ -207,11 +208,24 @@ cell_overlayer <- function(picture, mask, cell_list, color_list)
 }
 
 ################## PDF Output ##################
-pdf_w <- 8.27 / 2 # About 1/6th of an A4 (inches)
-pdf_h <- 11.69 / 3
-pdf_plotter <- function(filename, plot, width = pdf_w, height = pdf_h)
+single_pdf_w <- 8.27 / 2 # About 1/6th of an A4 (inches)
+single_pdf_h <- 11.69 / 3
+multi_pdf_w <- 8.27 # A4 Portrait
+multi_pdf_h <- 11.69
+
+pdf_plotter <- function(filename, plot, width = single_pdf_w, height = single_pdf_h)
 {
 	pdf(filename, width = width, height = height, useDingbats = F)
 	print(plot)
 	dev.off()
+}
+
+multi_pdf_plotter <- function(filename, plots, n_col = 2, n_row = 3, width = multi_pdf_w, height = multi_pdf_h)
+{
+	pdf(NULL)
+	arranged_grobs <- marrangeGrob(grobs = plots, nrow = n_row, ncol = n_col, top = NULL)
+	dev.off()
+	pdf(filename, width = width, height = height, useDingbats = F)
+	print(arranged_grobs)
+    dev.off()
 }
