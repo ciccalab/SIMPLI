@@ -19,6 +19,8 @@ params.low_color = "'#0000FF'"
 
 image_folder = "$params.output_folder/Images"
 
+/* Gets the Siungulairty key to verify the containers used by the pipeline */
+
 process get_singularity_key {
 
     label 'small_memory'
@@ -48,7 +50,7 @@ Channel
 /* For each aquisition specified in the $raw_metadata_file:
     - Extracts the raw tiff files into the working directory
     - Generates the raw tiff .csv metadata file in the working directory
-    - Copies the output files into "$image_folder" 
+    - Copies the output files into "$image_folder/Raw/$sample_name" 
   For ome.tiff output the channels in the .ome are in the same order they are
   written in the metadata.
 */
@@ -70,7 +72,7 @@ process convert_raw_data_to_tiffs {
 
     script:
     """
-    python3.8 /opt/tiff_extracter.py \\
+    python3.8 /opt/Tiff_extracter.py \\
         $sample_name \\
         '$roi_name' \\
         $raw_path \\
@@ -87,7 +89,7 @@ raw_tiff_metadata_by_sample.into{raw_tiff_metadata_to_collect; raw_tiff_metadata
     - Concatenates them into raw_tiff_metadata.csv 
     - Removes extra header lines from the middle of the file, as each of the
         original files starts with an header line.
-    - Copies the metadata to "$params.output_folder/raw_tiff_metadata.csv" 
+    - Copies the metadata to "$image_folder/Raw" 
 */
 
 process collect_raw_tiff_metadata {
@@ -140,8 +142,7 @@ process normalize_tiff {
         file "${sample_name}-cp3_normalized_tiff_metadata.csv" into cp3_normalized_tiff_metadata_by_sample
     script:
     """
-    mkdir -p $sample_name
-    Rscript /opt/tiff_normalizer.R \\
+    Rscript /opt/Tiff_normalizer.R \\
         $sample_name \\
         $raw_metadata_file \\
         $params.tiff_type \\
@@ -176,6 +177,10 @@ process collect_normalized_tiff_metadata {
     """
 }
 
+/* Collects all the cp3_normalized_tiff_metadata_by_sample metadata files and
+    pairs them with the corresponding sample name
+*/
+
 cp3_normalized_tiff_metadata_by_sample
     .map { file ->
             def key = file.name.toString().tokenize('-').get(0)
@@ -183,6 +188,14 @@ cp3_normalized_tiff_metadata_by_sample
             }
     .groupTuple()
     .set{ cp3_preprocessing_metadata }
+
+/* Process each sample with CellProfiler3 using:
+    - CellProfiler3 pipeline file: $params.cp3_preprocessing_cppipe
+    - Image metadata emitted by: cp3_normalized_tiff_metadata_by_sample
+    It expects the pipeline to produce output images as single tiffs with this name pattern:
+        "SAMPLE-MARKER-Preprocessed.tiff"
+    The output images and a metadata file are exported to: "$image_folder/Preprocessed/$sample_name"  
+*/
 
 process cell_profiler_image_preprocessing {
 
@@ -223,7 +236,7 @@ process cell_profiler_image_preprocessing {
     - Concatenates them into preprocessed_tiff_metadata.csv
     - Removes extra header lines from the middle of the file, as each of the
         original files starts with an header line.
-    - Copies the metadata to "$params.output_folder/preprocessed_tiff_metadata.csv" 
+    - Copies the metadata to "$image_folder/Preprocessed/preprocessed_tiff_metadata.csv" 
 */
 
 process process_cp3_preprocessed_metadata {
@@ -274,12 +287,16 @@ process pixel_area_measurements {
 
     script:
     """
-    Rscript /opt/pixel_measurements.R \\
+    Rscript /opt/Area_measurer.R \\
         $area_metadata \\
         $tiff_metadata \\
         area_measurements.csv > pixel_area_measurements.log 2>&1
     """
 }
+
+/* Reads the $params.raw_metadata_file to extract the names of the columns indicating the categories
+    to compare (all columns after the 4th)
+*/
 
 Channel
     .fromPath(params.raw_metadata_file)
@@ -287,6 +304,13 @@ Channel
     .first()
     .map{row -> row.drop(4).join(",")}
     .into{categories_area; categories_type; categories_cluster}
+
+/* For each category to compare if there are 2 types of samples:
+    For each main marker:
+        compare all its combinationations with other markers between the two types of samples,
+        and make one boxplot each. Output the boxplots in a single multipage pdf file:
+            $params.output_folder/Plots/Area_Plots/Boxplots/MAIN_MARKER/MAIN_MARKER_boxplots-CATEGORY.pdf
+*/
 
 process area_visualization {
 
@@ -301,7 +325,7 @@ process area_visualization {
         file sample_metadata_file from file(params.raw_metadata_file)
 
     output:
-        file "**/*.pdf" optional true into area_plots
+        file "*/**/*.pdf" optional true into area_plots
     
     script:
     """
@@ -313,11 +337,8 @@ process area_visualization {
     """
 }
 
-/* Perform cell segmentation and size, shape, position and intensity measurements
-    - For each sample produce:
-        - A table with single cell measurements.
-        - A uint16 cell mask
-    - Copies the results to "$params.output_folder/$ample_name/" 
+/* Collects all the cp3_preprocessed_tiff_metadata_by_sample metadata files and
+    pairs them with the corresponding sample name
 */
 
 cp3_preprocessed_tiff_metadata_by_sample
@@ -329,13 +350,20 @@ cp3_preprocessed_tiff_metadata_by_sample
     .groupTuple()
     .set{ cp3_segmentation_metadata }
 
+/* Perform cell segmentation and size, shape, position and intensity measurements
+    - For each sample the $params.cp3_segmentation_cppipei should produce:
+        - A table with single cell measurements: ${sample_name}-Cells.csv
+        - A uint16 cell mask: ${sample_name}-Cell_Mask.tiff
+    - Copies the results to "$params.output_folder/Segmentation/$sample_name" 
+*/
+
 process cell_segmentation {
 
     label 'big_memory'
     container = 'library://michelebortol/default/simpli_cp3:reupload'
     containerOptions = "--bind $cp3_pipeline_folder:/mnt"
 
-    publishDir "$params.output_folder/cell_data/$sample_name", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/Segmentation/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
         set sample_name, file(cp3_preprocessed_metadata) from cp3_segmentation_metadata 
@@ -380,12 +408,12 @@ process collect_single_cell_data {
     """
 }
 
-/* Assign each cell to a main cell population
-    - Outputs annotated_cells.csv
+/* Assign each cell to a main cell type 
+    - Outputs: $params.output_folder/annotated_cells.csv
 */
 
 cell_threshold_metadata = Channel.fromPath(params.cell_threshold_metadata)
-process cell_population_identification {
+process cell_type_identification {
     label 'mid_memory'
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
@@ -400,7 +428,7 @@ process cell_population_identification {
 
     script:
     """
-    Rscript /opt/cell_selecter.R \\
+    Rscript /opt/Cell_Type_Selecter.R \\
         $unannotated_cell_data_file \\
         $cell_threshold_metadata_file \\
         annotated_cells.csv
@@ -409,10 +437,23 @@ process cell_population_identification {
 
 annotated_cell_data.into{cell_data_to_plot; cell_data_to_cluster}
 
+
+/* Visualization of cell annotations as main cell types:
+   - For each category to compare if there are 2 types of samples:
+        - 1 Boxplot for each main cell type, collected in: $params.output_folder/Plots/Cell_Type_Plots/Boxplots/boxplots-CATEGORY.pdf
+   - For each category and once more by sample:
+        - Barplot with the percentage of each cell type in the category type or sample, collected into
+          a single file in: $params.output_folder/Plots/Cell_Type_Plots/Barplots/barplots.pdf
+   - For each sample:
+        - Overlay of all cells coloured by cell type: $params.output_folder/Plots/Cell_Type_Plots/Overlays/overlay-SAMPLE_NAME.tiff 
+   -PDF color legend: $params.output_folder/Plots/Cell_Type_Plots/Overlays/overlay_legend.pdf
+   Colors are specified in: $params.cell_threshold_metadata
+*/
+
 process cell_type_visualization {
 
     label 'big_memory'
-    publishDir "$params.output_folder/Plots/Cell_Population_Plots", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/Plots/Cell_Type_Plots", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
 
@@ -429,66 +470,71 @@ process cell_type_visualization {
     
     script:
     """
-    Rscript /opt/Population_Plotter.R \\
+    Rscript /opt/Cell_Type_Plotter.R \\
         $annotated_cell_file \\
         $sample_metadata_file \\
         $category_columns \\
         $cell_metadata_file \\
         . \\
-        $cell_mask_list > population_plotting_log.txt 2>&1
+        $cell_mask_list > cell_type_plotting.txt 2>&1
     """
 }
 
-/* Reads the clustering metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
+/* Reads the clustering metadata file line by line to extract:
    It expects an header line and it extracts the following fields into the sample_metadata channel:
-   - sample_name
-   - roi_name
-   - raw_path -> Converted to a file type 
-   - tiff_path
+   - cell_type
+   - markers: "@" separated list of valid measurement names from $params.output_folder/annotated_cells.csv
+   - resolutions: "@" separated list of floats 
 */
 
 Channel
     .fromPath(params.cell_clustering_metadata)
     .splitCsv(header:true)
-    .map{row -> tuple(row.population_name, row.markers, row.resolutions)}
+    .map{row -> tuple(row.cell_type, row.markers, row.resolutions)}
     .combine(cell_data_to_cluster)
     .set{clustering_metadata}
 
-/* For each population in the params.cell_clustering_metadata file:
+/* For each cell_type (line) in the $params.cell_clustering_metadata file:
     - Performs clustering with Seurat with the given markers for the given resolutions 
-    - Copies the output files into params.output_folder/CellClusters
+    - Copies the output files into params.output_folder/Cell_Clusters
 */
 
 process cluster_cells {
 
     label 'big_memory'
-    publishDir "$params.output_folder/CellClusters", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/Cell_Clusters", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
 
     input:
-        set population_name, markers, resolutions, file(annotated_cell_file) from clustering_metadata
+        set cell_type, markers, resolutions, file(annotated_cell_file) from clustering_metadata
 
     output:
-        file "$population_name/*_clusters.csv" into cluster_csv_files
-        file "$population_name/*_clusters.RData" into cluster_rdata_files
+        file "$cell_type/*_clusters.csv" into cluster_csv_files
+        file "$cell_type/*_clusters.RData" into cluster_rdata_files
     
     script:
     """
     Rscript /opt/Seurat_Runner.R \\
         $annotated_cell_file \\
-        $population_name \\
+        $cell_type \\
         $markers \\
         $resolutions \\
-        $population_name \\
-        $population_name > clustering_log.txt 2>&1
+        $cell_type \\
+        $cell_type > clustering_log.txt 2>&1
     """
 }
+
+/* Collects all the cluster_csv_files single clustered cell data files:
+    - Concatenates them into $params.output/Cell_Clusters/clustered_cells.csv
+    - Removes extra header lines from the middle of the file, as each of the
+        original files starts with an header line.
+*/
 
 process collect_clustering_data {
 
     label 'small_memory'
-    publishDir "$params.output_folder/CellClusters", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/Cell_Clusters", mode:'copy', overwrite: true
     
     input:
         file cluster_list from cluster_csv_files.collect()
@@ -506,9 +552,17 @@ process collect_clustering_data {
 Channel
     .fromPath(params.cell_clustering_metadata)
     .splitCsv(header:true)
-    .map{row -> tuple(row.population_name, row.markers, row.resolutions)}
+    .map{row -> tuple(row.cell_type, row.markers, row.resolutions)}
     .combine(clustered_cell_data)
     .set{cell_visualization_metadata}
+
+/* Visualization of cell annotations as main cell types, for each cell type and clustering resolution:
+   - For each category to compare:
+        - An heatmap with marker expression by cluster, and a boxplot for each cluster (if there are two groups in the category): 
+        $params.output_folder/Plots/Cell_Cluster_Plots/CELL_TYPE/Cluster_Comparisons/CATEGORY-RESOLUTION-plots.pdf
+   - UMAPS by cluster, marker, and sample:
+        $params.output_folder/Plots/Cell_Cluster_Plots/CELL_TYPE/UMAPs/UMAPs-RESOLUTION.pdf
+*/
 
 process cell_cluster_visualization {
 
@@ -519,25 +573,25 @@ process cell_cluster_visualization {
 
     input:
         val category_columns from categories_cluster
-        set population_name, markers, resolutions, file(clustered_cell_file) from cell_visualization_metadata
+        set cell_type, markers, resolutions, file(clustered_cell_file) from cell_visualization_metadata
         file sample_metadata_file from file(params.raw_metadata_file)
 
     output:
-        file "$population_name/**/*.pdf" optional true into cell_plots
+        file "$cell_type/**/*.pdf" optional true into cell_plots
     
     script:
     """
-    Rscript /opt/Single_Cell_Plotter.R \\
+    Rscript /opt/Cell_Cluster_Plotter.R \\
         $clustered_cell_file \\
         $sample_metadata_file \\
         $category_columns \\
-        $population_name \\
+        $cell_type \\
         $markers \\
         $resolutions \\
         $params.high_color \\
         $params.mid_color \\
         $params.low_color \\
-        $population_name \\
-        $population_name > cell_plotting_log.txt 2>&1
+        $cell_type \\
+        $cell_type > cell_plotting_log.txt 2>&1
     """
 }

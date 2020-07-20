@@ -8,7 +8,7 @@ library(Seurat)
 arguments <- commandArgs(trailingOnly = TRUE)
 print(arguments)
 in_file_name <- arguments[[1]]
-cell_population <- arguments[[2]]
+cell_type_target <- arguments[[2]]
 markers <- strsplit(arguments[[3]], "@")[[1]]
 resolutions <- as.numeric(strsplit(arguments[[4]], "@")[[1]])
 output_prefix <- arguments[[5]]
@@ -17,7 +17,7 @@ output_folder <- arguments[[6]]
 ####### Get the data for clustering #######
 cat("Reading the clustering data by sample\n")
 clustering_data <- fread(in_file_name)
-clustering_data <- clustering_data[cell_type == cell_population]
+clustering_data <- clustering_data[cell_type == cell_type_target]
 sample_names <- unique(clustering_data$Metadata_sample_name)
 clustering_data_by_sample <- lapply(sample_names, function(name){
 	mat <- as.matrix(transpose(clustering_data[Metadata_sample_name == name, ..markers]))

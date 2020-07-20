@@ -40,7 +40,7 @@ set.seed(666)
 UMAPS <- lapply(resolutions, function(res){
 umap_coords <- umap(Cells, n_neighbors = 40, min_dist = 0.9, learning_rate = 0.5, init = "random",
 	metric = list("euclidean" = markers, "categorical" = res), n_sgd_threads = 1, n_threads = 1)
-umap_table <- cbind(umap_coords, Cells[, c(markers, res), with = F])
+umap_table <- cbind(umap_coords, Cells[, c("Metadata_sample_name", markers, res), with = F])
 setnames(umap_table, c("V1", "V2"), c("umap_x", "umap_y"))
 return(umap_table)
 })
@@ -51,6 +51,12 @@ umap_cluster_plots <- lapply(resolutions, function(res){
 	label_dot_plotter(UMAPS[[res]][, c("umap_x", "umap_y", res), with = F], "umap_x", "umap_y", res)
 })
 names(umap_cluster_plots) <- resolutions
+
+###################### UMAP Plots by Sample ##########################
+umap_sample_plots <- lapply(resolutions, function(res){
+	label_dot_plotter(UMAPS[[res]][, c("umap_x", "umap_y", "Metadata_sample_name"), with = F], "umap_x", "umap_y", "Metadata_sample_name")
+})
+names(umap_sample_plots) <- resolutions
 
 ###################### UMAP Plots by Marker ##########################
 umap_marker_plots <- lapply(resolutions, function(res){
@@ -98,14 +104,14 @@ for(comparison_column in comparison_columns){
 	umap_output_folder <- file.path(output_folder, "UMAPs")
 	dir.create(umap_output_folder, recursive = T, showWarnings = F)
 	for(res in resolutions){
-		multi_pdf_plotter(c(list(umap_cluster_plots[[res]]), umap_marker_plots[[res]]),
+		multi_pdf_plotter(c(list(umap_cluster_plots[[res]]), list(umap_sample_plots[[res]]), umap_marker_plots[[res]]),
 			filename = file.path(umap_output_folder, paste0("UMAPs-", res, ".pdf"))) 
 		if(n_categories[[comparison_column]] == 2){
 			pdf(NULL)
 			arranged_grobs <- marrangeGrob(grobs = comparison_boxplots[[comparison_column]][[res]],
 				nrow = 3, ncol = 2, top = NULL)
 			dev.off()
-			pdf(file.path(comparison_output_folder, paste0(comparison_column, "_plots.pdf")),
+			pdf(file.path(comparison_output_folder, paste0(comparison_column, "-", res, "-plots.pdf")),
 				width = multi_pdf_w, height = multi_pdf_h, useDingbats = F)
 			print(heatmaps[[res]])
 			print(arranged_grobs)
