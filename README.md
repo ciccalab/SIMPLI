@@ -31,12 +31,12 @@ SIMPLI: Single-cell Identification from Multiplexed Images is a image processing
   - sample_name = Unique sample identifier.
   - roi_name = Name of the ROI to extract the acquisition for.
   - raw_path = Path to the raw IMC acquisition file.
-  - tiff_path = Path where to output the single tiff images.
-  - category = Categorical variable for grouping the sample.
+  - color = Color used to represent the sample (Used for boxplots, accepts R color strings and #FFFFFF hexadecimal)
+  - ... = All columns after the 4th are considered categorical variables for grouping the samples.
   
-- CellProfiler3 pipelines:
-  - Image preprocessing
-  - Cell segmentation
+ - CellProfiler3 pipelines:
+   - Image preprocessing
+   - Cell segmentation
 
 - Area measurements metadata, .csv file with an header with the two following columns:
   - marker = marker or combination of markers to measure (markers can be combined with the logical operators: "&", "|", "!" and "()").
@@ -47,14 +47,9 @@ SIMPLI: Single-cell Identification from Multiplexed Images is a image processing
   - cell_type = name of the cell type to identify.
   - marker = name of the marker to use as threshold (column name of the cellprofiler exported single cell data).
   - threshold = value to use as threshold for a cell to be of this cell type.
-
-- Cell type and expression threshold metadata, .csv file with an header with the following columns:
-  - cell_type = name of the cell type to identify.
-  - marker = name of the marker to use as threshold (column name of the cellprofiler exported single cell data).
-  - threshold = value to use as threshold for a cell to be of this cell type.
   
 - Cell clustering metadata, .csv file with an header with the following columns: 
-  - population_name = cell type to cluster (from the cell type and expression threshold metadata).
+  - cell_type = cell type to cluster (from the cell type and expression threshold metadata).
   - markers = markers to include in the clusterin (column names of the cellprofiler exported single cell data).
   - resolutions = resolutions values at which to cut the nearest neighbour graph.
   Values in the markers and resolution columns should be separated by '@'.
@@ -74,21 +69,24 @@ SIMPLI: Single-cell Identification from Multiplexed Images is a image processing
 
 - Preprocessed tiff images in either:
   - Single tiff files: one for each of the selected channels.
-  - One .ome.tiff file: the order of channels in the .ome.tiff file is the same as the order they
-    are reported in the metadata file.
 - Preprocessed tiff .csv metadata file.
 
 - Area measurements, and area ratios between user defined markers or their combinations.
-
-- Single Cell measurements in .csv format.
 
 - Cell masks in uint16 tiff format.
 
 - Annotated cell measurements in .csv format.
   Cell measuremetnts annotated with the clusters each cell belongs to at the different levels of
-  resolution selected by the user. One .csv file for each clustered cell type.
+  resolution selected by the user.
 
-- Single cell data plots.
-  - UMAPs: UMAPs coloured by cluster, and by marker.
-  - Heatmaps: Heatmaps of mean marker intensities for every cluster.
-  - Boxplots: Comparison of the fraction of cells in its main population in the two groups (Samples must be grouped in exactly 2 groups).  
+- Plots at three levels:
+  - Areas:
+    - Boxplots: The % of positive area for each user-defined combination of marker is compared between the two groups (2 groups of samples only).
+  - Cell type:
+    - Overlay of all cells coloured by cell type.
+    - Barplots: with the percentage of each cell type in the category type or sample.
+    - Boxplots: The fraction of cells in each main cell type is compared between the two groups (2 groups of samples only).  
+  - Cell clusters:  
+    - UMAPs: UMAPs coloured by cluster, and by marker.
+    - Heatmaps: Heatmaps of mean marker intensities for every cluster.
+    - Boxplots: For each cluster the fraction of cells in its main cell type is compared between the two groups (2 groups of samples only).  
