@@ -48,13 +48,14 @@ names(UMAPS) <- resolutions
 
 ###################### UMAP Plots by Cluster ##########################
 umap_cluster_plots <- lapply(resolutions, function(res){
-	label_dot_plotter(UMAPS[[res]][, c("umap_x", "umap_y", res), with = F], "umap_x", "umap_y", res)
+	label_dot_plotter(UMAPS[[res]][, c("umap_x", "umap_y", res), with = F], "umap_x", "umap_y", res, "Cluster")
 })
 names(umap_cluster_plots) <- resolutions
 
 ###################### UMAP Plots by Sample ##########################
 umap_sample_plots <- lapply(resolutions, function(res){
-	label_dot_plotter(UMAPS[[res]][, c("umap_x", "umap_y", "Metadata_sample_name"), with = F], "umap_x", "umap_y", "Metadata_sample_name")
+	label_dot_plotter(UMAPS[[res]][, c("umap_x", "umap_y", "Metadata_sample_name"), with = F], "umap_x", "umap_y",
+		"Metadata_sample_name", "Sample")
 })
 names(umap_sample_plots) <- resolutions
 

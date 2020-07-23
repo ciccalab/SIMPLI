@@ -26,14 +26,15 @@ heatmapper <- function(plot_dataset, res_column, cols, high_color, mid_color, lo
 }
 
 ####### Scatterplots #######
-label_dot_plotter <- function(data, x_name, y_name, marker_name)
+label_dot_plotter <- function(data, x_name, y_name, label_name, plot_title = NULL)
 {
   plot_data <- copy(data)
-  data[[marker_name]] <- as.character(data[[marker_name]])	
+  data[[label_name]] <- as.character(data[[label_name]])	
   my_plot <- ggplot(data) +
-    geom_point(mapping = aes_string(x = x_name, y = y_name, color = marker_name), size = 0.25) +
+    geom_point(mapping = aes_string(x = x_name, y = y_name, color = label_name), size = 0.25) +
     labs(x = x_name, y = y_name) +
     theme_bw(base_size = 8, base_family = "sans") +
+	labs(title = plot_title) +
     theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(),
           legend.position = "right", panel.border = element_blank(), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(), axis.line = element_line(colour = "black", size = 0.75),
@@ -50,7 +51,7 @@ gradient_dot_plotter <- function(data, x_name, y_name, marker, highcol, lowcol)
     geom_point(mapping = aes(x = x_name, y = y_name, color = marker), size = 0.25) +
     scale_color_gradient(low = lowcol, high = highcol) +
     theme_bw(base_size = 8, base_family = "sans") +
-    labs(x = x_name, y = y_name) +
+    labs(x = x_name, y = y_name, title = marker) +
     theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(),
           legend.position = "right", panel.border = element_blank(), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(), axis.line = element_line(colour = "black", size = 0.75),
@@ -65,12 +66,14 @@ Barplotter <- function(plot_dataset, x_column, annotation_column, color_column, 
 	if(x_column == annotation_column){ # Plot by sample
 		setnames(plot_data, c(x_column, color_column), c("annotation_column", "color_column"))
 		annotations <- sort(unique(plot_data$annotation_column))
+		plot_title <- "Samples"
 	} else{ # Plot by category
 		setnames(plot_data, c(x_column, annotation_column, color_column), c("x_column", "annotation_column", "color_column"))
 		annotations <- sort(unique(plot_data$annotation_column))
 		annotations <- sapply(annotations, function(annotation){
 			paste0(annotation, " (", length(unique(plot_data[annotation_column == annotation, x_column])), ")")
 		})	
+		plot_title <- annotation_column
 	}
 	names(annotations) <- sort(unique(plot_data$annotation_column))
 	plot_data[, count := .N, by = c("color_column", "annotation_column")]	
@@ -88,6 +91,7 @@ Barplotter <- function(plot_dataset, x_column, annotation_column, color_column, 
 	    scale_x_discrete(labels = annotations, breaks = sort(unique(plot_data$annotation_column)), name = element_blank()) +
 		scale_y_continuous(name = y_axis_title) +
 		scale_fill_manual(values = annotation_colors, name = element_blank(), labels = names(annotation_colors)) +
+		labs(title = plot_title) +
 		theme_bw(base_size = 8, base_family = "sans") +
 		theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(), legend.position = "right",
 			panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
