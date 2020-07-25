@@ -10,8 +10,7 @@ params.tiff_type = "single"
 params.cp3_preprocessing_cppipe = "single_preprocessing_example.cppipe"
 params.cp3_segmentation_cppipe = "example_segmentation_pipeline.cppipe" 
 params.area_measurements_metadata = "$baseDir/example_data/marker_area_metadata.csv"
-params.cell_threshold_metadata = "$baseDir/example_data/cell_threshold_metadata.csv"
-params.cell_clustering_metadata = "$baseDir/example_data/cell_clustering_metadata.csv"
+params.cell_analysis_metadata = "$baseDir/example_data/cell_analysis_metadata.csv"
 
 params.high_color = "'#FF0000'"
 params.mid_color = "'#FFFFFF'"
@@ -412,7 +411,6 @@ process collect_single_cell_data {
     - Outputs: $params.output_folder/annotated_cells.csv
 */
 
-cell_threshold_metadata = Channel.fromPath(params.cell_threshold_metadata)
 process cell_type_identification {
     label 'mid_memory'
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
@@ -421,7 +419,7 @@ process cell_type_identification {
     
     input:
         file unannotated_cell_data_file from unannotated_cell_data 
-        file cell_threshold_metadata_file from cell_threshold_metadata
+        file cell_threshold_metadata_file from file(params.cell_analysis_metadata)
     
     output:               
         file "annotated_cells.csv" into annotated_cell_data
@@ -447,7 +445,7 @@ annotated_cell_data.into{cell_data_to_plot; cell_data_to_cluster}
    - For each sample:
         - Overlay of all cells coloured by cell type: $params.output_folder/Plots/Cell_Type_Plots/Overlays/overlay-SAMPLE_NAME.tiff 
    -PDF color legend: $params.output_folder/Plots/Cell_Type_Plots/Overlays/overlay_legend.pdf
-   Colors are specified in: $params.cell_threshold_metadata
+   Colors are specified in: $params.cell_analysis_metadata
 */
 
 process cell_type_visualization {
@@ -461,7 +459,7 @@ process cell_type_visualization {
         val category_columns from categories_type
         file(annotated_cell_file) from cell_data_to_plot
         file sample_metadata_file from file(params.raw_metadata_file)
-        file cell_metadata_file from file(params.cell_threshold_metadata)
+        file cell_metadata_file from file(params.cell_analysis_metadata)
         file cell_mask_list from cell_mask_tiffs.collect()
 
     output:
@@ -484,17 +482,20 @@ process cell_type_visualization {
    It expects an header line and it extracts the following fields into the sample_metadata channel:
    - cell_type
    - markers: "@" separated list of valid measurement names from $params.output_folder/annotated_cells.csv
-   - resolutions: "@" separated list of floats 
+   - resolutions: "@" separated list of floats
+   If any of these fields is "NA" the line is skipped.
 */
 
 Channel
-    .fromPath(params.cell_clustering_metadata)
+    .fromPath(params.cell_analysis_metadata)
     .splitCsv(header:true)
-    .map{row -> tuple(row.cell_type, row.markers, row.resolutions)}
+    .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
+    .filter{!it.contains("NA")}
     .combine(cell_data_to_cluster)
     .set{clustering_metadata}
 
-/* For each cell_type (line) in the $params.cell_clustering_metadata file:
+/* For each cell_type (line) not containing "NA"in the cell_type, markers, or resolutions, fields
+   in $params.cell_analysis_metadata file:
     - Performs clustering with Seurat with the given markers for the given resolutions 
     - Copies the output files into params.output_folder/Cell_Clusters
 */
@@ -549,13 +550,6 @@ process collect_clustering_data {
     """
 }
 
-Channel
-    .fromPath(params.cell_clustering_metadata)
-    .splitCsv(header:true)
-    .map{row -> tuple(row.cell_type, row.markers, row.resolutions)}
-    .combine(clustered_cell_data)
-    .set{cell_visualization_metadata}
-
 /* Visualization of cell annotations as main cell types, for each cell type and clustering resolution:
    - For each category to compare:
         - An heatmap with marker expression by cluster, and a boxplot for each cluster (if there are two groups in the category): 
@@ -563,6 +557,14 @@ Channel
    - UMAPS by cluster, marker, and sample:
         $params.output_folder/Plots/Cell_Cluster_Plots/CELL_TYPE/UMAPs/UMAPs-RESOLUTION.pdf
 */
+
+Channel
+    .fromPath(params.cell_analysis_metadata)
+    .splitCsv(header:true)
+    .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
+    .filter{!it.contains("NA")}
+    .combine(clustered_cell_data)
+    .set{cell_visualization_metadata}
 
 process cell_cluster_visualization {
 

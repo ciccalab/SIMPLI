@@ -13,8 +13,8 @@ cells <- fread(unannotated_cells_file_name)
 ############################# Marker combinations ###########################
 # Expects a .csv file with 3 columns:
 # - cell_type
-# - marker
-# - threshold
+# - threshold_marker
+# - threshold_value
 threshold_metadata <- fread(threshold_metadata_file_name)
 
 ############################# Cell Selection ###########################
@@ -24,10 +24,10 @@ expression_columns <- paste0(cell_types, "_expression")
 names(expression_columns) <- cell_types
 names(bool_columns) <- cell_types
 cells[, (bool_columns) := lapply(threshold_metadata[, cell_type], function(type){
-  get(threshold_metadata[cell_type == type, marker]) > threshold_metadata[cell_type == type, threshold]
+  get(threshold_metadata[cell_type == type, threshold_marker]) > threshold_metadata[cell_type == type, threshold_value]
 })]
 cells[, (expression_columns) := lapply(threshold_metadata[, cell_type], function(type){
-  get(threshold_metadata[cell_type == type, marker])})]
+  get(threshold_metadata[cell_type == type, threshold_marker])})]
 
 cells[, (expression_columns) := lapply(cell_types, function(type){
   ifelse(get(bool_columns[[type]]), get(expression_columns[[type]]), NA_real_)
