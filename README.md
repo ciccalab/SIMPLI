@@ -4,7 +4,7 @@ SIMPLI: Single-cell Identification from Multiplexed Images is a image processing
 
 <img src="assets/SIMPLI.png" width="800" height="600">
 
-More Information about the analyses that can be performed with SIMPLI and its use can be found in the [wiki](https://github.com/ciccalab/SIMPLI/wiki) 
+More Information about the analyses that can be performed with SIMPLI and its use can be found in the [wiki](https://github.com/ciccalab/SIMPLI/wiki). 
 
 ## Installation
 [SIMPLI installation](https://github.com/ciccalab/SIMPLI/wiki/Installation).
