@@ -534,8 +534,10 @@ process cluster_cells {
 
 process collect_clustering_data {
 
-    label 'small_memory'
-    publishDir "$params.output_folder/Cell_Clusters", mode:'copy', overwrite: true
+    label 'mid_memory'
+    publishDir "$params.output_folder/Plots/Cell_Type_Plots", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
+    containerOptions = "--bind $script_folder:/opt"
     
     input:
         file cluster_list from cluster_csv_files.collect()
@@ -545,8 +547,8 @@ process collect_clustering_data {
 
     script:
     """
-    cat $cluster_list > clustered_cells.csv
-    sed -i '1!{/.*Metadata_sample_name.*/d;}' clustered_cells.csv
+    Rscript /opt/Clustered_Cell_Collecter.R $cluster_list \\
+        clustered_cells.csv > clustered_cells_collecting_log.txt 2>&1
     """
 }
 
