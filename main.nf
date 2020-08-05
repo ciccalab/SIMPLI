@@ -199,7 +199,7 @@ cp3_normalized_tiff_metadata_by_sample
 process cell_profiler_image_preprocessing {
 
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_cp3:reupload'
+    container = 'library://michelebortol/default/simpli_cp3:cp3_fix_dependencies'
     containerOptions = "--bind $cp3_pipeline_folder:/mnt"
 
     publishDir "$image_folder/Preprocessed/$sample_name", mode:'copy', overwrite: true
@@ -359,10 +359,10 @@ cp3_preprocessed_tiff_metadata_by_sample
 process cell_segmentation {
 
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_cp3:reupload'
+    container = 'library://michelebortol/default/simpli_cp3:cp3_fix_dependencies'
     containerOptions = "--bind $cp3_pipeline_folder:/mnt"
-
-    publishDir "$params.output_folder/Segmentation/$sample_name", mode:'copy', overwrite: true
+ 
+    publishDir"$params.output_folder/Segmentation/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
         set sample_name, file(cp3_preprocessed_metadata) from cp3_segmentation_metadata 
