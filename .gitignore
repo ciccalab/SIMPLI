@@ -4,9 +4,6 @@ venv
 # Exclude example output files and folders
 example_output
 
-# Exclude example data for now.
-example_data
-
 # Exclude nextflow files 
 .nextflow*
 work

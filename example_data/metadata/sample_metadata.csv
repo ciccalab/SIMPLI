@@ -1,0 +1,3 @@
+sample_name,roi_name,raw_path,color,TEST_A
+CRC_1,R-C02_x11350_950-y16500_1100-p0014-200Hz-p07dB-s0136,./example_data/raw_data/CRC_example.mcd,magenta,A
+CRC_2,R-B02_x40560_850-y12265_1200-p0014-200Hz-p07dB-s0136,./example_data/raw_data/CRC_example.mcd,"#00FFFF",B

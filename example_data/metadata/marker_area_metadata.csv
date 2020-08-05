@@ -1,0 +1,33 @@
+marker,main_marker
+CAMK4,CAMK4
+CD11c,CD11c
+CD16,CD16
+CD20,CD20
+CD27,CD27
+CD34,CD34
+PDL1,PDL1
+CD3,CD3
+CD45RA,CD45RA
+CD45RO,CD45RO
+CD45,CD45
+CD4,CD4
+CD8a,CD8a
+CollagenIV,CollagenIV
+DNA1,DNA1
+DNA2,DNA2
+FoxP3,FoxP3
+IFNA5,IFNA5
+IgA,IgA
+IgM,IgM
+Ki67,Ki67
+PD1,PD1
+PanKeratin,PanKeratin
+SMA,SMA
+VEGFc,VEGFc
+Vimentin,Vimentin
+eCadherin,eCadherin
+CD3 & CD45RA,CD3
+CD3 & CD8a,CD3
+CD3 & CD4 & !CD8a,CD3
+CD68 & CD16,CD68
+Vimentin,PanKeratin | eCadherin

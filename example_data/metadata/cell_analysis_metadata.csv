@@ -1,0 +1,6 @@
+cell_type,threshold_marker,threshold_value,color,clustering_markers,clustering_resolutions
+T_Cells,Intensity_MeanIntensity_CD3_c1,0.05,"#E6007E",Intensity_MeanIntensity_CD3_c1@Intensity_MeanIntensity_CD45RA_c1@Intensity_MeanIntensity_CD45RO_c1@Intensity_MeanIntensity_CD4_c1@Intensity_MeanIntensity_CD8a_c1@Intensity_MeanIntensity_Ki67_c1@Intensity_MeanIntensity_PD1_c1,0.1@0.3@0.5@0.9@1.5
+B_Cells,Intensity_MeanIntensity_CD20_c1,0.1,"#9187BF",NA,NA
+Macrophages,Intensity_MeanIntensity_CD68_c1,0.1,"#005F27",NA,NA
+Dendritic_Cells,Intensity_MeanIntensity_CD11c_c1,0.125,"#0094DA",NA,NA
+Tumour,Intensity_MeanIntensity_eCadherin_c1,0.1,"#FFFFFF",NA,NA
