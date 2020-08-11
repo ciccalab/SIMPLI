@@ -2,7 +2,7 @@ CellProfiler Pipeline: http://www.cellprofiler.org
 Version:4
 DateRevision:318
 GitHash:
-ModuleCount:85
+ModuleCount:82
 HasImagePlaneDetails:False
 
 LoadData:[module_num:1|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
@@ -317,26 +317,6 @@ Threshold:[module_num:16|svn_version:\'Unknown\'|variable_revision_number:10|sho
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
 Threshold:[module_num:17|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeD\x00N\x00A\x002\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x002\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:18|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeF\x00o\x00x\x00P\x003\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00F\x00o\x00x\x00P\x003\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -356,7 +336,7 @@ Threshold:[module_num:18|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:19|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:18|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeI\x00F\x00N\x00A\x005\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00F\x00N\x00A\x005\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -376,7 +356,7 @@ Threshold:[module_num:19|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:20|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:19|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeI\x00g\x00A\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -396,7 +376,7 @@ Threshold:[module_num:20|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:21|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:20|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeI\x00g\x00M\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00M\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -416,7 +396,7 @@ Threshold:[module_num:21|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:22|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:21|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeK\x00i\x006\x007\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00K\x00i\x006\x007\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -436,7 +416,7 @@ Threshold:[module_num:22|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:23|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:22|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeP\x00D\x001\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -456,7 +436,7 @@ Threshold:[module_num:23|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:24|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:23|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeP\x00D\x00L\x001\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x00L\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -476,7 +456,7 @@ Threshold:[module_num:24|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:25|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:24|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeP\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -496,7 +476,7 @@ Threshold:[module_num:25|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:26|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:25|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeS\x00M\x00A\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00S\x00M\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -516,7 +496,7 @@ Threshold:[module_num:26|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:27|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:26|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeV\x00E\x00G\x00F\x00c\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00V\x00E\x00G\x00F\x00c\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -536,7 +516,7 @@ Threshold:[module_num:27|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:28|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:27|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeV\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00V\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -556,7 +536,7 @@ Threshold:[module_num:28|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-Threshold:[module_num:29|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+Threshold:[module_num:28|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfee\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00e\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
@@ -576,7 +556,7 @@ Threshold:[module_num:29|svn_version:\'Unknown\'|variable_revision_number:10|sho
     # of deviations:\xff\xfe2\x00.\x000\x00
     Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
 
-MaskImage:[module_num:30|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:29|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00A\x00M\x00K\x004\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00A\x00M\x00K\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -584,7 +564,7 @@ MaskImage:[module_num:30|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00A\x00M\x00K\x004\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:31|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:30|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x001\x001\x00c\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x001\x00c\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -592,7 +572,7 @@ MaskImage:[module_num:31|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x001\x00c\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:32|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:31|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x001\x006\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x006\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -600,7 +580,7 @@ MaskImage:[module_num:32|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x006\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:33|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:32|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x002\x000\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x000\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -608,7 +588,7 @@ MaskImage:[module_num:33|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x000\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:34|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:33|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x002\x007\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x007\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -616,7 +596,7 @@ MaskImage:[module_num:34|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x007\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:35|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:34|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x003\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -624,7 +604,7 @@ MaskImage:[module_num:35|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:36|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:35|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x003\x004\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -632,7 +612,7 @@ MaskImage:[module_num:36|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x004\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:37|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:36|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x004\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -640,7 +620,7 @@ MaskImage:[module_num:37|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:38|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:37|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x004\x005\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -648,7 +628,7 @@ MaskImage:[module_num:38|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:39|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:38|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x004\x005\x00R\x00A\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -656,7 +636,7 @@ MaskImage:[module_num:39|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:40|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:39|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x004\x005\x00R\x00O\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00O\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -664,7 +644,7 @@ MaskImage:[module_num:40|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00O\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:41|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:40|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x006\x008\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x006\x008\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -672,7 +652,7 @@ MaskImage:[module_num:41|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x006\x008\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:42|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:41|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00D\x008\x00a\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x008\x00a\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -680,7 +660,7 @@ MaskImage:[module_num:42|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x008\x00a\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:43|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:42|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeC\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -688,7 +668,7 @@ MaskImage:[module_num:43|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:44|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:43|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeD\x00N\x00A\x001\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -696,15 +676,7 @@ MaskImage:[module_num:44|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:45|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeD\x00N\x00A\x002\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x002\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x002\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:46|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:44|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeF\x00o\x00x\x00P\x003\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00F\x00o\x00x\x00P\x003\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -712,7 +684,7 @@ MaskImage:[module_num:46|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00F\x00o\x00x\x00P\x003\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:47|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:45|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeI\x00F\x00N\x00A\x005\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00F\x00N\x00A\x005\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -720,7 +692,7 @@ MaskImage:[module_num:47|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00I\x00F\x00N\x00A\x005\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:48|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:46|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeI\x00g\x00A\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -728,7 +700,7 @@ MaskImage:[module_num:48|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:49|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:47|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeI\x00g\x00M\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00M\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -736,7 +708,7 @@ MaskImage:[module_num:49|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00M\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:50|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:48|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeK\x00i\x006\x007\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00K\x00i\x006\x007\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -744,7 +716,7 @@ MaskImage:[module_num:50|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00K\x00i\x006\x007\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:51|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:49|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeP\x00D\x001\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -752,7 +724,7 @@ MaskImage:[module_num:51|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:52|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:50|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeP\x00D\x00L\x001\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x00L\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -760,7 +732,7 @@ MaskImage:[module_num:52|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x00L\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:53|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:51|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeP\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -768,7 +740,7 @@ MaskImage:[module_num:53|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00P\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:54|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:52|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeS\x00M\x00A\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00S\x00M\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -776,7 +748,7 @@ MaskImage:[module_num:54|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00S\x00M\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:55|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:53|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeV\x00E\x00G\x00F\x00c\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00V\x00E\x00G\x00F\x00c\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -784,7 +756,7 @@ MaskImage:[module_num:55|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00V\x00E\x00G\x00F\x00c\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:56|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:54|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfeV\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00V\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -792,7 +764,7 @@ MaskImage:[module_num:56|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00V\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-MaskImage:[module_num:57|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+MaskImage:[module_num:55|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:\xff\xfee\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00
     Name the output image:\xff\xfeC\x00P\x003\x00_\x00e\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
@@ -800,7 +772,7 @@ MaskImage:[module_num:57|svn_version:\'Unknown\'|variable_revision_number:3|show
     Select image for mask:\xff\xfeC\x00P\x003\x00_\x00e\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
     Invert the mask?:\xff\xfeN\x00o\x00
 
-SaveImages:[module_num:58|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:56|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00A\x00M\x00K\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -818,7 +790,7 @@ SaveImages:[module_num:58|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:59|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:57|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x001\x00c\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -836,7 +808,7 @@ SaveImages:[module_num:59|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:60|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:58|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x006\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -854,7 +826,7 @@ SaveImages:[module_num:60|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:61|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:59|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x000\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -872,7 +844,7 @@ SaveImages:[module_num:61|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:62|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:60|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x007\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -890,7 +862,7 @@ SaveImages:[module_num:62|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:63|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:61|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -908,7 +880,7 @@ SaveImages:[module_num:63|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:64|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:62|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -926,7 +898,7 @@ SaveImages:[module_num:64|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:65|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:63|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -944,7 +916,7 @@ SaveImages:[module_num:65|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:66|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:64|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00O\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -962,7 +934,7 @@ SaveImages:[module_num:66|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:67|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:65|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -980,7 +952,7 @@ SaveImages:[module_num:67|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:68|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:66|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -998,7 +970,7 @@ SaveImages:[module_num:68|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:69|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:67|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x006\x008\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1016,7 +988,7 @@ SaveImages:[module_num:69|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:70|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:68|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x008\x00a\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1034,7 +1006,7 @@ SaveImages:[module_num:70|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:71|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:69|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1052,7 +1024,7 @@ SaveImages:[module_num:71|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:72|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:70|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1070,25 +1042,7 @@ SaveImages:[module_num:72|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:73|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x002\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00D\x00N\x00A\x002\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:74|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:71|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00F\x00o\x00x\x00P\x003\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1106,7 +1060,7 @@ SaveImages:[module_num:74|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:75|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:72|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00I\x00F\x00N\x00A\x005\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1124,7 +1078,7 @@ SaveImages:[module_num:75|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:76|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:73|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1142,7 +1096,7 @@ SaveImages:[module_num:76|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:77|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:74|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00M\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1160,7 +1114,7 @@ SaveImages:[module_num:77|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:78|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:75|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00K\x00i\x006\x007\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1178,7 +1132,7 @@ SaveImages:[module_num:78|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:79|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:76|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1196,7 +1150,7 @@ SaveImages:[module_num:79|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:80|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:77|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x00L\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1214,7 +1168,7 @@ SaveImages:[module_num:80|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:81|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:78|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00P\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1232,7 +1186,7 @@ SaveImages:[module_num:81|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:82|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:79|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00S\x00M\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1250,7 +1204,7 @@ SaveImages:[module_num:82|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:83|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:80|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00V\x00E\x00G\x00F\x00c\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1268,7 +1222,7 @@ SaveImages:[module_num:83|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:84|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:81|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00V\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
@@ -1286,7 +1240,7 @@ SaveImages:[module_num:84|svn_version:\'Unknown\'|variable_revision_number:13|sh
     Create subfolders in the output folder?:\xff\xfeN\x00o\x00
     Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
 
-SaveImages:[module_num:85|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:82|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
     Select the image to save:\xff\xfeC\x00P\x003\x00_\x00e\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
     Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
