@@ -1,21 +1,6 @@
 script_folder = "$baseDir/scripts"
-cp3_pipeline_folder = "$baseDir/cell_profiler_pipelines"
-
-// Input parameters: the default values will be moved to a test profile nextflow configuration
-params.output_folder ="$baseDir/example_output"
-params.channel_metadata = "$baseDir/example_data/metadata/channel_metadata.csv" 
-params.raw_metadata_file = "$baseDir/example_data/metadata/sample_metadata.csv" 
-params.tiff_type = "single" 
-params.cp3_preprocessing_cppipe = "preprocessing_example.cppipe"
-params.cp3_segmentation_cppipe = "cell_segmentation_example.cppipe"
-params.area_measurements_metadata = "$baseDir/example_data/metadata/marker_area_metadata.csv"
-params.cell_analysis_metadata = "$baseDir/example_data/metadata/cell_analysis_metadata.csv"
-
-params.high_color = "'#FF0000'"
-params.mid_color = "'#FFFFFF'"
-params.low_color = "'#0000FF'"
-
 image_folder = "$params.output_folder/Images"
+
 
 /* Gets the Siungulairty key to verify the containers used by the pipeline */
 
@@ -195,11 +180,14 @@ cp3_normalized_tiff_metadata_by_sample
     The output images and a metadata file are exported to: "$image_folder/Preprocessed/$sample_name"  
 */
 
+cp3_preprocessing_pipeline_folder = file(params.cp3_preprocessing_cppipe).getParent()
+cp3_preprocessing_pipeline = file(params.cp3_preprocessing_cppipe).getName() 
+
 process cell_profiler_image_preprocessing {
 
     label 'big_memory'
     container = 'library://michelebortol/default/simpli_cp3:cp3_fix_dependencies'
-    containerOptions = "--bind $cp3_pipeline_folder:/mnt"
+    containerOptions = "--bind $cp3_preprocessing_pipeline_folder:/mnt"
 
     publishDir "$image_folder/Preprocessed/$sample_name", mode:'copy', overwrite: true
                                                                                                 
@@ -214,7 +202,7 @@ process cell_profiler_image_preprocessing {
     cellprofiler \\
         --run-headless \\
         --data-file $cp3_normalized_metadata \\
-        --pipeline /mnt/$params.cp3_preprocessing_cppipe \\
+        --pipeline /mnt/$cp3_preprocessing_pipeline \\
         --plugins-directory /opt/CellProfiler/plugins/ \\
         --image-directory /data \\
         --output-directory ./ \\
@@ -355,11 +343,14 @@ cp3_preprocessed_tiff_metadata_by_sample
     - Copies the results to "$params.output_folder/Segmentation/$sample_name" 
 */
 
+cp3_segmentation_pipeline_folder = file(params.cp3_segmentation_cppipe).getParent()
+cp3_segmentation_pipeline = file(params.cp3_segmentation_cppipe).getName() 
+
 process cell_segmentation {
 
     label 'big_memory'
     container = 'library://michelebortol/default/simpli_cp3:cp3_fix_dependencies'
-    containerOptions = "--bind $cp3_pipeline_folder:/mnt"
+    containerOptions = "--bind $cp3_segmentation_pipeline_folder:/mnt"
  
     publishDir"$params.output_folder/Segmentation/$sample_name", mode:'copy', overwrite: true
                                                                                                 
@@ -374,7 +365,7 @@ script:
     cellprofiler \\
         --run-headless \\
         --data-file $cp3_preprocessed_metadata \\
-        --pipeline /mnt/$params.cp3_segmentation_cppipe \\
+        --pipeline /mnt/$cp3_segmentation_pipeline \\
         --plugins-directory /opt/CellProfiler/plugins/ \\
         --image-directory /data \\
         --output-directory ./ \\
