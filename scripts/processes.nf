@@ -3,6 +3,8 @@ image_folder = "$params.output_folder/Images"
 
 cp3_preprocessing_pipeline_folder = file(params.cp3_preprocessing_cppipe).getParent()
 cp3_preprocessing_pipeline = file(params.cp3_preprocessing_cppipe).getName() 
+cp3_segmentation_pipeline_folder = file(params.cp3_segmentation_cppipe).getParent()
+cp3_segmentation_pipeline = file(params.cp3_segmentation_cppipe).getName() 
 
 /* Gets the Singularity key to verify the containers used by the pipeline */
 
@@ -298,6 +300,7 @@ process cell_segmentation {
     publishDir"$params.output_folder/Segmentation/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
+        val(singularity_key_got)
         tuple val(sample_name), path(cp3_preprocessed_metadata) 
 
     output:
@@ -327,6 +330,7 @@ script:
 process collect_single_cell_data {
 
     label 'small_memory'
+    publishDir"$params.output_folder/Segmentation", mode:'copy', overwrite: true
     
     input:
         path(cell_data_list)

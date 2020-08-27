@@ -93,6 +93,18 @@ workflow measure_areas{
         area_measurements = measure_positive_areas.out.area_measurements
 }
 
+workflow segment_cells{
+    take:
+        singularity_key_got
+        segmentation_metadata_files
+    main:
+        cell_segmentation(singularity_key_got, segmentation_metadata_files)
+        collect_single_cell_data(cell_segmentation.out.cell_data_csv_by_sample.collect())
+    emit:
+        cell_mask_tiffs = cell_segmentation.out.cell_mask_tiffs
+        unannotated_cell_data = collect_single_cell_data.out.unannotated_cell_data
+}
+
 workflow {
     sample_names = channel.fromPath(params.sample_metadata_file).splitCsv(header: true).map{row -> row.sample_name}
     singularity_key_getter()
@@ -117,6 +129,18 @@ workflow {
             }
             .groupTuple()
         preprocess_images(singularity_key_getter.out.singularity_key_got, preprocessing_metadata) 
+    if(!params.skip_segmentation)
+        if(!params.skip_preprocessing)
+            segmentation_metadata = preprocess_images.out.cp3_preprocessed_tiff_metadata_by_sample
+                .flatten()
+                .map { file ->
+                    def key = file.name.toString().tokenize('-').get(0)
+                    return tuple(key, file)
+                    }
+                .groupTuple()
+        else{}
+        segment_cells(singularity_key_getter.out.singularity_key_got, segmentation_metadata)
+        // *** NOT IMPLEMENTED YET ***
 }
 
 
