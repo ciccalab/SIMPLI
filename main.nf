@@ -99,14 +99,17 @@ workflow segment_cells{
 workflow {
     sample_names = channel.fromPath(params.sample_metadata_file).splitCsv(header: true).map{row -> row.sample_name}
     singularity_key_getter()
-    if(params.raw_metadata_file && !params.skip_conversion)
-        convert_raw_data(singularity_key_getter.out.singularity_key_got) 
-    if((params.converted_metadata_file || !params.skip_conversion) && !params.skip_normalization)
+    if(params.raw_metadata_file && !params.skip_conversion){
+        convert_raw_data(singularity_key_getter.out.singularity_key_got)
+    }    
+    if((params.converted_metadata_file || !params.skip_conversion) && !params.skip_normalization){
         normalization_metadata = (params.skip_conversion) ? channel.fromPath(params.converted_metadata_file) : convert_raw_data.out.converted_tiff_metadata
-        normalize_images(singularity_key_getter.out.singularity_key_got, sample_names, normalization_metadata) 
-    if(!params.skip_preprocessing)
-        if(!params.skip_normalization)
+        normalize_images(singularity_key_getter.out.singularity_key_got, sample_names, normalization_metadata)
+    }    
+    if(!params.skip_preprocessing){
+        if(!params.skip_normalization){
             preprocessing_metadata = normalize_images.out.cp3_normalized_tiff_metadata_by_sample
+        }
         else if(params.skip_normalization && !params.skip_conversion){}
             // preprocessing_metadata = convert_raw_data.out.cp3_converted_tiff_metadata_by_sample *** NOT IMPLEMENTED YET! ***
         else{}
@@ -120,12 +123,15 @@ workflow {
             }
             .groupTuple()
         preprocess_images(singularity_key_getter.out.singularity_key_got, preprocessing_metadata) 
-    if(!params.skip_area)
-        if(!params.skip_preprocessing)
+    }    
+    if(!params.skip_area){
+        if(!params.skip_preprocessing){
             area_measurement_metadata = preprocess_images.out.preprocessed_tiff_metadata
+        }    
         else{}// *** NOT IMPLEMENTED YET ***
         measure_areas(singularity_key_getter.out.singularity_key_got, area_measurement_metadata, params.area_measurements_metadata)
-    if(!params.skip_segmentation)
+    }    
+    if(!params.skip_segmentation){
         if(!params.skip_preprocessing)
             segmentation_metadata = preprocess_images.out.cp3_preprocessed_tiff_metadata_by_sample
                 .flatten()
@@ -136,6 +142,7 @@ workflow {
                 .groupTuple()
         else{}// *** NOT IMPLEMENTED YET ***
         segment_cells(singularity_key_getter.out.singularity_key_got, segmentation_metadata)
+    }    
 }
 
 
