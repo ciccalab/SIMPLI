@@ -2,7 +2,7 @@
 venv
 
 # Exclude example output files and folders
-example_output
+test_output
 
 # Exclude nextflow files 
 .nextflow*
