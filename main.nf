@@ -32,14 +32,6 @@ workflow singularity_key_getter {
         singularity_key_got = get_singularity_key.out.singularity_key_got 
 }
 
-/* Reads the raw metadata file line by line to extract the sample metadata for the raw IMC acquisition files.
-   It expects an header line and it extracts the following fields into the sample_metadata channel:
-   - sample_name
-   - roi_name
-   - raw_path -> Converted to a file type 
-*/
-
-
 workflow convert_raw_data{
     take:
         singularity_key_got
@@ -53,7 +45,6 @@ workflow convert_raw_data{
         tiff_images = convert_raw_data_to_tiffs.out.raw_tiff_images
         converted_tiff_metadata = collect_raw_tiff_metadata.out.converted_tiff_metadata
 }
-
 
 workflow normalize_images{
     take:
@@ -129,6 +120,11 @@ workflow {
             }
             .groupTuple()
         preprocess_images(singularity_key_getter.out.singularity_key_got, preprocessing_metadata) 
+    if(!params.skip_area)
+        if(!params.skip_preprocessing)
+            area_measurement_metadata = preprocess_images.out.preprocessed_tiff_metadata
+        else{}// *** NOT IMPLEMENTED YET ***
+        measure_areas(singularity_key_getter.out.singularity_key_got, area_measurement_metadata, params.area_measurements_metadata)
     if(!params.skip_segmentation)
         if(!params.skip_preprocessing)
             segmentation_metadata = preprocess_images.out.cp3_preprocessed_tiff_metadata_by_sample
@@ -138,9 +134,8 @@ workflow {
                     return tuple(key, file)
                     }
                 .groupTuple()
-        else{}
+        else{}// *** NOT IMPLEMENTED YET ***
         segment_cells(singularity_key_getter.out.singularity_key_got, segmentation_metadata)
-        // *** NOT IMPLEMENTED YET ***
 }
 
 
