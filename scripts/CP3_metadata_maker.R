@@ -19,8 +19,8 @@ if(file_type != "ome" & file_type != "single"){
 metadata_maker <- function(filename)
 {
   metadata <- fread(filename)
-  if(file_type == "ome") metadata[, Frame := .I - 1]
-  if(file_type == "single") metadata[, Frame := 0]
+  if(file_type == "ome" && length(filenames) == 1) metadata[, Frame := .I - 1]
+  if(file_type == "single" || length(filenames) > 1) metadata[, Frame := 0]
   metadata[, URL := paste0("file:///", preprocessed_file_name)]
   metadata[, preprocessed_file_name := NULL]
   cp_metadata <- dcast(metadata, sample_name ~ label, value.var = cast_columns)
