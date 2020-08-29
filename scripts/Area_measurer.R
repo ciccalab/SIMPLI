@@ -111,6 +111,7 @@ melter <- function(annotated_table, ROI_area_table)
   tbl[main_marker == marker, main_marker_area := total_ROI_area]
   tbl[main_marker == marker, main_marker := "total_ROI_area"]
   tbl[, percentage := area / main_marker_area * 100]
+  tbl[main_marker_area == 0, percentage := 0]
   return(tbl)
 }
 
