@@ -21,6 +21,30 @@ process get_singularity_key {
     """                             
 }
 
+process cp3_format_convert {
+    
+    label 'small_memory'
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
+    containerOptions = "--bind $script_folder:/opt"
+    
+    input:
+        val(singularity_key_got)
+        val(output_suffix)
+        path(metadata_files_to_convert)
+
+    output:
+        path("*$output_suffix", emit: cp3_metadata)
+    
+    script:
+    """
+    Rscript /opt/Convert_to_cp3_metadata.R \\
+        $params.tiff_type \\
+        ./ \\
+        $output_suffix \\
+        $metadata_files_to_convert
+    """
+}
+
 /* For each aquisition specified in the $raw_metadata_file:
     - Extracts the raw tiff files into the working directory
     - Generates the raw tiff .csv metadata file in the working directory

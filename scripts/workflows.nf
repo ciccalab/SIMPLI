@@ -3,6 +3,7 @@ nextflow.enable.dsl=2
 script_folder = "$baseDir/scripts"
 
 include {get_singularity_key} from "$script_folder/processes.nf"
+include {cp3_format_convert} from "$script_folder/processes.nf"
 
 include {convert_raw_data_to_tiffs} from "$script_folder/processes.nf"
 include {collect_raw_tiff_metadata} from "$script_folder/processes.nf"
@@ -30,6 +31,17 @@ workflow singularity_key_getter {
     get_singularity_key()
     emit:
         singularity_key_got = get_singularity_key.out.singularity_key_got 
+}
+
+workflow convert_metadata_to_cp3{
+    take:
+        singularity_key_got
+        output_suffix
+        metadata_to_convert
+    main:
+        cp3_format_convert(singularity_key_got, output_suffix, metadata_to_convert)
+    emit:
+        cp3_metadata = cp3_format_convert.out.cp3_metadata
 }
 
 workflow convert_raw_data{
