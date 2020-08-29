@@ -121,6 +121,46 @@ workflow cluster_cells{
         clustered_cell_data = collect_clustering_data.out.clustered_cell_data
 }
 
+workflow visualize_areas{
+    take:
+        singularity_key_got
+        categories
+        area_measurement_file 
+        sample_metadata_file
+    main:
+        area_visualization(singularity_key_got, categories, area_measurement_file, sample_metadata_file)
+    emit:
+        area_plots =  area_visualization.out.area_plots
+}
+
+workflow visualize_cell_types{
+    take:
+        singularity_key_got
+        categories
+        annotated_cell_file
+        sample_metadata_file
+        cell_metadata_file
+        cell_mask_files 
+    main:
+        cell_type_visualization(singularity_key_got, categories, annotated_cell_file, sample_metadata_file, cell_metadata_file, cell_mask_files)
+    emit:
+        cell_type_plots = cell_type_visualization.out.cell_type_plots
+        cell_type_overlays = cell_type_visualization.out.cell_type_overlays
+}
+
+workflow visualize_cell_clusters{
+    take:
+        singularity_key_got
+        categories
+        cluster_visualization_metadata
+        clustered_cell_file
+        sample_metadata_file
+    main:
+        cell_cluster_visualization(singularity_key_got, categories, cluster_visualization_metadata, clustered_cell_file, sample_metadata_file)
+    emit:
+        cell_cluster_plots = cell_cluster_visualization.out.cell_cluster_plots
+}
+
 workflow {
     sample_names = channel.fromPath(params.sample_metadata_file).splitCsv(header: true).map{row -> row.sample_name}
     singularity_key_getter()
@@ -184,6 +224,35 @@ workflow {
             .filter{!it.contains("NA")}
         cluster_cells(singularity_key_getter.out.singularity_key_got, annotated_cells, clustering_metadata)
     }    
+    if(!params.skip_visualization){
+        categories = channel.fromPath(params.sample_metadata_file)
+            .splitCsv(header:false)
+            .first()
+            .map{row -> row.drop(2).join(",")}
+        if(!params.skip_area){
+            visualize_areas(singularity_key_getter.out.singularity_key_got, categories, measure_areas.out.area_measurements, params.sample_metadata_file)
+        }
+        if(!params.skip_cell_type_identification){
+            if(!params.skip_segmentation){
+                cell_masks = segment_cells.out.cell_mask_tiffs.collect()
+            }
+            else{}// *** NOT IMPLEMENTED YET ***
+            visualize_cell_types(singularity_key_getter.out.singularity_key_got, categories, identify_cell_types.out.annotated_cell_data,
+                params.sample_metadata_file, params.cell_analysis_metadata, cell_masks)
+        }
+        if(!params.skip_cell_clustering){
+            if(!params.skip_cell_type_identification){
+                clustered_cell_file = cluster_cells.out.clustered_cell_data
+            }
+            else{}// *** NOT IMPLEMENTED YET ***
+            cluster_visualization_metadata = channel.fromPath(params.cell_analysis_metadata)
+                .splitCsv(header:true)
+                .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
+                .filter{!it.contains("NA")}
+            visualize_cell_clusters(singularity_key_getter.out.singularity_key_got, categories, cluster_visualization_metadata,
+                clustered_cell_file, params.sample_metadata_file)
+        }
+    }
 }
 
 
@@ -230,12 +299,6 @@ workflow {
     to compare (all columns after the 4th)
 */
 
-//Channel
-//    .fromPath(params.raw_metadata_file)
-//    .splitCsv(header:false)
-//    .first()
-//    .map{row -> row.drop(4).join(",")}
-//    .into{categories_area; categories_type; categories_cluster}
 
 
 /* Collects all the cp3_preprocessed_tiff_metadata_by_sample metadata files and

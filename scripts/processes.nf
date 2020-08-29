@@ -266,6 +266,7 @@ process area_visualization {
     containerOptions = "--bind $script_folder:/opt"
 
     input:
+        val(singularity_key_got)
         val(category_columns)
         path(area_file) 
         path(sample_metadata_file)
@@ -391,6 +392,7 @@ process cell_type_visualization {
     containerOptions = "--bind $script_folder:/opt"
 
     input:
+        val(singularity_key_got)
         val(category_columns)
         path(annotated_cell_file)
         path(sample_metadata_file)
@@ -489,8 +491,10 @@ process cell_cluster_visualization {
     containerOptions = "--bind $script_folder:/opt"
 
     input:
+        val(singularity_key_got)
         val(category_columns)
-        tuple val(cell_type), val(markers), val(resolutions), path(clustered_cell_file)
+        tuple val(cell_type), val(markers), val(resolutions)
+        path(clustered_cell_file)
         path(sample_metadata_file)
 
     output:
