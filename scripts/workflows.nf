@@ -38,7 +38,7 @@ workflow convert_raw_data{
     main:
         raw_file_metadata = channel.fromPath(params.raw_metadata_file)
             .splitCsv(header:true)
-            .map{row -> tuple(row.sample_name, row.roi_name, file(row.raw_path))}
+            .map{row -> tuple(row.sample_name, row.roi_name, file(row.file_name))}
         convert_raw_data_to_tiffs(singularity_key_got, raw_file_metadata)
         collect_raw_tiff_metadata(convert_raw_data_to_tiffs.out.raw_tiff_metadata_by_sample.collect())
     emit:

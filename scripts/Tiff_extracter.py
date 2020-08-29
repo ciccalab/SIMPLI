@@ -74,7 +74,7 @@ def output_tiffs(acquisition, output_path, sample_name, roi_name, channel_metada
 		tiff_image_writer = acquisition.get_image_writer(tiff_file_name, metals = [metal], mass = None)
 		tiff_image_writer.save_image(mode = "imagej", compression = 0, dtype = numpy.int16().dtype, bigtiff = False)
 		single_metadata.append({"sample_name" : sample_name, "roi_name" : roi_name, "metal" : metal, "label" : label,
-			"raw_tiff_file_name" : tiff_file_name})
+			"file_name" : tiff_file_name})
 	return single_metadata	
 
 def output_ome_tiff(acquisition, output_path, sample_name, roi_name, channel_metadata):
@@ -90,7 +90,7 @@ def output_ome_tiff(acquisition, output_path, sample_name, roi_name, channel_met
 	tiff_image_writer = acquisition.get_image_writer(tiff_file_name, metals = channel_metadata.keys(), mass = None)
 	tiff_image_writer.save_image(mode = "ome", compression = 0, dtype = numpy.int16().dtype, bigtiff = False)
 	single_metadata = [{"sample_name" : sample_name, "roi_name" : roi_name, "metal" : metal, "label" : label,
-		"raw_tiff_file_name" : tiff_file_name} for metal, label in channel_metadata.items()]
+		"file_name" : tiff_file_name} for metal, label in channel_metadata.items()]
 	return single_metadata	
 					
 if __name__ == "__main__":

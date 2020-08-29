@@ -1,3 +1,3 @@
-sample_name,roi_name,raw_path
+sample_name,roi_name,file_name
 CRC_1,ROI007_R-B02_x40560_850-y12265_1200-p0014-200Hz-p07dB-s0136,./test/raw_data/crc_1.txt
 CRC_2,ROI004_R-A02_x13400_800-y12700_1250-p0014-200Hz-p07dB-s0137,./test/raw_data/crc_2.txt

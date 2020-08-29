@@ -60,7 +60,7 @@ tiff_loader <- function(file_name, all = FALSE)
 get_ROI_areas <- function(samples)
 {
   ROI_areas <- sapply(samples, function(name){
-    img <- tiff_loader(image_metadata[sample_name == name, preprocessed_file_name][[1]])
+    img <- tiff_loader(image_metadata[sample_name == name, file_name][[1]])
     dim(img)[[1]] * dim(img)[[2]]
   })
   data.table(sample_name = samples, total_ROI_area = ROI_areas)
@@ -74,7 +74,7 @@ process_image <- function(name_sample, expressions)
   divided <- as.character(unlist(sapply(sapply(to_divide, function(expr){parse(text = expr)}), all.vars)))
   image_names <- unique(c(as.character(unlist(sapply(parsed, all.vars))), divided))
   marker_file_names <- sapply(image_names, function(marker_name){
-    image_metadata[sample_name == name_sample & label == marker_name, preprocessed_file_name]})
+    image_metadata[sample_name == name_sample & label == marker_name, file_name]})
   imgs <- lapply(marker_file_names, tiff_loader)
   imgs <- lapply(imgs, function(x){x & x})
   names(imgs) <- image_names

@@ -39,7 +39,7 @@ process_image_single <- function(image, sample_name, marker, metal, output_dir)
   my_image@.Data <- normalizer(my_image@.Data)
   output_file_name <- image_writer(my_image, sample_name, marker, output_dir)
   return(c(sample_name = sample_name, metal = metal, label = marker,
-           normalized_file = output_file_name))
+           file_name = output_file_name))
 }
 
 ####### Load the metatdata #######
@@ -49,20 +49,19 @@ raw_metadata <- raw_metadata[sample_name == my_sample_name, ]
 
 ####### Image processing #######
 if (file_type == "ome") {
-  ome_image <- tiff_loader(raw_metadata$raw_tiff_file_name[[1]], all = T)
+  ome_image <- tiff_loader(raw_metadata$file_name[[1]], all = T)
   raw_data <- sapply(seq(1, dim(ome_image@.Data)[[3]]), function(n){
     normalizer(ome_image@.Data[,,n])}, simplify = "array")
   ome_image <- Image(raw_data, dim = dim(ome_image))
   output_file_name <- image_writer(raw_data, my_sample_name, "ALL", output_path,
                                    suffix = "normalized.ome.tiff")
   metadata <- copy(raw_metadata)
-  metadata[, normalized_file := output_file_name]
-  metadata[, raw_tiff_file_name := NULL]
+  metadata[, file_name := output_file_name]
   metadata[, Frame := .I - 1]
 } else if (file_type == "single") {
   metadata <- lapply(seq(1, raw_metadata[, .N]), function(n){
     meta <- raw_metadata[n]
-    my_image <- tiff_loader(meta$raw_tiff_file_name)
+    my_image <- tiff_loader(meta$file_name)
     process_image_single(my_image, meta$sample_name,  meta$label, meta$metal,
                          output_path)  
   })
@@ -75,8 +74,8 @@ if (file_type == "ome") {
 
 ##### Prepare CellProfiler3 compatible wide format metadata
 cast_columns <- c("URL", "Frame")
-metadata[, URL := paste0("file:///", normalized_file)]
-metadata[, normalized_file := NULL]
+metadata[, URL := paste0("file:///", file_name)]
+metadata[, file_name := NULL]
 cp_metadata <- dcast(metadata, sample_name ~ label, value.var = cast_columns)
 
 metadata_columns <- colnames(metadata)[!(colnames(metadata) %in% cast_columns)]

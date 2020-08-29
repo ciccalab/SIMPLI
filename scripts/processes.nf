@@ -79,7 +79,7 @@ process collect_raw_tiff_metadata {
     script:
     """
     cat $metadata_list > raw_tiff_metadata.csv
-    sed -i '1!{/sample_name,roi_name,metal,label,raw_tiff_file_name/d;}' raw_tiff_metadata.csv
+    sed -i '1!{/sample_name,roi_name,metal,label,file_name/d;}' raw_tiff_metadata.csv
     """
 }
 
@@ -181,7 +181,7 @@ process image_preprocessing {
         --log-level DEBUG \\
         --temporary-directory ./tmp > cp3_preprocessing_log.txt 2>&1
 
-    echo "sample_name,label,preprocessed_file_name" > "${sample_name}-preprocessed_metadata.csv"
+    echo "sample_name,label,file_name" > "${sample_name}-preprocessed_metadata.csv"
     find "\$(pwd)" -name "*-Preprocessed.tiff" > filename.csv
     sed "s@.*-\\(.*\\)-Preprocessed.*tiff@\\1@" filename.csv > label.csv
     paste -d , label.csv filename.csv >> "${sample_name}-preprocessed_metadata.csv"
@@ -217,7 +217,7 @@ process process_preprocessed_metadata {
         ./ \\
         $metadata_list
     cat $metadata_list > preprocessed_tiff_metadata.csv
-    sed -i '1!{/sample_name,label,preprocessed_file_name/d;}' preprocessed_tiff_metadata.csv
+    sed -i '1!{/sample_name,label,file_name/d;}' preprocessed_tiff_metadata.csv
     """
 }
 
