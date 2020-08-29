@@ -22,7 +22,7 @@ include {collect_single_cell_data} from "$script_folder/processes.nf"
 include {cell_type_identification} from "$script_folder/processes.nf"
 include {cell_type_visualization} from "$script_folder/processes.nf"
 
-include {cluster_cells} from "$script_folder/processes.nf"
+include {cell_clustering} from "$script_folder/processes.nf"
 include {collect_clustering_data} from "$script_folder/processes.nf"
 include {cell_cluster_visualization} from "$script_folder/processes.nf"
 
@@ -96,6 +96,31 @@ workflow segment_cells{
         unannotated_cell_data = collect_single_cell_data.out.unannotated_cell_data
 }
 
+workflow identify_cell_types{
+    take:
+        singularity_key_got
+        unannotated_cell_data
+        cell_type_metadata
+    main:
+        cell_type_identification(singularity_key_got, unannotated_cell_data, cell_type_metadata)
+    emit:
+        annotated_cell_data = cell_type_identification.out.annotated_cell_data
+}
+
+workflow cluster_cells{
+    take:
+        singularity_key_got
+        annotated_cell_data
+        cell_type_metadata
+    main:
+        cell_clustering(singularity_key_got, annotated_cell_data, cell_type_metadata)
+        collect_clustering_data(cell_clustering.out.cluster_csv_files)
+    emit:
+        cluster_csv_files = cell_clustering.out.cluster_csv_files
+        cluster_rdata_files = cell_clustering.out.cluster_rdata_files
+        clustered_cell_data = collect_clustering_data.out.clustered_cell_data
+}
+
 workflow {
     sample_names = channel.fromPath(params.sample_metadata_file).splitCsv(header: true).map{row -> row.sample_name}
     singularity_key_getter()
@@ -142,6 +167,22 @@ workflow {
                 .groupTuple()
         else{}// *** NOT IMPLEMENTED YET ***
         segment_cells(singularity_key_getter.out.singularity_key_got, segmentation_metadata)
+    }    
+    if(!params.skip_cell_type_identification){
+        if(!params.skip_segmentation)
+            unannotated_cells = segment_cells.out.unannotated_cell_data
+        else{}// *** NOT IMPLEMENTED YET ***
+        identify_cell_types(singularity_key_getter.out.singularity_key_got, unannotated_cells, params.cell_analysis_metadata)
+    }    
+    if(!params.skip_cell_clustering){
+        if(!params.skip_cell_type_identification)
+            annotated_cells = identify_cell_types.out.annotated_cell_data
+        else{}// *** NOT IMPLEMENTED YET ***
+        clustering_metadata = channel.fromPath(params.cell_analysis_metadata)
+            .splitCsv(header:true)
+            .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
+            .filter{!it.contains("NA")}
+        cluster_cells(singularity_key_getter.out.singularity_key_got, annotated_cells, clustering_metadata)
     }    
 }
 

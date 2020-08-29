@@ -21,7 +21,6 @@ process get_singularity_key {
     """                             
 }
 
-
 /* For each aquisition specified in the $raw_metadata_file:
     - Extracts the raw tiff files into the working directory
     - Generates the raw tiff .csv metadata file in the working directory
@@ -356,6 +355,7 @@ process cell_type_identification {
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
+        val(singularity_key_got)
         path(unannotated_cell_data_file) 
         path(cell_threshold_metadata_file)
     
@@ -419,7 +419,7 @@ process cell_type_visualization {
     - Copies the output files into params.output_folder/Cell_Clusters
 */
 
-process cluster_cells {
+process cell_clustering {
 
     label 'big_memory'
     publishDir "$params.output_folder/Cell_Clusters", mode:'copy', overwrite: true
@@ -427,7 +427,9 @@ process cluster_cells {
     containerOptions = "--bind $script_folder:/opt"
 
     input:
-        tuple val(cell_type), val(markers), val(resolutions), path(annotated_cell_file)
+        val(singularity_key_got)
+        path(annotated_cell_file)
+        tuple val(cell_type), val(markers), val(resolutions)
 
     output:
         path("$cell_type/*_clusters.csv", emit: cluster_csv_files)
@@ -454,7 +456,7 @@ process cluster_cells {
 process collect_clustering_data {
 
     label 'mid_memory'
-    publishDir "$params.output_folder/Plots/Cell_Type_Plots", mode:'copy', overwrite: true
+    publishDir "$params.output_folder/", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
     
