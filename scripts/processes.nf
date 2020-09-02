@@ -226,6 +226,8 @@ process process_preprocessed_metadata {
     label 'mid_memory'
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
+
+    publishDir "$image_folder/Preprocessed/", mode:'copy', overwrite: true
     
     input:
         path(metadata_list)
