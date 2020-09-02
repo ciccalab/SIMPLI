@@ -39,8 +39,8 @@ fix_expression <- function(name_vect)
   name_vect <- gsub("_", " & ", name_vect)
 }
 
-missing_main_markers <- marker_combinations_table$main_marker[!(marker_combinations_table$main_marker
-  %in% marker_combinations_table$marker)]
+missing_main_markers <- unique(marker_combinations_table$main_marker[!(marker_combinations_table$main_marker
+  %in% marker_combinations_table$marker)])
 
 missing_main_markers <- data.table(marker = missing_main_markers, main_marker = missing_main_markers)
 marker_combinations_table <- rbind(marker_combinations_table, missing_main_markers)
