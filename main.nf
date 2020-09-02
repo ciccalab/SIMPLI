@@ -89,7 +89,9 @@ workflow {
     if(!params.skip_cell_clustering){
         if(!params.skip_cell_type_identification)
             annotated_cells = identify_cell_types.out.annotated_cell_data
-        else{}// *** NOT IMPLEMENTED YET ***
+        else{
+            annotated_cells = params.single_cell_data_file
+        }
         clustering_metadata = channel.fromPath(params.cell_analysis_metadata)
             .splitCsv(header:true)
             .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
@@ -109,7 +111,8 @@ workflow {
                 cell_masks = segment_cells.out.cell_mask_tiffs.collect()
             }
             else{
-                cell_masks = params.single_cell_masks_metadata.splitCsv(header:true)
+                cell_masks = channel.fromPath(params.single_cell_masks_metadata)
+                    .splitCsv(header:true)
                     .map{row -> row.file_name}
                     .collect() 
             }
@@ -117,7 +120,7 @@ workflow {
                 params.sample_metadata_file, params.cell_analysis_metadata, cell_masks)
         }
         if(!params.skip_cell_clustering){
-            if(!params.skip_cell_type_identification){
+            if(!params.skip_cell_clustering){
                 clustered_cell_file = cluster_cells.out.clustered_cell_data
             }
             else{}// *** NOT IMPLEMENTED YET ***
