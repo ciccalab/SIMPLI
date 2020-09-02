@@ -70,18 +70,20 @@ workflow {
             convert_metadata_to_cp3(singularity_key_getter.out.singularity_key_got, "-cp3_metadata.csv", params.preprocessed_metadata_file) 
             segmentation_metadata = convert_metadata_to_cp3.out.cp3_metadata
         }
-                segmentation_metadata = segmentation_metadata.flatten()
-                    .map { file ->
-                        def key = file.name.toString().tokenize('-').get(0)
-                        return tuple(key, file)
-                        }
-                    .groupTuple()
+        segmentation_metadata = segmentation_metadata.flatten()
+            .map { file ->
+                def key = file.name.toString().tokenize('-').get(0)
+                return tuple(key, file)
+             }
+            .groupTuple()
         segment_cells(singularity_key_getter.out.singularity_key_got, segmentation_metadata)
     }    
     if(!params.skip_cell_type_identification){
         if(!params.skip_segmentation)
             unannotated_cells = segment_cells.out.unannotated_cell_data
-        else{}// *** NOT IMPLEMENTED YET ***
+        else{
+            unannotated_cells = params.single_cell_data_file
+        }
         identify_cell_types(singularity_key_getter.out.singularity_key_got, unannotated_cells, params.cell_analysis_metadata)
     }    
     if(!params.skip_cell_clustering){
@@ -106,7 +108,11 @@ workflow {
             if(!params.skip_segmentation){
                 cell_masks = segment_cells.out.cell_mask_tiffs.collect()
             }
-            else{}// *** NOT IMPLEMENTED YET ***
+            else{
+                cell_masks = params.single_cell_masks_metadata.splitCsv(header:true)
+                    .map{row -> row.file_name}
+                    .collect() 
+            }
             visualize_cell_types(singularity_key_getter.out.singularity_key_got, categories, identify_cell_types.out.annotated_cell_data,
                 params.sample_metadata_file, params.cell_analysis_metadata, cell_masks)
         }
