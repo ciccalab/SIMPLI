@@ -23,7 +23,7 @@ process get_singularity_key {
 
 process cp3_format_convert {
     
-    label 'small_memory'
+    label 'mid_memory'
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt"
     
@@ -41,7 +41,7 @@ process cp3_format_convert {
         $params.tiff_type \\
         ./ \\
         $output_suffix \\
-        $metadata_files_to_convert
+        $metadata_files_to_convert > conversion_log.txt 2>&1
     """
 }
 

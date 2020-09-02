@@ -58,19 +58,24 @@ workflow {
         if(!params.skip_preprocessing){
             area_measurement_metadata = preprocess_images.out.preprocessed_tiff_metadata
         }    
-        else{}// *** NOT IMPLEMENTED YET ***
+        else{
+            area_measurement_metadata = params.preprocessed_metadata_file
+        }
         measure_areas(singularity_key_getter.out.singularity_key_got, area_measurement_metadata, params.area_measurements_metadata)
     }    
     if(!params.skip_segmentation){
         if(!params.skip_preprocessing)
             segmentation_metadata = preprocess_images.out.cp3_preprocessed_tiff_metadata_by_sample
-                .flatten()
-                .map { file ->
-                    def key = file.name.toString().tokenize('-').get(0)
-                    return tuple(key, file)
-                    }
-                .groupTuple()
-        else{}// *** NOT IMPLEMENTED YET ***
+        else{
+            convert_metadata_to_cp3(singularity_key_getter.out.singularity_key_got, "-cp3_metadata.csv", params.preprocessed_metadata_file) 
+            segmentation_metadata = convert_metadata_to_cp3.out.cp3_metadata
+        }
+                segmentation_metadata = segmentation_metadata.flatten()
+                    .map { file ->
+                        def key = file.name.toString().tokenize('-').get(0)
+                        return tuple(key, file)
+                        }
+                    .groupTuple()
         segment_cells(singularity_key_getter.out.singularity_key_got, segmentation_metadata)
     }    
     if(!params.skip_cell_type_identification){
