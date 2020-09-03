@@ -3,4 +3,4 @@ T_Cells,Intensity_MeanIntensity_CD3_c1,0.05,"#E6007E",Intensity_MeanIntensity_CD
 B_Cells,Intensity_MeanIntensity_CD20_c1,0.1,"#9187BF",NA,NA
 Macrophages,Intensity_MeanIntensity_CD68_c1,0.1,"#005F27",NA,NA
 Dendritic_Cells,Intensity_MeanIntensity_CD11c_c1,0.125,"#0094DA",NA,NA
-Tumour,Intensity_MeanIntensity_eCadherin_c1,0.1,"#FFFFFF",NA,NA
+Epithelial_Cells,Intensity_MeanIntensity_eCadherin_c1,0.1,"#FFFFFF",NA,NA
