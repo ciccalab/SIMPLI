@@ -42,7 +42,7 @@ workflow {
             preprocessing_metadata = convert_metadata_to_cp3.out.cp3_metadata.flatten()
         }    
         else{
-            metadata_to_convert = channel.fromPath(params.preprocessing_image_metadata_file)
+            metadata_to_convert = channel.fromPath(params.normalized_metadata_file)
             convert_metadata_to_cp3(singularity_key_getter.out.singularity_key_got, "-cp3_metadata.csv", metadata_to_convert) 
             preprocessing_metadata = convert_metadata_to_cp3.out.cp3_metadata.flatten()
         }
