@@ -128,7 +128,7 @@ workflow {
         }
         if(!params.skip_cluster_visualization){
             if(!params.skip_cell_clustering){
-                clustered_cell_file = cluster_cells.out.clustered_cell_data_file
+                clustered_cell_file = cluster_cells.out.clustered_cell_data
             }
             else{
                 clustered_cell_file = params.clustered_cell_data_file
