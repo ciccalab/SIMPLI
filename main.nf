@@ -90,7 +90,7 @@ workflow {
         if(!params.skip_cell_type_identification)
             annotated_cells = identify_cell_types.out.annotated_cell_data
         else{
-            annotated_cells = params.single_cell_data_file
+            annotated_cells = params.annotated_cell_data_file
         }
         clustering_metadata = channel.fromPath(params.cell_analysis_metadata)
             .splitCsv(header:true)
@@ -103,27 +103,36 @@ workflow {
             .splitCsv(header:false)
             .first()
             .map{row -> row.drop(2).join(",")}
-        if(!params.skip_area){
-            visualize_areas(singularity_key_getter.out.singularity_key_got, categories, measure_areas.out.area_measurements, params.sample_metadata_file)
+        if(!params.skip_area && !params.skip_area_visualization){
+            visualize_areas(singularity_key_getter.out.singularity_key_got, categories, measure_areas.out.area_measurements,
+                params.sample_metadata_file)
         }
-        if(!params.skip_cell_type_identification){
+        if(!params.skip_type_visualization){
             if(!params.skip_segmentation){
                 cell_masks = segment_cells.out.cell_mask_tiffs.collect()
             }
-            else{
+            if(params.skip_segmentation){
                 cell_masks = channel.fromPath(params.single_cell_masks_metadata)
                     .splitCsv(header:true)
                     .map{row -> row.file_name}
                     .collect() 
             }
-            visualize_cell_types(singularity_key_getter.out.singularity_key_got, categories, identify_cell_types.out.annotated_cell_data,
+            if(!params.skip_cell_type_identification){
+                cell_types = identify_cell_types.out.annotated_cell_data 
+            }
+            if(params.skip_cell_type_identification){
+                cell_types = params.annotated_cell_data_file
+            }
+            visualize_cell_types(singularity_key_getter.out.singularity_key_got, categories, cell_types,
                 params.sample_metadata_file, params.cell_analysis_metadata, cell_masks)
         }
-        if(!params.skip_cell_clustering){
+        if(!params.skip_cluster_visualization){
             if(!params.skip_cell_clustering){
-                clustered_cell_file = cluster_cells.out.clustered_cell_data
+                clustered_cell_file = cluster_cells.out.clustered_cell_data_file
             }
-            else{}// *** NOT IMPLEMENTED YET ***
+            else{
+                clustered_cell_file = params.clustered_cell_data_file
+            }
             cluster_visualization_metadata = channel.fromPath(params.cell_analysis_metadata)
                 .splitCsv(header:true)
                 .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
