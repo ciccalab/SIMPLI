@@ -58,7 +58,7 @@ process convert_raw_data_to_tiffs {
     label 'big_memory'
     publishDir "$image_folder/Raw/$sample_name", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_imctools:reupload'
-    containerOptions = "--bind $script_folder:/opt"
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
         val(singularity_key_got)
@@ -118,7 +118,7 @@ process normalize_tiffs {
     
     label 'big_memory'
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
-    containerOptions = "--bind $script_folder:/opt"
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
     
     publishDir "$image_folder/Normalized/$sample_name", mode:'copy', overwrite: true
     
@@ -181,7 +181,7 @@ process image_preprocessing {
 
     label 'big_memory'
     container = 'library://michelebortol/default/simpli_cp3:cp3_fix_dependencies'
-    containerOptions = "--bind $cp3_preprocessing_pipeline_folder:/mnt"
+    containerOptions = "--bind $cp3_preprocessing_pipeline_folder:/mnt,$workflow.launchDir/:/data"
 
     publishDir "$image_folder/Preprocessed/$sample_name", mode:'copy', overwrite: true
                                                                                                 
@@ -225,7 +225,7 @@ process process_preprocessed_metadata {
 
     label 'mid_memory'
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
-    containerOptions = "--bind $script_folder:/opt"
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     publishDir "$image_folder/Preprocessed/", mode:'copy', overwrite: true
     
@@ -256,7 +256,7 @@ process measure_positive_areas {
 
     label 'big_memory'
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
-    containerOptions = "--bind $script_folder:/opt"
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
@@ -289,7 +289,7 @@ process area_visualization {
     label 'mid_memory'
     publishDir "$params.output_folder/Plots/Area_Plots/", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
-    containerOptions = "--bind $script_folder:/opt"
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
         val(singularity_key_got)
@@ -321,8 +321,8 @@ process cell_segmentation {
 
     label 'big_memory'
     container = 'library://michelebortol/default/simpli_cp3:cp3_fix_dependencies'
-    containerOptions = "--bind $cp3_segmentation_pipeline_folder:/mnt"
- 
+    containerOptions = "--bind $cp3_segmentation_pipeline_folder:/mnt,$workflow.launchDir/:/data"
+
     publishDir"$params.output_folder/Segmentation/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
@@ -378,7 +378,8 @@ process collect_single_cell_data {
 process cell_type_identification {
     label 'mid_memory'
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
-    containerOptions = "--bind $script_folder:/opt"
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
+
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
@@ -415,7 +416,7 @@ process cell_type_visualization {
     label 'big_memory'
     publishDir "$params.output_folder/Plots/Cell_Type_Plots", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
-    containerOptions = "--bind $script_folder:/opt"
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
         val(singularity_key_got)
@@ -452,7 +453,7 @@ process cell_clustering {
     label 'big_memory'
     publishDir "$params.output_folder/Cell_Clusters", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
-    containerOptions = "--bind $script_folder:/opt"
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
         val(singularity_key_got)
@@ -486,7 +487,7 @@ process collect_clustering_data {
     label 'mid_memory'
     publishDir "$params.output_folder/", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
-    containerOptions = "--bind $script_folder:/opt"
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
     
     input:
         path(cluster_list)
@@ -514,7 +515,7 @@ process cell_cluster_visualization {
     label 'mid_memory'
     publishDir "$params.output_folder/Plots/Cell_Cluster_Plots", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
-    containerOptions = "--bind $script_folder:/opt"
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
         val(singularity_key_got)
