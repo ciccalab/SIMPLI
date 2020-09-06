@@ -360,14 +360,23 @@ process collect_single_cell_data {
     
     input:
         path(cell_data_list)
+        path(cell_mask_list)
     
     output:
         path("unannotated_cells.csv", emit: unannotated_cell_data)
+        path("cell_mask_metadata.csv", emit: cell_mask_metadata)
 
     script:
     """
     cat $cell_data_list > unannotated_cells.csv
     sed -i '1!{/ImageNumber,ObjectNumber,.*/d;}' unannotated_cells.csv
+
+    echo "sample_name,label,file_name" > cell_mask_metadata.csv
+    echo $cell_mask_list | tr " " "\n" > filename.csv
+    sed "s@\\(.*\\)-\\Cell_Mask\\.tiff@\\1@" filename.csv > sample.csv
+    sed "s@.*-\\(Cell_Mask\\).tiff@\\1@" filename.csv > label.csv
+    paste -d , sample.csv label.csv filename.csv >> cell_mask_metadata.csv
+    rm filename.csv label.csv
     """
 }
 

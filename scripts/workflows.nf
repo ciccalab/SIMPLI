@@ -102,10 +102,12 @@ workflow segment_cells{
         segmentation_metadata_files
     main:
         cell_segmentation(singularity_key_got, segmentation_metadata_files)
-        collect_single_cell_data(cell_segmentation.out.cell_data_csv_by_sample.collect())
+        collect_single_cell_data(cell_segmentation.out.cell_data_csv_by_sample.collect(),
+            cell_segmentation.out.cell_mask_tiffs.collect())
     emit:
         cell_mask_tiffs = cell_segmentation.out.cell_mask_tiffs
         unannotated_cell_data = collect_single_cell_data.out.unannotated_cell_data
+        cell_mask_metadata = collect_single_cell_data.out.cell_mask_metadata
 }
 
 workflow identify_cell_types{
