@@ -34,7 +34,7 @@ rm(cell_type_color)
 
 ###################### Cell Overlays ##########################
 cell_mask_file_names <- sapply(sample_names, function(sample_name){
-cell_mask_file_name <- grep(sample_name, cell_mask_file_list, value = T)
+	cell_mask_file_name <- grep(sample_name, cell_mask_file_list, value = T)
 })
 names(cell_mask_file_names) <- sample_names
 

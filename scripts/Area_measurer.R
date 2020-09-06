@@ -14,7 +14,7 @@ out_file_name <- args[[3]]
 # Expects a .csv file with 3 columns:
 # - sample_name
 # - label
-# - preprocessed_file_name
+# - file_name
 image_metadata <- fread(metadata_file_name)
 all_samples <- unique(image_metadata$sample_name)
 
