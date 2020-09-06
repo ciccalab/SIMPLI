@@ -20,7 +20,8 @@ include {area_visualization} from "$script_folder/processes.nf"
 include {cell_segmentation} from "$script_folder/processes.nf"
 include {collect_single_cell_data} from "$script_folder/processes.nf"
 
-include {cell_type_identification} from "$script_folder/processes.nf"
+include {cell_type_identification_mask} from "$script_folder/processes.nf"
+include {cell_type_identification_expression} from "$script_folder/processes.nf"
 include {cell_type_visualization} from "$script_folder/processes.nf"
 
 include {cell_clustering} from "$script_folder/processes.nf"
@@ -110,15 +111,29 @@ workflow segment_cells{
         cell_mask_metadata = collect_single_cell_data.out.cell_mask_metadata
 }
 
-workflow identify_cell_types{
+workflow identify_cell_types_expression{
     take:
         singularity_key_got
         unannotated_cell_data
         cell_type_metadata
     main:
-        cell_type_identification(singularity_key_got, unannotated_cell_data, cell_type_metadata)
+        cell_type_identification_expression(singularity_key_got, unannotated_cell_data, cell_type_metadata)
     emit:
-        annotated_cell_data = cell_type_identification.out.annotated_cell_data
+        annotated_cell_data = cell_type_identification_expression.out.annotated_cell_data
+}
+
+workflow identify_cell_types_mask{
+    take:
+        singularity_key_got
+        unannotated_cell_data
+        cell_type_metadata
+        image_metadata
+        mask_metadata
+    main:
+        cell_type_identification_mask(singularity_key_got, unannotated_cell_data, cell_type_metadata,
+            image_metadata, mask_metadata)
+    emit:
+        annotated_cell_data = cell_type_identification_mask.out.annotated_cell_data
 }
 
 workflow cluster_cells{

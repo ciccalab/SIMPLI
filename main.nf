@@ -15,7 +15,8 @@ include {measure_areas} from "$script_folder/workflows.nf"
 
 include {segment_cells} from "$script_folder/workflows.nf"
 
-include {identify_cell_types} from "$script_folder/workflows.nf"
+include {identify_cell_types_mask} from "$script_folder/workflows.nf"
+include {identify_cell_types_expression} from "$script_folder/workflows.nf"
 
 include {cluster_cells} from "$script_folder/workflows.nf"
 
@@ -84,11 +85,29 @@ workflow {
         else{
             unannotated_cells = params.single_cell_data_file
         }
-        identify_cell_types(singularity_key_getter.out.singularity_key_got, unannotated_cells, params.cell_analysis_metadata)
+        if(params.cell_identification_method == "mask"){
+            if(!params.skip_segmentation)
+                cell_mask_metadata = segment_cells.out.cell_mask_metadata
+            else{
+                cell_mask_metadta = params.single_cell_masks_metadata
+            }
+            if(!params.skip_preprocessing)
+                image_metadata = preprocess_images.out.preprocessed_tiff_metadata
+            else{
+                image_metadata = params.preprocessed_metadata_file
+            }
+            identify_cell_types_mask(singularity_key_getter.out.singularity_key_got, unannotated_cells, params.cell_analysis_metadata,
+                image_metadata, cell_mask_metadata)
+            annotated_cell_data = identify_cell_types_mask.out.annotated_cell_data
+        }
+        if(params.cell_identification_method == "expression"){
+            identify_cell_types_expression(singularity_key_getter.out.singularity_key_got, unannotated_cells, params.cell_analysis_metadata)
+            annotated_cell_data = identify_cell_types_expression.out.annotated_cell_data
+        }    
     }    
     if(!params.skip_cell_clustering){
         if(!params.skip_cell_type_identification)
-            annotated_cells = identify_cell_types.out.annotated_cell_data
+            annotated_cells = annotated_cell_data 
         else{
             annotated_cells = params.annotated_cell_data_file
         }
@@ -118,7 +137,7 @@ workflow {
                     .collect() 
             }
             if(!params.skip_cell_type_identification){
-                cell_types = identify_cell_types.out.annotated_cell_data 
+                cell_types = annotated_cell_data 
             }
             if(params.skip_cell_type_identification){
                 cell_types = params.annotated_cell_data_file

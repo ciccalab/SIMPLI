@@ -39,5 +39,5 @@ cells[is.na(cell_type), cell_type := "UNASSIGNED"]
 cells[, (c(expression_columns, bool_columns)) := NULL]
 
 ########## Output ###################
-cells[, CellName := paste0(Metadata_sample_name, "_", ObjectNumber)]
+cells[, CellName := paste0(Metadata_sample_name, "-", ObjectNumber)]
 fwrite(cells, out_file_name)
