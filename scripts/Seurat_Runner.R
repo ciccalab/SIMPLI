@@ -82,18 +82,18 @@ cat("Finding Clusters\n")
 seurats_integrated@meta.data <- as.data.table(seurats_integrated@meta.data, keep.rownames = "CellName")
 seurats_integrated@meta.data[, orig.ident := NULL]
 seurats_integrated <- FindClusters(seurats_integrated, reduction.type = reduction.type,
-  dims.use = 1:total_dimensions, resolution = resolutions[[1]], save.SNN = TRUE, reuse.SNN = FALSE)
+	dims.use = 1:total_dimensions, resolution = resolutions[[1]], save.SNN = TRUE, reuse.SNN = FALSE)
 if (length(resolutions) > 1){
   identities <- lapply(resolutions[2:length(resolutions)], function(res){
   	seurats_integrated <- FindClusters(seurats_integrated, reduction.type = reduction.type,
-      dims.use = 1:total_dimensions, resolution = res,	save.SNN = FALSE, reuse.SNN = TRUE)@ident
+      dims.use = 1:total_dimensions, resolution = res, save.SNN = FALSE, reuse.SNN = TRUE)@ident
   })
   names(identities) <- paste0("res_", resolutions[2:length(resolutions)], "_ids")
   seurats_integrated@meta.data <- cbind(seurats_integrated@meta.data, as.data.table(identities))
 }
 setnames(seurats_integrated@meta.data, paste0("res.", resolutions[[1]]), paste0("res_", resolutions[[1]], "_ids"))
 seurats_integrated@meta.data <- merge(seurats_integrated@meta.data, clustering_data,
- by = c("CellName", "Metadata_sample_name"))
+	by = c("CellName", "Metadata_sample_name"))
 
 ####### Align the CCA subspaces #######
 dir.create(output_folder, recursive = T, showWarnings = F)
