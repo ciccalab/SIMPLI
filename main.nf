@@ -89,7 +89,7 @@ workflow {
             if(!params.skip_segmentation)
                 cell_mask_metadata = segment_cells.out.cell_mask_metadata
             else{
-                cell_mask_metadta = params.single_cell_masks_metadata
+                cell_mask_metadata = params.single_cell_masks_metadata
             }
             if(!params.skip_preprocessing)
                 image_metadata = preprocess_images.out.preprocessed_tiff_metadata
