@@ -75,6 +75,9 @@ process_image <- function(name_sample, expressions)
   image_names <- unique(c(as.character(unlist(sapply(parsed, all.vars))), divided))
   marker_file_names <- sapply(image_names, function(marker_name){
     image_metadata[sample_name == name_sample & label == marker_name, file_name]})
+  cat("\n\n")
+  print(name_sample)
+  print(marker_file_names)
   imgs <- lapply(marker_file_names, tiff_loader)
   imgs <- lapply(imgs, function(x){x & x})
   names(imgs) <- image_names
