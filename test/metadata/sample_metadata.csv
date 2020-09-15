@@ -1,3 +1,3 @@
 sample_name,color,TEST_A
 CRC_1,magenta,A
-CRC_2,"#00FFFF",B
+CRC_2,#00FFFF,B
