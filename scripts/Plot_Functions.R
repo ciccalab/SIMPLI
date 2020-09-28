@@ -126,8 +126,8 @@ boxplotter <- function(data, y_axis_variable_name, y_axis_title, group_variable_
 	# Two-tailed Wilcoxon test between the two groups:
 	g1 <- local_data[local_data[,group_variable_name] == levels(local_data[,group_variable_name])[1], y_axis_variable_name]
 	g2 <- local_data[local_data[,group_variable_name] == levels(local_data[,group_variable_name])[2], y_axis_variable_name]
-	wilcox_groups <- wilcox.test(g1, g2)
-	list_return[["pval"]] <- wilcox_groups$p.value
+	wilcox_groups <- try(wilcox.test(g1, g2))
+	list_return[["pval"]] <- ifelse(class(wilcox_groups) != "try-error", wilcox_groups$p.value, 1)
 	# Creating Boxplot:
 	y_ticks <- seq(from = 0, to = max(local_data[,y_axis_variable_name]), length.out = 10)
 	list_return[["bp"]] <- ggplot(data = local_data, aes_string(x = group_variable_name, y = y_axis_variable_name,
