@@ -9,7 +9,7 @@ arguments <- commandArgs(trailingOnly = TRUE)
 print(arguments)                                                                                                           
 cell_file_name <- arguments[[1]]                                                                                             
 sample_metadata_file_name <- arguments[[2]]
-comparison_columns <- strsplit(arguments[[3]], ",")[[1]]   
+comparison_column <- arguments[[3]]  
 cell_population <- arguments[[4]]                                                                                          
 markers <- strsplit(arguments[[5]], "@")[[1]]                                                                              
 resolutions <- as.numeric(strsplit(arguments[[6]], "@")[[1]])                                                              
@@ -22,10 +22,12 @@ resolutions <- paste0("res_", resolutions, "_ids")
 
 ######## Cell data #######
 Cells <- fread(cell_file_name)
+Cells <- Cells[Comparison == comparison_column, ]
 Samples <- fread(sample_metadata_file_name)
-Samples[, c(comparison_columns) :=  lapply(.SD, function(x){ifelse(is.na(x), "NA", x)}), .SDcols = comparison_columns]
+setnames(Samples, comparison_column, "comparison_column")
+Samples[is.na(comparison_column), comparison_column := "NA" ]
 suppressWarnings(Cells[, color := NULL])
-suppressWarnings(Cells[, comparison_columns := NULL])
+suppressWarnings(Cells[, comparison_column := NULL])
 Cells <- merge(Cells, Samples, by.x = "Metadata_sample_name", by.y = "sample_name")
 
 ######## Heatmaps #######
@@ -71,59 +73,40 @@ umap_marker_plots <- lapply(resolutions, function(res){
 names(umap_marker_plots) <- resolutions
 
 ###################### Boxplots by Cluster ##########################
-n_categories <- sapply(comparison_columns, function(comparison_column){
-	sum(unique(Samples[[comparison_column]]) != "NA")
-})
-names(n_categories) <- comparison_columns
+n_categories <- sum(unique(Samples$comparison_column) != "NA")
 
 sample_colors <- Samples[, color]
 names(sample_colors) <- Samples[, color]
 
-comparison_boxplots <- lapply(comparison_columns, function(comparison_column){
-	all_boxplots <- list()
-	if(n_categories[[comparison_column]] == 2){
-		all_boxplots <- lapply(resolutions, function(res){
-			plot_dataset <- copy(Cells)		
-			plot_dataset <- plot_dataset[plot_dataset[[comparison_column]] != "NA"]
-			plot_dataset[, n_cells := .N, by = c("Metadata_sample_name", res)]
-			plot_dataset[, total := .N, by = "Metadata_sample_name"]
-			plot_dataset[, frac := n_cells / total * 100]
-			cluster_boxplots <- list_boxplotter(plot_dataset, "Metadata_sample_name", res, comparison_column, "frac",
-				"Cells in cluster / total cells %", "color", sample_colors)
-			lapply(cluster_boxplots, function(x){x$Plot})
-		})
-		names(all_boxplots) <- resolutions
-	}
-	return(all_boxplots)
-})
-names(comparison_boxplots) <- comparison_columns 
+if(n_categories == 2){
+	plot_dataset <- copy(Cells)		
+	plot_dataset <- plot_dataset[comparison_column != "NA"]
+	plot_dataset[, total := .N, by = "Metadata_sample_name"]
+	comparison_boxplots <- lapply(resolutions, function(res){
+		plot_dataset[, n_cells := .N, by = c("Metadata_sample_name", res)]
+		plot_dataset[, frac := n_cells / total * 100]
+		cluster_boxplots <- list_boxplotter(plot_dataset, "Metadata_sample_name", res, "comparison_column", "frac",
+			"Cells in cluster / total cells %", "color", sample_colors)
+		lapply(cluster_boxplots, function(x){x$Plot})
+	})
+	names(comparison_boxplots) <- resolutions
+}
 
 comparison_output_folder <- file.path(output_folder, "Cluster_Comparisons")
 dir.create(comparison_output_folder, recursive = T, showWarnings = F)
 
-for(comparison_column in comparison_columns){
-	umap_output_folder <- file.path(output_folder, "UMAPs")
-	dir.create(umap_output_folder, recursive = T, showWarnings = F)
-	for(res in resolutions){
-		multi_pdf_plotter(c(list(umap_cluster_plots[[res]]), list(umap_sample_plots[[res]]), umap_marker_plots[[res]]),
-			filename = file.path(umap_output_folder, paste0("UMAPs-", res, ".pdf"))) 
-		if(n_categories[[comparison_column]] == 2){
-			pdf(NULL)
-			arranged_grobs <- marrangeGrob(grobs = comparison_boxplots[[comparison_column]][[res]],
-				nrow = 3, ncol = 2, top = NULL)
-			dev.off()
-			pdf(file.path(comparison_output_folder, paste0(comparison_column, "-", res, "-plots.pdf")),
-				width = multi_pdf_w, height = multi_pdf_h, useDingbats = F)
-			print(heatmaps[[res]])
-			print(arranged_grobs)
-			dev.off()
-		}	
-	}
-}	
-
-if (all(n_categories != 2)){
-	for(res in resolutions){
-		pdf_plotter(file.path(comparison_output_folder, paste0("Heatmap-", res, ".pdf")), heatmaps[[res]],
-			width = single_pdf_w, height = single_pdf_h)
-	}
+umap_output_folder <- file.path(output_folder, "UMAPs")
+dir.create(umap_output_folder, recursive = T, showWarnings = F)
+for(res in resolutions){
+	multi_pdf_plotter(c(list(umap_cluster_plots[[res]]), list(umap_sample_plots[[res]]), umap_marker_plots[[res]]),
+		filename = file.path(umap_output_folder, paste0("UMAPs-", res, ".pdf"))) 
+	pdf(file.path(comparison_output_folder, paste0(comparison_column, "-", res, "-plots.pdf")),
+		width = multi_pdf_w, height = multi_pdf_h, useDingbats = F)
+	print(heatmaps[[res]])
+	if(n_categories == 2){
+		arranged_grobs <- marrangeGrob(grobs = comparison_boxplots[[res]], nrow = 3, ncol = 2, top = NULL)
+		print(arranged_grobs)
+	}	
+	dev.off()
 }
+

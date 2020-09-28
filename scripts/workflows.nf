@@ -141,9 +141,11 @@ workflow cluster_cells{
         singularity_key_got
         annotated_cell_data
         cell_type_metadata
+        category_columns
+        sample_metadata
     main:
-        cell_clustering(singularity_key_got, annotated_cell_data, cell_type_metadata)
-        collect_clustering_data(cell_clustering.out.cluster_csv_files)
+        cell_clustering(singularity_key_got, annotated_cell_data, cell_type_metadata, category_columns, sample_metadata)
+        collect_clustering_data(cell_clustering.out.cluster_csv_files.collect())
     emit:
         cluster_csv_files = cell_clustering.out.cluster_csv_files
         cluster_rdata_files = cell_clustering.out.cluster_rdata_files

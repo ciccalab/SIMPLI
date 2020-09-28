@@ -487,7 +487,7 @@ process cell_type_visualization {
 
 process cell_clustering {
 
-    label 'big_memory'
+    label 'huge_memory'
     publishDir "$params.output_folder/Cell_Clusters", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
@@ -496,20 +496,24 @@ process cell_clustering {
         val(singularity_key_got)
         path(annotated_cell_file)
         tuple val(cell_type), val(markers), val(resolutions)
+        val(category_column)
+        path(sample_metadata_file)
 
     output:
-        path("$cell_type/*_clusters.csv", emit: cluster_csv_files)
-        path("$cell_type/*_clusters.RData", emit: cluster_rdata_files)
+        path("$cell_type-$category_column/*-clusters.csv", emit: cluster_csv_files)
+        path("$cell_type-$category_column/*-clusters.RData", emit: cluster_rdata_files)
     
     script:
     """
     Rscript /opt/Seurat_Runner.R \\
         $annotated_cell_file \\
+        $sample_metadata_file \\
+        $category_column \\
         $cell_type \\
         $markers \\
         $resolutions \\
-        $cell_type \\
-        $cell_type > clustering_log.txt 2>&1
+        "$cell_type-$category_column" \\
+        "$cell_type-$category_column" > clustering_log.txt 2>&1
     """
 }
 
@@ -549,34 +553,33 @@ process collect_clustering_data {
 
 process cell_cluster_visualization {
 
-    label 'mid_memory'
+    label 'big_memory'
     publishDir "$params.output_folder/Plots/Cell_Cluster_Plots", mode:'copy', overwrite: true
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
         val(singularity_key_got)
-        val(category_columns)
+        val(category_column)
         tuple val(cell_type), val(markers), val(resolutions)
         path(clustered_cell_file)
         path(sample_metadata_file)
 
     output:
-        path("$cell_type/**/*.pdf", emit: cell_cluster_plots) optional true
-    
+        path("$cell_type-$category_column/**/*.pdf", emit: cell_cluster_plots) optional true
+         
     script:
     """
     Rscript /opt/Cell_Cluster_Plotter.R \\
         $clustered_cell_file \\
         $sample_metadata_file \\
-        $category_columns \\
+        $category_column \\
         $cell_type \\
         $markers \\
         $resolutions \\
         $params.high_color \\
         $params.mid_color \\
         $params.low_color \\
-        $cell_type \\
-        $cell_type > cell_plotting_log.txt 2>&1
+        $cell_type-$category_column > cell_plotting_log.txt 2>&1
     """
 }

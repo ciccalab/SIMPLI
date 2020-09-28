@@ -7,18 +7,27 @@ library(Seurat)
 
 arguments <- commandArgs(trailingOnly = TRUE)
 print(arguments)
-in_file_name <- arguments[[1]]
-cell_type_target <- arguments[[2]]
-markers <- strsplit(arguments[[3]], "@")[[1]]
-resolutions <- as.numeric(strsplit(arguments[[4]], "@")[[1]])
-output_prefix <- arguments[[5]]
-output_folder <- arguments[[6]]
+cell_file_name <- arguments[[1]]
+sample_file_name <- arguments[[2]]
+comparison_column <- arguments[[3]]
+cell_type_target <- arguments[[4]]
+markers <- strsplit(arguments[[5]], "@")[[1]]
+resolutions <- as.numeric(strsplit(arguments[[6]], "@")[[1]])
+output_prefix <- arguments[[7]]
+output_folder <- arguments[[8]]
 
 ####### Get the data for clustering #######
 cat("Reading the clustering data by sample\n")
-clustering_data <- fread(in_file_name)
+clustering_data <- fread(cell_file_name)
 clustering_data <- clustering_data[cell_type == cell_type_target]
-sample_names <- unique(clustering_data$Metadata_sample_name)
+
+samples <- fread(sample_file_name)
+setnames(samples, comparison_column, "comparison_column")
+samples[is.na(comparison_column), comparison_column :=  "NA"]
+sample_names <- samples[comparison_column != "NA", sample_name]
+clustering_data <- clustering_data[Metadata_sample_name %in% sample_names, ]
+sample_names <- sample_names[sample_names %in% unique(clustering_data$Metadata_sample_name)]
+
 clustering_data_by_sample <- lapply(sample_names, function(name){
 	mat <- as.matrix(transpose(clustering_data[Metadata_sample_name == name, ..markers]))
 	row.names(mat) <- markers
@@ -44,8 +53,8 @@ if (length(sample_names) > 1){
   if(length(sample_names) > 2){
     cat("Running the multiple CCA analysis.\n")
     seurats_integrated <- try(RunMultiCCA_Changed(seurats_by_sample, genes.use = markers,
-      num.cc = total_dimensions, check_duplicates = FALSE))
-	while(class(seurats_integrated) == "try-error" & total_dimensions > 0)
+      num.cc = total_dimensions))
+	while(class(seurats_integrated) == "try-error" & total_dimensions > 1)
 	{
 		total_dimensions <- total_dimensions - 1	
 		cat(paste0("Reduced dimensions: ", total_dimensions, "\n"))
@@ -57,7 +66,7 @@ if (length(sample_names) > 1){
     cat("Running the CCA analysis.\n")
     seurats_integrated <- try(RunCCA(seurats_by_sample[[1]], seurats_by_sample[[2]],
       genes.use = markers, num.cc = total_dimensions))
-	while(class(seurats_integrated) == "try-error" & total_dimensions > 0)
+	while(class(seurats_integrated) == "try-error" & total_dimensions > 1)
 	{
 		total_dimensions <- total_dimensions - 1	
 		cat(paste0("Reduced dimensions: ", total_dimensions, "\n"))
@@ -67,37 +76,47 @@ if (length(sample_names) > 1){
   }
   reduction.type = "cca"
   cat(paste0("Aligning Subspaces, dimensions: ", total_dimensions, "\n"))
-  seurats_integrated <- AlignSubspace(seurats_integrated, reduction.type = reduction.type,
+  seurats_aligned <- try(AlignSubspace(seurats_integrated, reduction.type = reduction.type,
     grouping.var = "Metadata_sample_name", verbose = F, dims.align = 1:total_dimensions,
-    num.genes = max(total_dimensions / 2, 2))
+    num.genes = max(total_dimensions / 2, 2)))
+	while(class(seurats_aligned) == "try-error" & total_dimensions > 1)
+	{
+		total_dimensions <- total_dimensions - 1	
+		cat(paste0("Aligning Subspaces, dimensions: ", total_dimensions, "\n"))
+		seurats_aligned <- try(AlignSubspace(seurats_integrated, reduction.type = reduction.type,
+			grouping.var = "Metadata_sample_name", verbose = F, dims.align = 1:total_dimensions,
+			num.genes = max(total_dimensions / 2, 2)))
+	}
 }else{
   reduction.type = "pca"
   cat("Performing PCA\n")
-  seurats_integrated <- RunPCA(object = seurats_by_sample[[1]], pc.genes = markers, do.print = F)
+  seurats_aligned <- RunPCA(object = seurats_by_sample[[1]], pc.genes = markers, do.print = F)
 }  
 rm(seurats_by_sample)
 
 ####### Align the CCA subspaces #######
 cat("Finding Clusters\n")
-seurats_integrated@meta.data <- as.data.table(seurats_integrated@meta.data, keep.rownames = "CellName")
-seurats_integrated@meta.data[, orig.ident := NULL]
-seurats_integrated <- FindClusters(seurats_integrated, reduction.type = reduction.type,
-	dims.use = 1:total_dimensions, resolution = resolutions[[1]], save.SNN = TRUE, reuse.SNN = FALSE)
+seurats_aligned@meta.data <- as.data.table(seurats_aligned@meta.data, keep.rownames = "CellName")
+seurats_aligned@meta.data[, orig.ident := NULL]
+seurats_aligned <- FindClusters(seurats_aligned, reduction.type = reduction.type,
+	dims.use = 1:total_dimensions, resolution = resolutions[[1]], save.SNN = TRUE, reuse.SNN = FALSE,
+	edge.file.name = "edge_file_seurat.txt")
 if (length(resolutions) > 1){
   identities <- lapply(resolutions[2:length(resolutions)], function(res){
-  	seurats_integrated <- FindClusters(seurats_integrated, reduction.type = reduction.type,
-      dims.use = 1:total_dimensions, resolution = res, save.SNN = FALSE, reuse.SNN = TRUE)@ident
+  	seurats_aligned <- FindClusters(seurats_aligned, reduction.type = reduction.type,
+      dims.use = 1:total_dimensions, resolution = res, save.SNN = FALSE, reuse.SNN = TRUE,
+	  edge.file.name = "edge_file_seurat.txt")@ident
   })
   names(identities) <- paste0("res_", resolutions[2:length(resolutions)], "_ids")
-  seurats_integrated@meta.data <- cbind(seurats_integrated@meta.data, as.data.table(identities))
+  seurats_aligned@meta.data <- cbind(seurats_aligned@meta.data, as.data.table(identities))
 }
-setnames(seurats_integrated@meta.data, paste0("res.", resolutions[[1]]), paste0("res_", resolutions[[1]], "_ids"))
-seurats_integrated@meta.data <- merge(seurats_integrated@meta.data, clustering_data,
+setnames(seurats_aligned@meta.data, paste0("res.", resolutions[[1]]), paste0("res_", resolutions[[1]], "_ids"))
+seurats_aligned@meta.data <- merge(seurats_aligned@meta.data, clustering_data,
 	by = c("CellName", "Metadata_sample_name"))
 
 ####### Align the CCA subspaces #######
 dir.create(output_folder, recursive = T, showWarnings = F)
-out_name <- paste0(output_folder, "/", output_prefix, "_clusters")
-save(seurats_integrated, file = paste0(out_name, ".RData"))
-fwrite(seurats_integrated@meta.data, file = paste0(out_name, ".csv"))
+out_name <- paste0(output_folder, "/", output_prefix, "-clusters")
+save(seurats_aligned, file = paste0(out_name, ".RData"))
+fwrite(seurats_aligned@meta.data, file = paste0(out_name, ".csv"))
 cat("Finished!\n")
