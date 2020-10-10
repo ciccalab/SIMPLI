@@ -1,11 +1,14 @@
 script_folder = "$baseDir/scripts"
 image_folder = "$params.output_folder/Images"
 
-cp3_preprocessing_pipeline_folder = file(params.cp3_preprocessing_cppipe).getParent()
-cp3_preprocessing_pipeline = file(params.cp3_preprocessing_cppipe).getName() 
-cp3_segmentation_pipeline_folder = file(params.cp3_segmentation_cppipe).getParent()
-cp3_segmentation_pipeline = file(params.cp3_segmentation_cppipe).getName() 
-
+if (params.cp3_preprocessing_cppipe){
+    cp3_preprocessing_pipeline_folder = file(params.cp3_preprocessing_cppipe).getParent()
+    cp3_preprocessing_pipeline = file(params.cp3_preprocessing_cppipe).getName()
+}
+if (params.cp3_segmentation_cppipe){
+    cp3_segmentation_pipeline_folder = file(params.cp3_segmentation_cppipe).getParent()
+    cp3_segmentation_pipeline = file(params.cp3_segmentation_cppipe).getName() 
+}
 /* Gets the Singularity key to verify the containers used by the pipeline */
 
 process get_singularity_key {
