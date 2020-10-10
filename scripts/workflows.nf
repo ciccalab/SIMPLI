@@ -141,10 +141,9 @@ workflow cluster_cells{
         singularity_key_got
         annotated_cell_data
         cell_type_metadata
-        category_columns
         sample_metadata
     main:
-        cell_clustering(singularity_key_got, annotated_cell_data, cell_type_metadata, category_columns, sample_metadata)
+        cell_clustering(singularity_key_got, annotated_cell_data, cell_type_metadata, sample_metadata)
         collect_clustering_data(cell_clustering.out.cluster_csv_files.collect())
     emit:
         cluster_csv_files = cell_clustering.out.cluster_csv_files
@@ -155,11 +154,10 @@ workflow cluster_cells{
 workflow visualize_areas{
     take:
         singularity_key_got
-        categories
         area_measurement_file 
         sample_metadata_file
     main:
-        area_visualization(singularity_key_got, categories, area_measurement_file, sample_metadata_file)
+        area_visualization(singularity_key_got, area_measurement_file, sample_metadata_file)
     emit:
         area_plots =  area_visualization.out.area_plots
 }
@@ -167,13 +165,12 @@ workflow visualize_areas{
 workflow visualize_cell_types{
     take:
         singularity_key_got
-        categories
         annotated_cell_file
         sample_metadata_file
         cell_metadata_file
         cell_mask_files 
     main:
-        cell_type_visualization(singularity_key_got, categories, annotated_cell_file, sample_metadata_file, cell_metadata_file, cell_mask_files)
+        cell_type_visualization(singularity_key_got, annotated_cell_file, sample_metadata_file, cell_metadata_file, cell_mask_files)
     emit:
         cell_type_plots = cell_type_visualization.out.cell_type_plots
         cell_type_overlays = cell_type_visualization.out.cell_type_overlays
@@ -182,12 +179,11 @@ workflow visualize_cell_types{
 workflow visualize_cell_clusters{
     take:
         singularity_key_got
-        categories
         cluster_visualization_metadata
         clustered_cell_file
         sample_metadata_file
     main:
-        cell_cluster_visualization(singularity_key_got, categories, cluster_visualization_metadata, clustered_cell_file, sample_metadata_file)
+        cell_cluster_visualization(singularity_key_got, cluster_visualization_metadata, clustered_cell_file, sample_metadata_file)
     emit:
         cell_cluster_plots = cell_cluster_visualization.out.cell_cluster_plots
 }

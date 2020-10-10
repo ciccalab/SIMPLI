@@ -280,7 +280,7 @@ process measure_positive_areas {
     """
 }
 
-/* For each category to compare if there are 2 types of samples:
+/* If there are 2 types of samples:
     For each main marker:
         compare all its combinationations with other markers between the two types of samples,
         and make one boxplot each. Output the boxplots in a single multipage pdf file:
@@ -296,7 +296,6 @@ process area_visualization {
 
     input:
         val(singularity_key_got)
-        val(category_columns)
         path(area_file) 
         path(sample_metadata_file)
 
@@ -308,7 +307,6 @@ process area_visualization {
     Rscript /opt/Area_Plotter.R \\
         $area_file \\
         $sample_metadata_file \\
-        $category_columns \\
         . > area_plotting_log.txt 2>&1
     """
 }
@@ -440,9 +438,9 @@ process cell_type_identification_mask {
 }
 
 /* Visualization of cell annotations as main cell types:
-   - For each category to compare if there are 2 types of samples:
+   - If there are 2 types of samples:
         - 1 Boxplot for each main cell type, collected in: $params.output_folder/Plots/Cell_Type_Plots/Boxplots/boxplots-CATEGORY.pdf
-   - For each category and once more by sample:
+   - Once by category and once more by sample:
         - Barplot with the percentage of each cell type in the category type or sample, collected into
           a single file in: $params.output_folder/Plots/Cell_Type_Plots/Barplots/barplots.pdf
    - For each sample:
@@ -460,7 +458,6 @@ process cell_type_visualization {
 
     input:
         val(singularity_key_got)
-        val(category_columns)
         path(annotated_cell_file)
         path(sample_metadata_file)
         path(cell_metadata_file)
@@ -475,7 +472,6 @@ process cell_type_visualization {
     Rscript /opt/Cell_Type_Plotter.R \\
         $annotated_cell_file \\
         $sample_metadata_file \\
-        $category_columns \\
         $cell_metadata_file \\
         . \\
         $cell_mask_list > cell_type_plotting.txt 2>&1
@@ -499,24 +495,22 @@ process cell_clustering {
         val(singularity_key_got)
         path(annotated_cell_file)
         tuple val(cell_type), val(markers), val(resolutions)
-        val(category_column)
         path(sample_metadata_file)
 
     output:
-        path("$cell_type-$category_column/*-clusters.csv", emit: cluster_csv_files)
-        path("$cell_type-$category_column/*-clusters.RData", emit: cluster_rdata_files)
+        path("$cell_type/*-clusters.csv", emit: cluster_csv_files)
+        path("$cell_type/*-clusters.RData", emit: cluster_rdata_files)
     
     script:
     """
     Rscript /opt/Seurat_Runner.R \\
         $annotated_cell_file \\
         $sample_metadata_file \\
-        $category_column \\
         $cell_type \\
         $markers \\
         $resolutions \\
-        "$cell_type-$category_column" \\
-        "$cell_type-$category_column" > clustering_log.txt 2>&1
+        $cell_type \\
+        $cell_type > clustering_log.txt 2>&1
     """
 }
 
@@ -547,8 +541,7 @@ process collect_clustering_data {
 }
 
 /* Visualization of cell annotations as main cell types, for each cell type and clustering resolution:
-   - For each category to compare:
-        - An heatmap with marker expression by cluster, and a boxplot for each cluster (if there are two groups in the category): 
+    - An heatmap with marker expression by cluster, and a boxplot for each cluster (if there are two groups in the category): 
         $params.output_folder/Plots/Cell_Cluster_Plots/CELL_TYPE/Cluster_Comparisons/CATEGORY-RESOLUTION-plots.pdf
    - UMAPS by cluster, marker, and sample:
         $params.output_folder/Plots/Cell_Cluster_Plots/CELL_TYPE/UMAPs/UMAPs-RESOLUTION.pdf
@@ -563,26 +556,24 @@ process cell_cluster_visualization {
 
     input:
         val(singularity_key_got)
-        val(category_column)
         tuple val(cell_type), val(markers), val(resolutions)
         path(clustered_cell_file)
         path(sample_metadata_file)
 
     output:
-        path("$cell_type-$category_column/**/*.pdf", emit: cell_cluster_plots) optional true
+        path("$cell_type/**/*.pdf", emit: cell_cluster_plots) optional true
          
     script:
     """
     Rscript /opt/Cell_Cluster_Plotter.R \\
         $clustered_cell_file \\
         $sample_metadata_file \\
-        $category_column \\
         $cell_type \\
         $markers \\
         $resolutions \\
         $params.high_color \\
         $params.mid_color \\
         $params.low_color \\
-        $cell_type-$category_column > cell_plotting_log.txt 2>&1
+        $cell_type > cell_plotting_log.txt 2>&1
     """
 }

@@ -115,23 +115,11 @@ workflow {
             .splitCsv(header:true)
             .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
             .filter{!it.contains("NA")}
-        categories = channel.fromPath(params.sample_metadata_file)
-            .splitCsv(header:false)
-            .first()
-            .map{row -> row.drop(2)}
-            .flatten()
-            .combine(clustering_metadata)
-        clustering_metadata = categories.map{el -> tuple(el[1], el[2], el[3])}
-        categories = categories.map{el -> el[0]}
-        cluster_cells(singularity_key_getter.out.singularity_key_got, annotated_cells, clustering_metadata, categories, params.sample_metadata_file)
+        cluster_cells(singularity_key_getter.out.singularity_key_got, annotated_cells, clustering_metadata, params.sample_metadata_file)
     }    
     if(!params.skip_visualization){
-        categories_joined = channel.fromPath(params.sample_metadata_file)
-            .splitCsv(header:false)
-            .first()
-            .map{row -> row.drop(2).join(",")}
         if(!params.skip_area && !params.skip_area_visualization){
-            visualize_areas(singularity_key_getter.out.singularity_key_got, categories_joined, measure_areas.out.area_measurements,
+            visualize_areas(singularity_key_getter.out.singularity_key_got, measure_areas.out.area_measurements,
                 params.sample_metadata_file)
         }
         if(!params.skip_type_visualization){
@@ -150,7 +138,7 @@ workflow {
             if(params.skip_cell_type_identification){
                 cell_types = params.annotated_cell_data_file
             }
-            visualize_cell_types(singularity_key_getter.out.singularity_key_got, categories_joined, cell_types,
+            visualize_cell_types(singularity_key_getter.out.singularity_key_got, cell_types,
                 params.sample_metadata_file, params.cell_analysis_metadata, cell_masks)
         }
         if(!params.skip_cluster_visualization){
@@ -164,15 +152,7 @@ workflow {
                 .splitCsv(header:true)
                 .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
                 .filter{!it.contains("NA")}
-            categories = channel.fromPath(params.sample_metadata_file)
-                .splitCsv(header:false)
-                .first()
-                .map{row -> row.drop(2)}
-                .flatten()
-                .combine(clustering_metadata)
-            clustering_metadata = categories.map{el -> tuple(el[1], el[2], el[3])}
-            categories = categories.map{el -> el[0]}
-            visualize_cell_clusters(singularity_key_getter.out.singularity_key_got, categories, clustering_metadata,
+            visualize_cell_clusters(singularity_key_getter.out.singularity_key_got, clustering_metadata,
                 clustered_cell_file, params.sample_metadata_file)
         }
     }

@@ -9,12 +9,11 @@ arguments <- commandArgs(trailingOnly = TRUE)
 print(arguments)
 cell_file_name <- arguments[[1]]
 sample_file_name <- arguments[[2]]
-comparison_column <- arguments[[3]]
-cell_type_target <- arguments[[4]]
-markers <- strsplit(arguments[[5]], "@")[[1]]
-resolutions <- as.numeric(strsplit(arguments[[6]], "@")[[1]])
-output_prefix <- arguments[[7]]
-output_folder <- arguments[[8]]
+cell_type_target <- arguments[[3]]
+markers <- strsplit(arguments[[4]], "@")[[1]]
+resolutions <- as.numeric(strsplit(arguments[[5]], "@")[[1]])
+output_prefix <- arguments[[6]]
+output_folder <- arguments[[7]]
 
 ####### Get the data for clustering #######
 cat("Reading the clustering data by sample\n")
@@ -22,9 +21,8 @@ clustering_data <- fread(cell_file_name)
 clustering_data <- clustering_data[cell_type == cell_type_target]
 
 samples <- fread(sample_file_name)
-setnames(samples, comparison_column, "comparison_column")
-samples[is.na(comparison_column), comparison_column :=  "NA"]
-sample_names <- samples[comparison_column != "NA", sample_name]
+samples[is.na(comparison), comparison :=  "NA"]
+sample_names <- samples[comparison != "NA", sample_name]
 clustering_data <- clustering_data[Metadata_sample_name %in% sample_names, ]
 sample_names <- sample_names[sample_names %in% unique(clustering_data$Metadata_sample_name)]
 

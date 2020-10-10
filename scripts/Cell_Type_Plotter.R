@@ -6,24 +6,22 @@ library(EBImage)
 source("/opt/Plot_Functions.R")
 
 arguments <- commandArgs(trailingOnly = TRUE)                                                                              
-print(arguments)                                                                                                           
 cell_file_name <- arguments[[1]]                                                                                             
 sample_metadata_file_name <- arguments[[2]]
-comparison_columns <- strsplit(arguments[[3]], ",")[[1]]    
-cell_cell_type_metadata_file_name <- arguments[[4]]
-output_folder <- arguments[[5]]   
-cell_mask_file_list <- unlist(arguments[6:length(arguments)])
+cell_cell_type_metadata_file_name <- arguments[[3]]
+output_folder <- arguments[[4]]   
+cell_mask_file_list <- unlist(arguments[5:length(arguments)])
 
 ######## Cell data #######
 Cells <- fread(cell_file_name)
 Samples <- fread(sample_metadata_file_name)
-print(comparison_columns)
-Samples[, c(comparison_columns) := lapply(.SD, function(x){ifelse(is.na(x), "NA", x)}), .SDcols = comparison_columns]
+Samples[is.na(comparison), comparison := "NA" ]
 suppressWarnings(Cells[, color := NULL])
-suppressWarnings(Cells[, comparison_columns := NULL])
+suppressWarnings(Cells[, comparison := NULL])
 Cells <- merge(Cells, Samples, by.x = "Metadata_sample_name", by.y = "sample_name")
+Cells <- Cells[comparison != "NA",]
 
-sample_names <- Samples[, sample_name]
+sample_names <- Samples[comparison != "NA", sample_name]
 
 ###################### Read cell type colors from the cell type metadata  ##########################
 cell_type_color <- fread(cell_cell_type_metadata_file_name)
@@ -65,34 +63,26 @@ legend_plot <- ggplot(data = legend_table) +
 sample_barplot <- Barplotter(Cells, "Metadata_sample_name", "Metadata_sample_name", "cell_type",
 	color_list, "Cell type cells / total cells %")
 
-comparison_barplots <- NULL
+comparison_barplot <- NULL
 if(length(sample_names) > 1){
-	comparison_barplots <- lapply(comparison_columns, function(comparison_column){
-		Barplotter(Cells[Cells[[comparison_column]] != "NA"], "Metadata_sample_name",
-			comparison_column, "cell_type",	color_list, "Cell type cells / total cells %")
-	})
-	names(comparison_barplots) <- comparison_columns
+	comparison_barplot <- Barplotter(Cells, "Metadata_sample_name", "comparison", "cell_type",	color_list, "Cell type cells / total cells %")
 }
 
 ###################### Boxplots by Population ##########################
-comparison_boxplots <- lapply(comparison_columns, function(comparison_column){
-	n_categories <- sum(unique(Samples[[comparison_column]]) != "NA")
-	sample_colors <- Samples[, color]
-	names(sample_colors) <- Samples[, color]
-	cell_type_boxplots <- list()
-	if(n_categories == 2){
-	# Boxplots should be made only when we have 2 groups to compare
-		plot_dataset <- copy(Cells)		
-		plot_dataset <- plot_dataset[plot_dataset[[comparison_column]] != "NA"]
-		plot_dataset[, n_cells := .N, by = c("Metadata_sample_name", "cell_type")]
-		plot_dataset[, total := .N, by = "Metadata_sample_name"]
-		plot_dataset[, percentage := n_cells / total * 100]
-		cell_type_boxplots <- list_boxplotter(plot_dataset, "Metadata_sample_name", "cell_type", comparison_column, "percentage",
-			"Cell type cells / total cells %", "color", sample_colors)
-		lapply(cell_type_boxplots, function(x){x$Plot})
-	}
-})
-names(comparison_boxplots) <- comparison_columns
+n_categories <- length(unique(Samples[comparison != "NA", comparison]))
+sample_colors <- Samples[, color]
+names(sample_colors) <- Samples[, color]
+cell_type_boxplots <- list()
+if(n_categories == 2){
+# Boxplots should be made only when we have 2 groups to compare
+	plot_data <- copy(Cells)		
+	plot_data[, n_cells := .N, by = c("Metadata_sample_name", "cell_type")]
+	plot_data[, total := .N, by = "Metadata_sample_name"]
+	plot_data[, percentage := n_cells / total * 100]
+	cell_type_boxplots <- list_boxplotter(plot_data, "Metadata_sample_name", "cell_type", "comparison", "percentage",
+		"Cell type cells / total cells %", "color", sample_colors)
+	cell_type_boxplots <- lapply(cell_type_boxplots, function(x){x$Plot})
+}
 
 ################ Output ######################
 # Cell Overlays
@@ -107,15 +97,12 @@ pdf_plotter(file.path(overlay_output_folder, "overlay_legend.pdf"), legend_plot)
 # Barlots
 barplot_output_folder <- file.path(output_folder, "Barplots")  
 dir.create(barplot_output_folder, recursive = T, showWarnings = F)
-multi_pdf_plotter(c(list(sample_barplot), comparison_barplots), filename = paste0(barplot_output_folder, "/barplots.pdf"), n_col = 2, n_row = 2)
+multi_pdf_plotter(list(sample_barplot, comparison_barplot), filename = paste0(barplot_output_folder, "/barplots.pdf"), n_col = 1, n_row = 2)
 # Boxplots by comparison
-if(any(lengths(comparison_boxplots) > 0)){	
+if(length(cell_type_boxplots) > 0){	
 	boxplot_output_folder <- file.path(output_folder, "Boxplots")  
 	dir.create(boxplot_output_folder, recursive = T, showWarnings = F)
-	for(comparison_column in names(comparison_boxplots[lengths(comparison_boxplots) > 0]))
-	{
-		multi_pdf_plotter(comparison_boxplots[[comparison_column]],
-			filename = paste0(boxplot_output_folder, "/boxplots-", comparison_column, ".pdf"))
-	}
+	multi_pdf_plotter(cell_type_boxplots, filename = paste0(boxplot_output_folder, "/boxplots.pdf"))
 }
+
 

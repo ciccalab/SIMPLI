@@ -160,7 +160,7 @@ list_boxplotter <- function(data, sample_column, type_column, group_variable_nam
   plot_dataset <- copy(data)[, .SD, .SDcols = c(sample_column, group_variable_name, type_column, y_column, color_variable_name)]
   setnames(plot_dataset, c(sample_column, group_variable_name, type_column, y_column, color_variable_name),
     c("sample_column", "x_column", "type_column", "y_column", "color_column"))
-  plot_dataset <- unique(plot_dataset[, .(sample_column, x_column, y_column, color_column), keyby = type_column])
+  plot_dataset <- unique(plot_dataset[, .(sample_column, x_column, y_column, color_column, type_column)])
   plots <- lapply(types, function(type)
   {
     boxplotter(plot_dataset[type_column == type], "y_column", y_axis_title, group_variable_name = "x_column",
