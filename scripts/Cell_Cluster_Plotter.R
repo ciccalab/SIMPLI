@@ -29,6 +29,7 @@ Samples[is.na(comparison_column), comparison_column := "NA" ]
 suppressWarnings(Cells[, color := NULL])
 suppressWarnings(Cells[, comparison_column := NULL])
 Cells <- merge(Cells, Samples, by.x = "Metadata_sample_name", by.y = "sample_name")
+Cells <- Cells[comparison_column != "NA"]
 
 ######## Heatmaps #######
 heatmaps <- lapply(resolutions, function(res){
@@ -37,7 +38,7 @@ heatmaps <- lapply(resolutions, function(res){
 	})
 names(heatmaps) <- resolutions
 
-################## UMAPS #####################x
+################## UMAPS #####################
 set.seed(666)
 UMAPS <- lapply(resolutions, function(res){
 umap_coords <- umap(Cells, n_neighbors = 40, min_dist = 0.9, learning_rate = 0.5, init = "random",
