@@ -1,1259 +1,1313 @@
 CellProfiler Pipeline: http://www.cellprofiler.org
-Version:4
-DateRevision:318
+Version:5
+DateRevision:407
 GitHash:
 ModuleCount:82
 HasImagePlaneDetails:False
 
-LoadData:[module_num:1|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Input data file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00I\x00n\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00 \x00s\x00u\x00b\x00-\x00f\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00c\x00o\x00l\x00c\x00c\x00/\x00w\x00o\x00r\x00k\x00/\x00d\x008\x00/\x00f\x005\x001\x002\x002\x009\x00e\x00a\x008\x00f\x006\x002\x00b\x00e\x003\x003\x003\x005\x006\x001\x004\x006\x00a\x004\x00a\x00b\x00a\x001\x006\x00b\x00
-    Name of the file:\xff\xfeC\x00R\x00C\x00_\x002\x00-\x00c\x00p\x003\x00_\x00n\x00o\x00r\x00m\x00a\x00l\x00i\x00z\x00e\x00d\x00_\x00t\x00i\x00f\x00f\x00_\x00m\x00e\x00t\x00a\x00d\x00a\x00t\x00a\x00.\x00c\x00s\x00v\x00
-    Load images based on this data?:\xff\xfeY\x00e\x00s\x00
-    Base image location:\xff\xfeN\x00o\x00n\x00e\x00\x7C\x00
-    Process just a range of rows?:\xff\xfeN\x00o\x00
-    Rows to process:\xff\xfe1\x00,\x001\x000\x000\x000\x000\x000\x00
-    Group images by metadata?:\xff\xfeY\x00e\x00s\x00
-    Select metadata tags for grouping:\xff\xfes\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00
-    Rescale intensities?:\xff\xfeN\x00o\x00
-
-Threshold:[module_num:2|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00A\x00M\x00K\x004\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00A\x00M\x00K\x004\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:3|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x001\x001\x00c\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x001\x00c\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:4|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x001\x006\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x006\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:5|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x002\x000\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x000\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:6|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x002\x007\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x007\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:7|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x003\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:8|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x003\x004\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x004\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:9|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x004\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:10|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x004\x005\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:11|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x004\x005\x00R\x00A\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:12|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x004\x005\x00R\x00O\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00O\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:13|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x006\x008\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x006\x008\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:14|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x008\x00a\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x008\x00a\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:15|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:16|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeD\x00N\x00A\x001\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:17|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeF\x00o\x00x\x00P\x003\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00F\x00o\x00x\x00P\x003\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:18|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeI\x00F\x00N\x00A\x005\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00F\x00N\x00A\x005\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:19|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeI\x00g\x00A\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:20|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeI\x00g\x00M\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00M\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:21|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeK\x00i\x006\x007\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00K\x00i\x006\x007\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:22|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeP\x00D\x001\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:23|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeP\x00D\x00L\x001\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x00L\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:24|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeP\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:25|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeS\x00M\x00A\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00S\x00M\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:26|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeV\x00E\x00G\x00F\x00c\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00V\x00E\x00G\x00F\x00c\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:27|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeV\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00V\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-Threshold:[module_num:28|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfee\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00e\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Threshold strategy:\xff\xfeG\x00l\x00o\x00b\x00a\x00l\x00
-    Thresholding method:\xff\xfeR\x00o\x00b\x00u\x00s\x00t\x00B\x00a\x00c\x00k\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Threshold smoothing scale:\xff\xfe0\x00.\x000\x00
-    Threshold correction factor:\xff\xfe1\x00.\x000\x00
-    Lower and upper bounds on threshold:\xff\xfe0\x00.\x006\x00,\x001\x00.\x000\x00
-    Manual threshold:\xff\xfe0\x00.\x000\x00
-    Select the measurement to threshold with:\xff\xfeN\x00o\x00n\x00e\x00
-    Two-class or three-class thresholding?:\xff\xfeT\x00w\x00o\x00 \x00c\x00l\x00a\x00s\x00s\x00e\x00s\x00
-    Assign pixels in the middle intensity class to the foreground or the background?:\xff\xfeF\x00o\x00r\x00e\x00g\x00r\x00o\x00u\x00n\x00d\x00
-    Size of adaptive window:\xff\xfe5\x000\x00
-    Lower outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Upper outlier fraction:\xff\xfe0\x00.\x000\x005\x00
-    Averaging method:\xff\xfeM\x00e\x00a\x00n\x00
-    Variance method:\xff\xfeS\x00t\x00a\x00n\x00d\x00a\x00r\x00d\x00 \x00d\x00e\x00v\x00i\x00a\x00t\x00i\x00o\x00n\x00
-    # of deviations:\xff\xfe2\x00.\x000\x00
-    Thresholding method:\xff\xfeO\x00t\x00s\x00u\x00
-
-MaskImage:[module_num:29|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00A\x00M\x00K\x004\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00A\x00M\x00K\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00A\x00M\x00K\x004\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:30|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x001\x001\x00c\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x001\x00c\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x001\x00c\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:31|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x001\x006\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x006\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x006\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:32|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x002\x000\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x000\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x000\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:33|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x002\x007\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x007\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x007\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:34|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x003\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:35|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x003\x004\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x004\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:36|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x004\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:37|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x004\x005\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:38|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x004\x005\x00R\x00A\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:39|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x004\x005\x00R\x00O\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00O\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00O\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:40|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x006\x008\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x006\x008\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x006\x008\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:41|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00D\x008\x00a\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x008\x00a\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x008\x00a\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:42|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeC\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00C\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00C\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:43|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeD\x00N\x00A\x001\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:44|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeF\x00o\x00x\x00P\x003\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00F\x00o\x00x\x00P\x003\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00F\x00o\x00x\x00P\x003\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:45|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeI\x00F\x00N\x00A\x005\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00F\x00N\x00A\x005\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00I\x00F\x00N\x00A\x005\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:46|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeI\x00g\x00A\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:47|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeI\x00g\x00M\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00M\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00M\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:48|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeK\x00i\x006\x007\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00K\x00i\x006\x007\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00K\x00i\x006\x007\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:49|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeP\x00D\x001\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:50|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeP\x00D\x00L\x001\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x00L\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x00L\x001\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:51|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeP\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00P\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00P\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:52|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeS\x00M\x00A\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00S\x00M\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00S\x00M\x00A\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:53|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeV\x00E\x00G\x00F\x00c\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00V\x00E\x00G\x00F\x00c\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00V\x00E\x00G\x00F\x00c\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:54|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfeV\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00V\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00V\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-MaskImage:[module_num:55|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:\xff\xfee\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00
-    Name the output image:\xff\xfeC\x00P\x003\x00_\x00e\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Use objects or an image as a mask?:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select object for mask:\xff\xfeN\x00o\x00n\x00e\x00
-    Select image for mask:\xff\xfeC\x00P\x003\x00_\x00e\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00_\x00T\x00h\x00r\x00e\x00s\x00h\x00o\x00l\x00d\x00
-    Invert the mask?:\xff\xfeN\x00o\x00
-
-SaveImages:[module_num:56|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00A\x00M\x00K\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00A\x00M\x00K\x004\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:57|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x001\x00c\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x001\x001\x00c\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:58|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x001\x006\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x001\x006\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:59|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x000\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x002\x000\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:60|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x002\x007\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x002\x007\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:61|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x003\x004\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:62|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x003\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x003\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:63|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x004\x005\x00R\x00A\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:64|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00R\x00O\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x004\x005\x00R\x00O\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:65|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x005\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x004\x005\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:66|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x004\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x004\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:67|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x006\x008\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x006\x008\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:68|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00D\x008\x00a\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00D\x008\x00a\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:69|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00C\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00C\x00o\x00l\x00l\x00a\x00g\x00e\x00n\x00I\x00V\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:70|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00D\x00N\x00A\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00D\x00N\x00A\x001\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:71|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00F\x00o\x00x\x00P\x003\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00F\x00o\x00x\x00P\x003\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:72|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00I\x00F\x00N\x00A\x005\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00I\x00F\x00N\x00A\x005\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:73|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00I\x00g\x00A\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:74|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00I\x00g\x00M\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00I\x00g\x00M\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:75|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00K\x00i\x006\x007\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00K\x00i\x006\x007\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:76|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00P\x00D\x001\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:77|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00P\x00D\x00L\x001\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00P\x00D\x00L\x001\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:78|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00P\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00P\x00a\x00n\x00K\x00e\x00r\x00a\x00t\x00i\x00n\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:79|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00S\x00M\x00A\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00S\x00M\x00A\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:80|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00V\x00E\x00G\x00F\x00c\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00V\x00E\x00G\x00F\x00c\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:81|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00V\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00V\x00i\x00m\x00e\x00n\x00t\x00i\x00n\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
-
-SaveImages:[module_num:82|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
-    Select the type of image to save:\xff\xfeI\x00m\x00a\x00g\x00e\x00
-    Select the image to save:\xff\xfeC\x00P\x003\x00_\x00e\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00_\x00M\x00a\x00s\x00k\x00e\x00d\x00
-    Select method for constructing file names:\xff\xfeS\x00i\x00n\x00g\x00l\x00e\x00 \x00n\x00a\x00m\x00e\x00
-    Select image name for file prefix:\xff\xfe1\x004\x001\x00P\x00r\x00-\x00S\x00M\x00A\x00
-    Enter single file name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00-\x00e\x00C\x00a\x00d\x00h\x00e\x00r\x00i\x00n\x00-\x00P\x00r\x00e\x00p\x00r\x00o\x00c\x00e\x00s\x00s\x00e\x00d\x00
-    Number of digits:\xff\xfe4\x00
-    Append a suffix to the image file name?:\xff\xfeY\x00e\x00s\x00
-    Text to append to the image name:\xff\xfe\\\x00g\x00<\x00s\x00a\x00m\x00p\x00l\x00e\x00_\x00n\x00a\x00m\x00e\x00>\x00
-    Saved file format:\xff\xfet\x00i\x00f\x00f\x00
-    Output file location:\xff\xfeD\x00e\x00f\x00a\x00u\x00l\x00t\x00 \x00O\x00u\x00t\x00p\x00u\x00t\x00 \x00F\x00o\x00l\x00d\x00e\x00r\x00\x7C\x00
-    Image bit depth:\xff\xfe1\x006\x00-\x00b\x00i\x00t\x00 \x00i\x00n\x00t\x00e\x00g\x00e\x00r\x00
-    Overwrite existing files without warning?:\xff\xfeY\x00e\x00s\x00
-    When to save:\xff\xfeE\x00v\x00e\x00r\x00y\x00 \x00c\x00y\x00c\x00l\x00e\x00
-    Record the file and path information to the saved image?:\xff\xfeN\x00o\x00
-    Create subfolders in the output folder?:\xff\xfeN\x00o\x00
-    Base image folder:\xff\xfeE\x00l\x00s\x00e\x00w\x00h\x00e\x00r\x00e\x00.\x00.\x00.\x00\x7C\x00
+LoadData:[module_num:1|svn_version:'Unknown'|variable_revision_number:6|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Input data file location:Default Input Folder sub-folder|colcc/work/d8/f51229ea8f62be33356146a4aba16b
+    Name of the file:CRC_2-cp3_normalized_tiff_metadata.csv
+    Load images based on this data?:Yes
+    Base image location:None|
+    Process just a range of rows?:No
+    Rows to process:1,100000
+    Group images by metadata?:Yes
+    Select metadata tags for grouping:sample_name
+    Rescale intensities?:No
+
+Threshold:[module_num:2|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CAMK4
+    Name the output image:CP3_CAMK4_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:3|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD11c
+    Name the output image:CP3_CD11c_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:4|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD16
+    Name the output image:CP3_CD16_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:5|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD20
+    Name the output image:CP3_CD20_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:6|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD27
+    Name the output image:CP3_CD27_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:7|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD3
+    Name the output image:CP3_CD3_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:8|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD34
+    Name the output image:CP3_CD34_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:9|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD4
+    Name the output image:CP3_CD4_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:10|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD45
+    Name the output image:CP3_CD45_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:11|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD45RA
+    Name the output image:CP3_CD45RA_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:12|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD45RO
+    Name the output image:CP3_CD45RO_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:13|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD68
+    Name the output image:CP3_CD68_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:14|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD8a
+    Name the output image:CP3_CD8a_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:15|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CollagenIV
+    Name the output image:CP3_CollagenIV_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:16|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:DNA1
+    Name the output image:CP3_DNA1_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:17|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:FoxP3
+    Name the output image:CP3_FoxP3_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:18|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:IFNA5
+    Name the output image:CP3_IFNA5_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:19|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:IgA
+    Name the output image:CP3_IgA_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:20|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:IgM
+    Name the output image:CP3_IgM_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:21|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:Ki67
+    Name the output image:CP3_Ki67_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:22|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:PD1
+    Name the output image:CP3_PD1_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:23|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:PDL1
+    Name the output image:CP3_PDL1_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:24|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:PanKeratin
+    Name the output image:CP3_PanKeratin_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:25|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:SMA
+    Name the output image:CP3_SMA_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:26|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:VEGFc
+    Name the output image:CP3_VEGFc_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:27|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:Vimentin
+    Name the output image:CP3_Vimentin_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:28|svn_version:'Unknown'|variable_revision_number:12|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:eCadherin
+    Name the output image:CP3_eCadherin_Threshold
+    Threshold strategy:Global
+    Thresholding method:Robust Background
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.6,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Log transform before thresholding?:No
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+MaskImage:[module_num:29|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CAMK4
+    Name the output image:CP3_CAMK4_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CAMK4_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:30|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD11c
+    Name the output image:CP3_CD11c_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD11c_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:31|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD16
+    Name the output image:CP3_CD16_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD16_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:32|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD20
+    Name the output image:CP3_CD20_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD20_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:33|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD27
+    Name the output image:CP3_CD27_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD27_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:34|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD3
+    Name the output image:CP3_CD3_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD3_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:35|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD34
+    Name the output image:CP3_CD34_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD34_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:36|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD4
+    Name the output image:CP3_CD4_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD4_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:37|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD45
+    Name the output image:CP3_CD45_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD45_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:38|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD45RA
+    Name the output image:CP3_CD45RA_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD45RA_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:39|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD45RO
+    Name the output image:CP3_CD45RO_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD45RO_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:40|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD68
+    Name the output image:CP3_CD68_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD68_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:41|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CD8a
+    Name the output image:CP3_CD8a_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CD8a_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:42|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:CollagenIV
+    Name the output image:CP3_CollagenIV_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_CollagenIV_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:43|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:DNA1
+    Name the output image:CP3_DNA1_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_DNA1_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:44|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:FoxP3
+    Name the output image:CP3_FoxP3_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_FoxP3_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:45|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:IFNA5
+    Name the output image:CP3_IFNA5_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_IFNA5_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:46|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:IgA
+    Name the output image:CP3_IgA_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_IgA_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:47|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:IgM
+    Name the output image:CP3_IgM_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_IgM_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:48|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:Ki67
+    Name the output image:CP3_Ki67_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_Ki67_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:49|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:PD1
+    Name the output image:CP3_PD1_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_PD1_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:50|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:PDL1
+    Name the output image:CP3_PDL1_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_PDL1_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:51|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:PanKeratin
+    Name the output image:CP3_PanKeratin_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_PanKeratin_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:52|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:SMA
+    Name the output image:CP3_SMA_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_SMA_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:53|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:VEGFc
+    Name the output image:CP3_VEGFc_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_VEGFc_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:54|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:Vimentin
+    Name the output image:CP3_Vimentin_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_Vimentin_Threshold
+    Invert the mask?:No
+
+MaskImage:[module_num:55|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:eCadherin
+    Name the output image:CP3_eCadherin_Masked
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:CP3_eCadherin_Threshold
+    Invert the mask?:No
+
+SaveImages:[module_num:56|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CAMK4_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CAMK4-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:57|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD11c_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD11c-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:58|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD16_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD16-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:59|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD20_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD20-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:60|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD27_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD27-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:61|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD34_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD34-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:62|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD3_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD3-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:63|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD45RA_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD45RA-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:64|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD45RO_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD45RO-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:65|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD45_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD45-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:66|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD4_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD4-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:67|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD68_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD68-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:68|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CD8a_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CD8a-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:69|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_CollagenIV_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-CollagenIV-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:70|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_DNA1_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-DNA1-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:71|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_FoxP3_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-FoxP3-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:72|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_IFNA5_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-IFNA5-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:73|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_IgA_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-IgA-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:74|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_IgM_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-IgM-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:75|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_Ki67_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-Ki67-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:76|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_PD1_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-PD1-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:77|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_PDL1_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-PDL1-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:78|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_PanKeratin_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-PanKeratin-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:79|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_SMA_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-SMA-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:80|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_VEGFc_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-VEGFc-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:81|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_Vimentin_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-Vimentin-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
+
+SaveImages:[module_num:82|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:CP3_eCadherin_Masked
+    Select method for constructing file names:Single name
+    Select image name for file prefix:141Pr-SMA
+    Enter single file name:\g<sample_name>-eCadherin-Preprocessed
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:\g<sample_name>
+    Saved file format:tiff
+    Output file location:Default Output Folder|
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:Yes
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...|
+    How to save the series:T (Time)
