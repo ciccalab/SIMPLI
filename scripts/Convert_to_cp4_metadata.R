@@ -23,7 +23,7 @@ if(length(filenames > 1)){
 }
 sample_names <- unique(unified_table$sample_name)
 
-##### Prepare CellProfiler3 compatible wide format metadata
+##### Prepare CellProfiler4 compatible wide format metadata
 metadata_maker <- function(name)
 {
   metadata <- unified_table[sample_name == name, ]
@@ -45,7 +45,7 @@ metadata_maker <- function(name)
 metadata_list <- lapply(sample_names, metadata_maker)
 names(metadata_list) <- sample_names
 
-##### Output metadata in CellProfiler3 compatible wide format
+##### Output metadata in CellProfiler4 compatible wide format
 lapply(sample_names, function(name){
   out_filename <- paste0(name, output_suffix)
   out_filename <- file.path(outputh_path, out_filename)

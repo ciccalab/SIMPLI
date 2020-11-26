@@ -1,13 +1,13 @@
 script_folder = "$baseDir/scripts"
 image_folder = "$params.output_folder/Images"
 
-if (params.cp3_preprocessing_cppipe){
-    cp3_preprocessing_pipeline_folder = file(params.cp3_preprocessing_cppipe).getParent()
-    cp3_preprocessing_pipeline = file(params.cp3_preprocessing_cppipe).getName()
+if (params.cp4_preprocessing_cppipe){
+    cp4_preprocessing_pipeline_folder = file(params.cp4_preprocessing_cppipe).getParent()
+    cp4_preprocessing_pipeline = file(params.cp4_preprocessing_cppipe).getName()
 }
-if (params.cp3_segmentation_cppipe){
-    cp3_segmentation_pipeline_folder = file(params.cp3_segmentation_cppipe).getParent()
-    cp3_segmentation_pipeline = file(params.cp3_segmentation_cppipe).getName() 
+if (params.cp4_segmentation_cppipe){
+    cp4_segmentation_pipeline_folder = file(params.cp4_segmentation_cppipe).getParent()
+    cp4_segmentation_pipeline = file(params.cp4_segmentation_cppipe).getName() 
 }
 /* Gets the Singularity key to verify the containers used by the pipeline */
 
@@ -24,7 +24,7 @@ process get_singularity_key {
     """                             
 }
 
-process cp3_format_convert {
+process cp4_format_convert {
     
     label 'mid_memory'
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
@@ -36,11 +36,11 @@ process cp3_format_convert {
         path(metadata_files_to_convert)
 
     output:
-        path("*$output_suffix", emit: cp3_metadata)
+        path("*$output_suffix", emit: cp4_metadata)
     
     script:
     """
-    Rscript /opt/Convert_to_cp3_metadata.R \\
+    Rscript /opt/Convert_to_cp4_metadata.R \\
         $params.tiff_type \\
         ./ \\
         $output_suffix \\
@@ -133,7 +133,7 @@ process normalize_tiffs {
     output:
         path("$sample_name*normalized*tiff", emit: normalized_tiff_images)
         path("${sample_name}-normalized_tiff_metadata.csv", emit: normalized_tiff_metadata_by_sample)
-        path("${sample_name}-cp3_normalized_tiff_metadata.csv", emit: cp3_normalized_tiff_metadata_by_sample)
+        path("${sample_name}-cp4_normalized_tiff_metadata.csv", emit: cp4_normalized_tiff_metadata_by_sample)
     
     script:
     """
@@ -143,7 +143,7 @@ process normalize_tiffs {
         $params.tiff_type \\
         ./ \\
         ${sample_name}-normalized_tiff_metadata.csv \\
-        ${sample_name}-cp3_normalized_tiff_metadata.csv > normalization_log.txt 2>&1
+        ${sample_name}-cp4_normalized_tiff_metadata.csv > normalization_log.txt 2>&1
     """
 }
 
@@ -172,9 +172,9 @@ process collect_normalized_tiff_metadata {
     """
 }
 
-/* Process each sample with CellProfiler3 using:
-    - CellProfiler3 pipeline file: $params.cp3_preprocessing_cppipe
-    - Image metadata emitted by: cp3_normalized_tiff_metadata_by_sample
+/* Process each sample with CellProfiler4 using:
+    - CellProfiler4 pipeline file: $params.cp4_preprocessing_cppipe
+    - Image metadata emitted by: cp4_normalized_tiff_metadata_by_sample
     It expects the pipeline to produce output images as single tiffs with this name pattern:
         "SAMPLE-MARKER-Preprocessed.tiff"
     The output images and a metadata file are exported to: "$image_folder/Preprocessed/$sample_name"  
@@ -183,14 +183,14 @@ process collect_normalized_tiff_metadata {
 process image_preprocessing {
 
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_cp3:cp3_fix_dependencies'
-    containerOptions = "--bind $cp3_preprocessing_pipeline_folder:/mnt,$workflow.launchDir/:/data"
+    container = 'library://michelebortol/default/simpli_cp4_imcplugins:plugins'
+    containerOptions = "--bind $cp4_preprocessing_pipeline_folder:/mnt,$workflow.launchDir/:/data"
 
     publishDir "$image_folder/Preprocessed/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
        val(singularity_key_got)
-       tuple val(sample_name), path(cp3_normalized_metadata) 
+       tuple val(sample_name), path(cp4_normalized_metadata) 
 
     output:
         path("*-Preprocessed.tiff", emit: preprocessed_tiff_files)
@@ -200,13 +200,13 @@ process image_preprocessing {
     """
     cellprofiler \\
         --run-headless \\
-        --data-file $cp3_normalized_metadata \\
-        --pipeline /mnt/$cp3_preprocessing_pipeline \\
+        --data-file $cp4_normalized_metadata \\
+        --pipeline /mnt/$cp4_preprocessing_pipeline \\
         --plugins-directory /opt/CellProfiler/plugins/ \\
         --image-directory /data \\
         --output-directory ./ \\
         --log-level DEBUG \\
-        --temporary-directory ./tmp > cp3_preprocessing_log.txt 2>&1
+        --temporary-directory ./tmp > cp4_preprocessing_log.txt 2>&1
 
     echo "sample_name,label,file_name" > "${sample_name}-preprocessed_metadata.csv"
     find "\$(pwd)" -name "*-Preprocessed.tiff" > filename.csv
@@ -237,11 +237,11 @@ process process_preprocessed_metadata {
     
     output:
         path("preprocessed_tiff_metadata.csv", emit: preprocessed_tiff_metadata)
-        path("*-cp3-preprocessed_metadata.csv", emit: cp3_preprocessed_tiff_metadata_by_sample)
+        path("*-cp4-preprocessed_metadata.csv", emit: cp4_preprocessed_tiff_metadata_by_sample)
 
     script:
     """
-    Rscript /opt/CP3_metadata_maker.R \\
+    Rscript /opt/CP4_metadata_maker.R \\
         $params.tiff_type \\
         ./ \\
         $metadata_list
@@ -312,7 +312,7 @@ process area_visualization {
 }
 
 /* Perform cell segmentation and size, shape, position and intensity measurements
-    - For each sample the $params.cp3_segmentation_cppipei should produce:
+    - For each sample the $params.cp4_segmentation_cppipe should produce:
         - A table with single cell measurements: ${sample_name}-Cells.csv
         - A uint16 cell mask: ${sample_name}-Cell_Mask.tiff
     - Copies the results to "$params.output_folder/Segmentation/$sample_name" 
@@ -321,14 +321,14 @@ process area_visualization {
 process cell_segmentation {
 
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_cp3:cp3_fix_dependencies'
-    containerOptions = "--bind $cp3_segmentation_pipeline_folder:/mnt,$workflow.launchDir/:/data"
+    container = 'library://michelebortol/default/simpli_cp4_imcplugins:plugins'
+    containerOptions = "--bind $cp4_segmentation_pipeline_folder:/mnt,$workflow.launchDir/:/data"
 
     publishDir"$params.output_folder/Segmentation/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
         val(singularity_key_got)
-        tuple val(sample_name), path(cp3_preprocessed_metadata) 
+        tuple val(sample_name), path(cp4_preprocessed_metadata) 
 
     output:
         path("${sample_name}-Cells.csv", emit: cell_data_csv_by_sample)
@@ -338,13 +338,13 @@ script:
     """
     cellprofiler \\
         --run-headless \\
-        --data-file $cp3_preprocessed_metadata \\
-        --pipeline /mnt/$cp3_segmentation_pipeline \\
+        --data-file $cp4_preprocessed_metadata \\
+        --pipeline /mnt/$cp4_segmentation_pipeline \\
         --plugins-directory /opt/CellProfiler/plugins/ \\
         --image-directory /data \\
         --output-directory ./ \\
         --log-level DEBUG \\
-        --temporary-directory ./tmp > cp3_segmentation_log.txt 2>&1
+        --temporary-directory ./tmp > cp4_segmentation_log.txt 2>&1
     """
 }
 

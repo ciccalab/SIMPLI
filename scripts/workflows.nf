@@ -3,7 +3,7 @@ nextflow.enable.dsl=2
 script_folder = "$baseDir/scripts"
 
 include {get_singularity_key} from "$script_folder/processes.nf"
-include {cp3_format_convert} from "$script_folder/processes.nf"
+include {cp4_format_convert} from "$script_folder/processes.nf"
 
 include {convert_raw_data_to_tiffs} from "$script_folder/processes.nf"
 include {collect_raw_tiff_metadata} from "$script_folder/processes.nf"
@@ -34,15 +34,15 @@ workflow singularity_key_getter {
         singularity_key_got = get_singularity_key.out.singularity_key_got 
 }
 
-workflow convert_metadata_to_cp3{
+workflow convert_metadata_to_cp4{
     take:
         singularity_key_got
         output_suffix
         metadata_to_convert
     main:
-        cp3_format_convert(singularity_key_got, output_suffix, metadata_to_convert)
+        cp4_format_convert(singularity_key_got, output_suffix, metadata_to_convert)
     emit:
-        cp3_metadata = cp3_format_convert.out.cp3_metadata
+        cp4_metadata = cp4_format_convert.out.cp4_metadata
 }
 
 workflow convert_raw_data{
@@ -70,7 +70,7 @@ workflow normalize_images{
     emit:
         normalized_tiff_images = normalize_tiffs.out.normalized_tiff_images
         normalized_tiff_metadata = collect_normalized_tiff_metadata.out.normalized_tiff_metadata
-        cp3_normalized_tiff_metadata_by_sample = normalize_tiffs.out.cp3_normalized_tiff_metadata_by_sample
+        cp4_normalized_tiff_metadata_by_sample = normalize_tiffs.out.cp4_normalized_tiff_metadata_by_sample
 }
 
 workflow preprocess_images{
@@ -83,7 +83,7 @@ workflow preprocess_images{
     emit:
         preprocessed_tiff_images = image_preprocessing.out.preprocessed_tiff_files
         preprocessed_tiff_metadata = process_preprocessed_metadata.out.preprocessed_tiff_metadata
-        cp3_preprocessed_tiff_metadata_by_sample = process_preprocessed_metadata.out.cp3_preprocessed_tiff_metadata_by_sample
+        cp4_preprocessed_tiff_metadata_by_sample = process_preprocessed_metadata.out.cp4_preprocessed_tiff_metadata_by_sample
 }
 
 workflow measure_areas{

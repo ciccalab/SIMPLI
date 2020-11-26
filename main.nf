@@ -3,7 +3,7 @@ nextflow.enable.dsl=2
 script_folder = "$baseDir/scripts"
 
 include {singularity_key_getter} from "$script_folder/workflows.nf"
-include {convert_metadata_to_cp3} from "$script_folder/workflows.nf"
+include {convert_metadata_to_cp4} from "$script_folder/workflows.nf"
 
 include {convert_raw_data} from "$script_folder/workflows.nf"
 
@@ -36,16 +36,16 @@ workflow {
     }    
     if(!params.skip_preprocessing){
         if(!params.skip_normalization){
-            preprocessing_metadata = normalize_images.out.cp3_normalized_tiff_metadata_by_sample
+            preprocessing_metadata = normalize_images.out.cp4_normalized_tiff_metadata_by_sample
         }
         else if(params.skip_normalization && !params.skip_conversion){
-            convert_metadata_to_cp3(singularity_key_getter.out.singularity_key_got, "-cp3_metadata.csv", convert_raw_data.out.converted_tiff_metadata.collect()) 
-            preprocessing_metadata = convert_metadata_to_cp3.out.cp3_metadata.flatten()
+            convert_metadata_to_cp4(singularity_key_getter.out.singularity_key_got, "-cp4_metadata.csv", convert_raw_data.out.converted_tiff_metadata.collect()) 
+            preprocessing_metadata = convert_metadata_to_cp4.out.cp4_metadata.flatten()
         }    
         else{
             metadata_to_convert = channel.fromPath(params.normalized_metadata_file)
-            convert_metadata_to_cp3(singularity_key_getter.out.singularity_key_got, "-cp3_metadata.csv", metadata_to_convert) 
-            preprocessing_metadata = convert_metadata_to_cp3.out.cp3_metadata.flatten()
+            convert_metadata_to_cp4(singularity_key_getter.out.singularity_key_got, "-cp4_metadata.csv", metadata_to_convert) 
+            preprocessing_metadata = convert_metadata_to_cp4.out.cp4_metadata.flatten()
         }
         preprocessing_metadata = preprocessing_metadata
             .map{ file ->
@@ -66,10 +66,10 @@ workflow {
     }    
     if(!params.skip_segmentation){
         if(!params.skip_preprocessing)
-            segmentation_metadata = preprocess_images.out.cp3_preprocessed_tiff_metadata_by_sample
+            segmentation_metadata = preprocess_images.out.cp4_preprocessed_tiff_metadata_by_sample
         else{
-            convert_metadata_to_cp3(singularity_key_getter.out.singularity_key_got, "-cp3_metadata.csv", params.preprocessed_metadata_file) 
-            segmentation_metadata = convert_metadata_to_cp3.out.cp3_metadata
+            convert_metadata_to_cp4(singularity_key_getter.out.singularity_key_got, "-cp4_metadata.csv", params.preprocessed_metadata_file) 
+            segmentation_metadata = convert_metadata_to_cp4.out.cp4_metadata
         }
         segmentation_metadata = segmentation_metadata.flatten()
             .map { file ->

@@ -15,7 +15,7 @@ if(file_type != "ome" & file_type != "single"){
   quit(status = 99)
 }
 
-##### Prepare CellProfiler3 compatible wide format metadata
+##### Prepare CellProfiler4 compatible wide format metadata
 metadata_maker <- function(filename)
 {
   metadata <- fread(filename)
@@ -38,10 +38,11 @@ metadata_list <- lapply(filenames, metadata_maker)
 
 filenames <- basename(filenames)
 names(metadata_list) <- filenames
-##### Output metadata in CellProfiler3 compatible wide format
+
+##### Output metadata in CellProfiler4 compatible wide format
 lapply(names(metadata_list), function(filename){
   out_filename <- paste0(sub("-preprocessed_metadata.csv", "", filename),
-    "-cp3-preprocessed_metadata.csv")
+    "-cp4-preprocessed_metadata.csv")
   out_filename <- file.path(outputh_path, out_filename)
   fwrite(metadata_list[[filename]], file = out_filename, sep = ",")  
 })
