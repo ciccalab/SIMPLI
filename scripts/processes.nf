@@ -40,7 +40,7 @@ process cp4_format_convert {
     
     script:
     """
-    Rscript /opt/Convert_to_cp4_metadata.R \\
+    Rscript --vanilla /opt/Convert_to_cp4_metadata.R \\
         $params.tiff_type \\
         ./ \\
         $output_suffix \\
@@ -137,7 +137,7 @@ process normalize_tiffs {
     
     script:
     """
-    Rscript /opt/Tiff_normalizer.R \\
+    Rscript --vanilla /opt/Tiff_normalizer.R \\
         $sample_name \\
         $converted_metadata_file \\
         $params.tiff_type \\
@@ -241,7 +241,7 @@ process process_preprocessed_metadata {
 
     script:
     """
-    Rscript /opt/CP4_metadata_maker.R \\
+    Rscript --vanilla /opt/CP4_metadata_maker.R \\
         $params.tiff_type \\
         ./ \\
         $metadata_list
@@ -273,7 +273,7 @@ process measure_positive_areas {
 
     script:
     """
-    Rscript /opt/Area_measurer.R \\
+    Rscript --vanilla /opt/Area_measurer.R \\
         $area_metadata \\
         $tiff_metadata \\
         area_measurements.csv > pixel_area_measurements.log 2>&1
@@ -304,7 +304,7 @@ process area_visualization {
     
     script:
     """
-    Rscript /opt/Area_Plotter.R \\
+    Rscript --vanilla /opt/Area_Plotter.R \\
         $area_file \\
         $sample_metadata_file \\
         . > area_plotting_log.txt 2>&1
@@ -402,7 +402,7 @@ process cell_type_identification_expression {
 
     script:
     """
-    Rscript /opt/Cell_type_selecter_expression.R \\
+    Rscript --vanilla /opt/Cell_type_selecter_expression.R \\
         $unannotated_cell_data_file \\
         $cell_threshold_metadata_file \\
         annotated_cells.csv
@@ -428,7 +428,7 @@ process cell_type_identification_mask {
 
     script:
     """
-    Rscript /opt/Cell_type_selecter_mask.R \\
+    Rscript --vanilla /opt/Cell_type_selecter_mask.R \\
         $unannotated_cell_data_file \\
         $cell_threshold_metadata_file \\
         $image_metadata_file \\
@@ -469,7 +469,7 @@ process cell_type_visualization {
 
     script:
     """
-    Rscript /opt/Cell_Type_Plotter.R \\
+    Rscript --vanilla /opt/Cell_Type_Plotter.R \\
         $annotated_cell_file \\
         $sample_metadata_file \\
         $cell_metadata_file \\
@@ -503,7 +503,7 @@ process cell_clustering {
     
     script:
     """
-    Rscript /opt/Seurat_Runner.R \\
+    Rscript --vanilla /opt/Seurat_Runner.R \\
         $annotated_cell_file \\
         $sample_metadata_file \\
         $cell_type \\
@@ -535,7 +535,7 @@ process collect_clustering_data {
 
     script:
     """
-    Rscript /opt/Clustered_Cell_Collecter.R $cluster_list \\
+    Rscript --vanilla /opt/Clustered_Cell_Collecter.R $cluster_list \\
         clustered_cells.csv > clustered_cells_collecting_log.txt 2>&1
     """
 }
@@ -565,7 +565,7 @@ process cell_cluster_visualization {
          
     script:
     """
-    Rscript /opt/Cell_Cluster_Plotter.R \\
+    Rscript --vanilla /opt/Cell_Cluster_Plotter.R \\
         $clustered_cell_file \\
         $sample_metadata_file \\
         $cell_type \\
