@@ -26,6 +26,12 @@ sample_names <- samples[comparison != "NA", sample_name]
 clustering_data <- clustering_data[Metadata_sample_name %in% sample_names, ]
 sample_names <- sample_names[sample_names %in% unique(clustering_data$Metadata_sample_name)]
 
+if(length(sample_names) == 0)
+{
+	cat(paste0("No samples with comparison != NA, please check the  ", sample_file_name, " file\n."))
+	quit(save = "no", status = 1)
+}
+
 clustering_data_by_sample <- lapply(sample_names, function(name){
 	mat <- as.matrix(transpose(clustering_data[Metadata_sample_name == name, ..markers]))
 	row.names(mat) <- markers

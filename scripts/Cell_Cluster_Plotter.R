@@ -28,6 +28,12 @@ suppressWarnings(Cells[, comparison := NULL])
 Cells <- merge(Cells, Samples, by.x = "Metadata_sample_name", by.y = "sample_name")
 Cells <- Cells[comparison != "NA" & cell_type == cell_population]
 
+if(nrow(Cells) == 0)
+{
+	cat(paste0("No samples with comparison != NA, please check the  ", sample_metadata_file_name, " file\n."))
+	quit(save = "no", status = 1)
+}
+
 ######## Heatmaps #######
 heatmaps <- lapply(resolutions, function(res){
 	heatmapper(Cells[, c(res, markers), with = F], res_column = res, cols = markers, high_color,
