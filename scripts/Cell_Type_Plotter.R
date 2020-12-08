@@ -60,12 +60,13 @@ legend_plot <- ggplot(data = legend_table) +
 
 
 ###################### Barplots ##########################
-sample_barplot <- Barplotter(Cells, "Metadata_sample_name", "Metadata_sample_name", "cell_type",
-	color_list, "Cell type cells / total cells %")
-
-comparison_barplot <- NULL
-if(length(sample_names) > 1){
-	comparison_barplot <- Barplotter(Cells, "Metadata_sample_name", "comparison", "cell_type",	color_list, "Cell type cells / total cells %")
+if(length(sample_names) > 0){
+	sample_barplot <- Barplotter(Cells, "Metadata_sample_name", "Metadata_sample_name", "cell_type",
+		color_list, "Cell type cells / total cells %")
+	if(length(sample_names) > 1){
+		comparison_barplot <- Barplotter(Cells, "Metadata_sample_name", "comparison", "cell_type",	color_list,
+			"Cell type cells / total cells %")
+	}
 }
 
 ###################### Boxplots by Population ##########################
@@ -97,12 +98,14 @@ pdf_plotter(file.path(overlay_output_folder, "overlay_legend.pdf"), legend_plot)
 # Barlots
 barplot_output_folder <- file.path(output_folder, "Barplots")  
 dir.create(barplot_output_folder, recursive = T, showWarnings = F)
-multi_pdf_plotter(list(sample_barplot, comparison_barplot), filename = paste0(barplot_output_folder, "/barplots.pdf"), n_col = 1, n_row = 2)
+if(length(sample_names) > 1){
+	multi_pdf_plotter(list(sample_barplot, comparison_barplot), filename = paste0(barplot_output_folder, "/barplots.pdf"), n_col = 1, n_row = 2)
+} else if (length(sample_names > 0)){
+	pdf_plotter(filename = paste0(barplot_output_folder, "/barplots.pdf"), plot = sample_barplot)
+}
 # Boxplots by comparison
 if(length(cell_type_boxplots) > 0){	
 	boxplot_output_folder <- file.path(output_folder, "Boxplots")  
 	dir.create(boxplot_output_folder, recursive = T, showWarnings = F)
 	multi_pdf_plotter(cell_type_boxplots, filename = paste0(boxplot_output_folder, "/boxplots.pdf"))
 }
-
-
