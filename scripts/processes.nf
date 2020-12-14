@@ -440,8 +440,8 @@ process cell_type_visualization {
         path(cell_mask_list) 
 
     output:
-        path("*/*.pdf", emit: cell_type_plots)  optional true 
-        path("*/*.tiff", emit: cell_type_overlays) optional true
+        path("*/*.pdf", emit: cell_type_plots)
+        path("*/*.tiff", emit: cell_type_overlays)
 
     script:
     """
@@ -567,7 +567,7 @@ process cell_cluster_visualization {
         path(sample_metadata_file)
 
     output:
-        path("$cell_type/**/*.pdf", emit: cell_cluster_plots) optional true
+        path("$cell_type/**/*.pdf", emit: cell_cluster_plots)
          
     script:
     """
@@ -580,6 +580,45 @@ process cell_cluster_visualization {
         $params.high_color \\
         $params.mid_color \\
         $params.low_color \\
-        $cell_type > cell_plotting_log.txt 2>&1
+        $cell_type > clustering_plotting_log.txt 2>&1
+    """
+}
+
+/* Visualization of thresholded cell subpopulations:
+    - Heatmaps with marker expression by main cell type and supopulation:
+    - Boxplot for each subpopulation (2 categories only): 
+    - Barplots for each main cell type, by samples and comparison (2 categories only): 
+    - Density plots for each main cell type, subpopulation, thresholded marker:
+*/
+
+process cell_threshold_visualization {
+
+    label 'big_memory'
+    publishDir "$params.output_folder/Plots/Cell_Threshold_Plots", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
+
+    input:
+        val(singularity_key_got)
+        path(thresholded_cell_file)
+        path(sample_metadata_file)
+        path(threshold_metadata_file)
+        path(cell_mask_list) 
+
+    output:
+        path("**/*.pdf", emit: cell_threshold_plots) 
+        path("**/*.tiff", emit: cell_threshold_overlays)
+         
+    script:
+    """
+    Rscript --vanilla /opt/Cell_Threshold_Plotter.R \\
+        $thresholded_cell_file \\
+        $sample_metadata_file \\
+        $threshold_metadata_file \\
+        $params.high_color \\
+        $params.mid_color \\
+        $params.low_color \\
+        . \\
+        $cell_mask_list > threshold_plotting_log.txt 2>&1
     """
 }

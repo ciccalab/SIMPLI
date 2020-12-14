@@ -28,6 +28,7 @@ include {collect_clustering_data} from "$script_folder/processes.nf"
 include {cell_cluster_visualization} from "$script_folder/processes.nf"
 
 include {threshold_cells} from "$script_folder/processes.nf"
+include {cell_threshold_visualization} from "$script_folder/processes.nf"
 
 workflow singularity_key_getter {
     get_singularity_key()
@@ -188,4 +189,17 @@ workflow visualize_cell_clusters{
         cell_cluster_visualization(singularity_key_got, cluster_visualization_metadata, clustered_cell_file, sample_metadata_file)
     emit:
         cell_cluster_plots = cell_cluster_visualization.out.cell_cluster_plots
+}
+
+workflow visualize_cell_thresholds{
+    take:
+        singularity_key_got
+        thresholded_cell_file
+        sample_metadata_file
+        threshold_metadata_file
+        cell_mask_list
+    main:
+        cell_threshold_visualization(singularity_key_got, thresholded_cell_file, sample_metadata_file, threshold_metadata_file, cell_mask_list)
+    emit:
+        cell_threshold_plots = cell_threshold_visualization.out.cell_threshold_plots
 }

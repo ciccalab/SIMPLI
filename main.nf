@@ -23,6 +23,7 @@ include {threshold_expression} from "$script_folder/workflows.nf"
 include {visualize_areas} from "$script_folder/workflows.nf"
 include {visualize_cell_types} from "$script_folder/workflows.nf"
 include {visualize_cell_clusters} from "$script_folder/workflows.nf"
+include {visualize_cell_thresholds} from "$script_folder/workflows.nf"
 
 workflow {
     sample_names = channel.fromPath(params.sample_metadata_file).splitCsv(header: true).map{row -> row.sample_name}
@@ -154,6 +155,25 @@ workflow {
                 .filter{!it.contains("NA")}
             visualize_cell_clusters(singularity_key_getter.out.singularity_key_got, clustering_metadata,
                 clustered_cell_file, params.sample_metadata_file)
+        }
+        if(!params.skip_cluster_visualization){
+            if(!params.skip_thresholding_visualization){
+                thresholded_cell_file = threshold_expression.out.thresholded_cell_data
+            }
+            else{
+                clustered_cell_file = params.thresholded_cell_data_file
+            }
+            if(!params.skip_segmentation){
+                cell_masks = segment_cells.out.cell_mask_tiffs.collect()
+            }
+            if(params.skip_segmentation){
+                cell_masks = channel.fromPath(params.single_cell_masks_metadata)
+                    .splitCsv(header:true)
+                    .map{row -> row.file_name}
+                    .collect() 
+            }
+            visualize_cell_thresholds(singularity_key_getter.out.singularity_key_got,
+                thresholded_cell_file, params.sample_metadata_file, params.cell_thresholding_metadata, cell_masks)
         }
     }
 }
