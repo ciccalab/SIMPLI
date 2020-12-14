@@ -385,30 +385,6 @@ process collect_single_cell_data {
     - Outputs: $params.output_folder/annotated_cells.csv
 */
 
-process cell_type_identification_expression {
-    label 'mid_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
-    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
-
-    publishDir "$params.output_folder", mode:'copy', overwrite: true
-    
-    input:
-        val(singularity_key_got)
-        path(unannotated_cell_data_file) 
-        path(cell_threshold_metadata_file)
-    
-    output:               
-        path("annotated_cells.csv", emit: annotated_cell_data)
-
-    script:
-    """
-    Rscript --vanilla /opt/Cell_type_selecter_expression.R \\
-        $unannotated_cell_data_file \\
-        $cell_threshold_metadata_file \\
-        annotated_cells.csv
-    """
-}
-
 process cell_type_identification_mask {
     label 'big_memory'
     container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
@@ -537,6 +513,36 @@ process collect_clustering_data {
     """
     Rscript --vanilla /opt/Clustered_Cell_Collecter.R $cluster_list \\
         clustered_cells.csv > clustered_cells_collecting_log.txt 2>&1
+    """
+}
+
+/* For each cell_type (line) not containing "NA" in the cell_type, markers, or resolutions, fields
+   in $params.cell_analysis_metadata file:
+    - Performs thresholding on the expressions of the given markers 
+    - Copies the output files into params.output_folder/Cell_Thresholds
+*/
+
+process threshold_cells {
+    label 'mid_memory'
+    container = 'library://michelebortol/default/simpli_rbioconductor:ggrepel'
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
+
+    publishDir "$params.output_folder", mode:'copy', overwrite: true
+    
+    input:
+        val(singularity_key_got)
+        path(annotated_cell_data_file) 
+        path(cell_threshold_metadata_file)
+    
+    output:               
+        path("thresholded_cells.csv", emit: thresholded_cell_data)
+
+    script:
+    """
+    Rscript --vanilla /opt/expression_threshold.R \\
+        $annotated_cell_data_file \\
+        $cell_threshold_metadata_file \\
+        thresholded_cells.csv
     """
 }
 

@@ -21,12 +21,13 @@ include {cell_segmentation} from "$script_folder/processes.nf"
 include {collect_single_cell_data} from "$script_folder/processes.nf"
 
 include {cell_type_identification_mask} from "$script_folder/processes.nf"
-include {cell_type_identification_expression} from "$script_folder/processes.nf"
 include {cell_type_visualization} from "$script_folder/processes.nf"
 
 include {cell_clustering} from "$script_folder/processes.nf"
 include {collect_clustering_data} from "$script_folder/processes.nf"
 include {cell_cluster_visualization} from "$script_folder/processes.nf"
+
+include {threshold_cells} from "$script_folder/processes.nf"
 
 workflow singularity_key_getter {
     get_singularity_key()
@@ -111,16 +112,6 @@ workflow segment_cells{
         cell_mask_metadata = collect_single_cell_data.out.cell_mask_metadata
 }
 
-workflow identify_cell_types_expression{
-    take:
-        singularity_key_got
-        unannotated_cell_data
-        cell_type_metadata
-    main:
-        cell_type_identification_expression(singularity_key_got, unannotated_cell_data, cell_type_metadata)
-    emit:
-        annotated_cell_data = cell_type_identification_expression.out.annotated_cell_data
-}
 
 workflow identify_cell_types_mask{
     take:
@@ -149,6 +140,17 @@ workflow cluster_cells{
         cluster_csv_files = cell_clustering.out.cluster_csv_files
         cluster_rdata_files = cell_clustering.out.cluster_rdata_files
         clustered_cell_data = collect_clustering_data.out.clustered_cell_data
+}
+
+workflow threshold_expression{
+    take:
+        singularity_key_got
+        annotated_cell_data
+        cell_thresholding_metadata
+    main:
+        threshold_cells(singularity_key_got, annotated_cell_data, cell_thresholding_metadata)
+    emit:
+        thresholded_cell_data = threshold_cells.out.thresholded_cell_data
 }
 
 workflow visualize_areas{

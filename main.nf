@@ -16,9 +16,9 @@ include {measure_areas} from "$script_folder/workflows.nf"
 include {segment_cells} from "$script_folder/workflows.nf"
 
 include {identify_cell_types_mask} from "$script_folder/workflows.nf"
-include {identify_cell_types_expression} from "$script_folder/workflows.nf"
 
 include {cluster_cells} from "$script_folder/workflows.nf"
+include {threshold_expression} from "$script_folder/workflows.nf"
 
 include {visualize_areas} from "$script_folder/workflows.nf"
 include {visualize_cell_types} from "$script_folder/workflows.nf"
@@ -80,30 +80,30 @@ workflow {
         segment_cells(singularity_key_getter.out.singularity_key_got, segmentation_metadata)
     }    
     if(!params.skip_cell_type_identification){
-        if(!params.skip_segmentation)
+        if(!params.skip_segmentation){
             unannotated_cells = segment_cells.out.unannotated_cell_data
+            cell_mask_metadata = segment_cells.out.cell_mask_metadata
+        }    
         else{
             unannotated_cells = params.single_cell_data_file
+            cell_mask_metadata = params.single_cell_masks_metadata
         }
-        if(params.cell_identification_method == "mask"){
-            if(!params.skip_segmentation)
-                cell_mask_metadata = segment_cells.out.cell_mask_metadata
-            else{
-                cell_mask_metadata = params.single_cell_masks_metadata
-            }
-            if(!params.skip_preprocessing)
-                image_metadata = preprocess_images.out.preprocessed_tiff_metadata
-            else{
-                image_metadata = params.preprocessed_metadata_file
-            }
-            identify_cell_types_mask(singularity_key_getter.out.singularity_key_got, unannotated_cells, params.cell_analysis_metadata,
-                image_metadata, cell_mask_metadata)
-            annotated_cell_data = identify_cell_types_mask.out.annotated_cell_data
+        if(!params.skip_preprocessing)
+            image_metadata = preprocess_images.out.preprocessed_tiff_metadata
+        else{
+            image_metadata = params.preprocessed_metadata_file
         }
-        if(params.cell_identification_method == "expression"){
-            identify_cell_types_expression(singularity_key_getter.out.singularity_key_got, unannotated_cells, params.cell_analysis_metadata)
-            annotated_cell_data = identify_cell_types_expression.out.annotated_cell_data
-        }    
+        identify_cell_types_mask(singularity_key_getter.out.singularity_key_got, unannotated_cells, params.cell_masking_metadata,
+            image_metadata, cell_mask_metadata)
+        annotated_cell_data = identify_cell_types_mask.out.annotated_cell_data
+    }    
+    if(!params.skip_cell_thresholding){
+        if(!params.skip_cell_type_identification)
+            annotated_cells = annotated_cell_data 
+        else{
+            annotated_cells = params.annotated_cell_data_file
+        }
+        threshold_expression(singularity_key_getter.out.singularity_key_got, annotated_cells, params.cell_thresholding_metadata)
     }    
     if(!params.skip_cell_clustering){
         if(!params.skip_cell_type_identification)
@@ -111,7 +111,7 @@ workflow {
         else{
             annotated_cells = params.annotated_cell_data_file
         }
-        clustering_metadata = channel.fromPath(params.cell_analysis_metadata)
+        clustering_metadata = channel.fromPath(params.cell_clustering_metadata)
             .splitCsv(header:true)
             .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
             .filter{!it.contains("NA")}
@@ -139,7 +139,7 @@ workflow {
                 cell_types = params.annotated_cell_data_file
             }
             visualize_cell_types(singularity_key_getter.out.singularity_key_got, cell_types,
-                params.sample_metadata_file, params.cell_analysis_metadata, cell_masks)
+                params.sample_metadata_file, params.cell_masking_metadata, cell_masks)
         }
         if(!params.skip_cluster_visualization){
             if(!params.skip_cell_clustering){
@@ -148,7 +148,7 @@ workflow {
             else{
                 clustered_cell_file = params.clustered_cell_data_file
             }
-            clustering_metadata = channel.fromPath(params.cell_analysis_metadata)
+            clustering_metadata = channel.fromPath(params.cell_clustering_metadata)
                 .splitCsv(header:true)
                 .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
                 .filter{!it.contains("NA")}
