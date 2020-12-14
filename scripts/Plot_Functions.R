@@ -14,13 +14,16 @@ heatmapper <- function(plot_dataset, res_column, cols, high_color, mid_color, lo
   setnames(plot_data, c("variable", "value"), c("gene", "expression"))
   plot_data[, scaled_expression := (expression - min(expression)) / (max(expression) - min(expression)), by = gene]
   x_labels <- as.character(sort(as.numeric(unique(plot_data$cluster))))
+  if(any(is.na(as.numeric(unique(plot_data$cluster))))){
+    x_labels <- sort(unique(plot_data$cluster))
+  }
   ggplot(data = plot_data) +
     geom_tile(mapping = aes(x = cluster, y = gene, fill = scaled_expression)) +
     geom_text(mapping = aes(x = cluster, y = gene, label = formatC(expression, digits = 2, format = "g")),
               color = "black", size = 2) + 
     scale_x_discrete(limits = x_labels, labels = x_labels, name = element_blank()) +
     scale_fill_gradient2(low = low_color, high = high_color, mid = mid_color, midpoint = 0.5, name = element_blank()) +
-    scale_y_discrete(name = element_blank(), limits = rev(markers)) + coord_flip() +
+    scale_y_discrete(name = element_blank(), limits = rev(cols)) + coord_flip() +
     theme_classic() + theme(text = element_text(size = 8), plot.margin = margin(t = 0, r = 0, b = 0,l = 0,
     unit = "pt"), plot.title = element_text(hjust = 0.5), axis.text.x = element_text(size = 8, angle = 90))
 }
@@ -210,6 +213,55 @@ cell_overlayer <- function(picture, mask, cell_list, color_list)
 	pic <- Reduce(`+`, pics)
 	return(pic + ifelse(any(picture) > 0, rgbImage(picture, picture, picture), 0))
 }
+
+############# Density Plot
+marker_histogram_density <- function(data, marker_col, plot_title, x_label, y_label, geom = "density",
+  color = "black", fill = "grey", alpha = 0.3, log_x = T, log_y = T)
+{
+  x_n_breaks <- seq(0, 1, 0.05)
+  x_log_breaks <- c(0.00001, 0.0001, 0.001, 0.01, 0.1, 0.5, 1)
+  plot_dataset <- copy(data)
+  setnames(plot_dataset, marker_col, "marker_col")
+  plot_dataset[, marker_col := marker_col + (1* 10^-5)]
+  plt <- ggplot(plot_dataset, aes(x = marker_col)) +
+    theme_classic() + theme(plot.margin = margin(t = 0, r = 0, b = 0,l = 0, unit = "pt"),
+    axis.text = element_text(size = 15), axis.title = element_text(size = 15),
+    legend.text = element_text(size = 15))
+  if(log_x){
+    plt <- plt + scale_x_continuous(name = paste("Log ", x_label), trans = "log10",
+      breaks = x_log_breaks, labels = x_log_breaks)
+  }else{
+    plt <- plt + scale_x_continuous(name = x_label, breaks = x_n_breaks, labels = x_n_breaks)
+  }
+  if(log_y){
+    plt <- plt +
+      stat_bin(aes(y = ..count.. + 1), binwidth = NULL, bins = 100, fill = fill, alpha = alpha,
+        color = color, geom = geom) +
+      scale_y_continuous(name = paste("Log ", y_label), trans = "log10")
+  }else{
+    plt <- plt + stat_bin(aes(y = ..count..), binwidth = NULL, bins = 100, fill = fill,
+        alpha = alpha, color = color, geom = geom) +
+      scale_y_continuous(name = y_label)
+  }
+  if(log_x | log_y){
+    plt <- plt + annotation_logticks(sides = ifelse(log_x & log_y, "lb", ifelse(log_x, "b", "l")))
+  }
+  plt <- plt + labs(title = plot_title)
+  return(plt)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ################## PDF Output ##################
 single_pdf_w <- 8.27 / 2 # About 1/6th of an A4 (inches)
