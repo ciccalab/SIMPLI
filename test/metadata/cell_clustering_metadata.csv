@@ -1,0 +1,6 @@
+cell_type,clustering_markers,clustering_resolutions
+T_Cells,Intensity_MeanIntensity_CD3@Intensity_MeanIntensity_CD45RA@Intensity_MeanIntensity_CD45RO@Intensity_MeanIntensity_CD4@Intensity_MeanIntensity_CD8a@Intensity_MeanIntensity_Ki67@Intensity_MeanIntensity_PD1,0.1@0.3@0.5@0.9@1.5
+B_Cells,NA,NA
+Macrophages,NA,NA
+Dendritic_Cells,NA,NA
+Epithelial_Cells,NA,NA
