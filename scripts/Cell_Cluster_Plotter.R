@@ -43,11 +43,23 @@ names(heatmaps) <- resolutions
 
 ################## UMAPS #####################
 set.seed(666)
+
+checkna_warn <- function(X){  ### Override the uwot:::checkna which stops with an error!
+	if (!is.null(X) && any(is.na(X))) {
+		warning("Missing values found in 'X'")
+    }
+}	
+rlang::env_unlock(env = asNamespace('uwot'))
+rlang::env_binding_unlock(env = asNamespace('uwot'))
+assign('checkna', checkna_warn, envir = asNamespace('uwot'))
+rlang::env_binding_lock(env = asNamespace('uwot'))
+rlang::env_lock(asNamespace('uwot'))
+
 UMAPS <- lapply(resolutions, function(res){
-umap_coords <- umap(Cells, n_neighbors = 40, min_dist = 0.9, learning_rate = 0.5, init = "random",
-	metric = list("euclidean" = markers, "categorical" = res), n_sgd_threads = 1, n_threads = 1)
-umap_table <- cbind(umap_coords, Cells[, c("Metadata_sample_name", markers, res), with = F])
-setnames(umap_table, c("V1", "V2"), c("umap_x", "umap_y"))
+	umap_coords <- umap(Cells, n_neighbors = 40, min_dist = 0.9, learning_rate = 0.5, init = "random",
+		metric = list("euclidean" = markers, "categorical" = res), n_sgd_threads = 1, n_threads = 1)
+	umap_table <- cbind(umap_coords, Cells[, c("Metadata_sample_name", markers, res), with = F])
+	setnames(umap_table, c("V1", "V2"), c("umap_x", "umap_y"))
 return(umap_table)
 })
 names(UMAPS) <- resolutions

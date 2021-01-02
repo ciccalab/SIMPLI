@@ -1,7 +1,8 @@
 Bootstrap: docker
-From: bioconductor/bioconductor_docker:RELEASE_3_10
+From: bioconductor/bioconductor_docker:RELEASE_3_12
 
 %post
+R --slave -e 'install.packages("dplyr", repos="https://cloud.r-project.org/")'
 R --slave -e 'install.packages("data.table", repos="https://cloud.r-project.org/")'
 R --slave -e 'install.packages("devtools", repos="https://cloud.r-project.org/")'
 R --slave -e 'BiocManager::install("multtest")'
@@ -11,6 +12,8 @@ R --slave -e 'devtools::install_version(package = "Seurat", version = package_ve
 R --slave -e 'BiocManager::install("EBImage")'
 R --slave -e 'install.packages("uwot", repos="https://cloud.r-project.org/")'
 R --slave -e 'install.packages("ggrepel", repos="https://cloud.r-project.org/")'
+R --slave -e 'install.packages("fpc", repos="https://cloud.r-project.org/")'
+R --slave -e 'install.packages("factoextra", repos="https://cloud.r-project.org/")'
 
 %apprun R
 	exec R "${@}"
