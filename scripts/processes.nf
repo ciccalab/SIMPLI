@@ -622,3 +622,29 @@ process cell_threshold_visualization {
         $cell_mask_list > threshold_plotting_log.txt 2>&1
     """
 }
+
+process homotypic_interaction_analysis {
+
+    label 'big_memory'
+    publishDir "$params.output_folder/Homotypic_interactions", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
+
+    input:
+        val(singularity_key_got)
+        path(coordinates_file_name)
+        tuple val(cell_type_column), val(cell_type_to_cluster), val(reachability_distance), val(min_cells)
+    output:
+        path("$cell_type_to_cluster/homotypic_clusters.csv", emit: homotypic_clusters) 
+    script:
+    """
+    Rscript --vanilla /opt/Homotypic_spatial_analysis.R \\
+        $coordinates_file_name \\
+        $reachability_distance \\
+        $min_cells \\
+        $cell_type_column \\
+        $cell_type_to_cluster \\
+        $cell_type_to_cluster \\
+        homotypic_clusters.csv > homotypic_log.txt 2>&1
+    """
+}

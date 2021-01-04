@@ -20,6 +20,8 @@ include {identify_cell_types_mask} from "$script_folder/workflows.nf"
 include {cluster_cells} from "$script_folder/workflows.nf"
 include {threshold_expression} from "$script_folder/workflows.nf"
 
+include {analyse_homotypic_interactions} from "$script_folder/workflows.nf"
+
 include {visualize_areas} from "$script_folder/workflows.nf"
 include {visualize_cell_types} from "$script_folder/workflows.nf"
 include {visualize_cell_clusters} from "$script_folder/workflows.nf"
@@ -118,6 +120,27 @@ workflow {
             .filter{!it.contains("NA")}
         cluster_cells(singularity_key_getter.out.singularity_key_got, annotated_cells, clustering_metadata, params.sample_metadata_file)
     }    
+    if(!params.skip_homotypic_interactions){
+        homotypic_metadata = channel.fromPath(params.homotypic_interactions_metadata)
+            .splitCsv(header:true)
+            .map{row -> tuple(row.cell_type_column, row.cell_type_to_cluster, row.reachability_distance, row.min_cells)}
+            .filter{!it.contains("NA")}
+        switch(params.homotypic_interactions_input){
+            case "identification":
+                homotypic_interactions_input = annotated_cell_data
+                break
+            case "clustering":
+                homotypic_interactions_input = cluster_cells.out.clustered_cell_data
+                break
+            case "thresholding":
+                homotypic_interactions_input = threshold_expression.out.thresholded_cell_data
+                break
+            default:
+                homotypic_interactions_input = channel.fromPath(params.homotypic_interactions_input)
+        }
+        analyse_homotypic_interactions(singularity_key_getter.out.singularity_key_got,
+            homotypic_interactions_input, homotypic_metadata)
+    }
     if(!params.skip_visualization){
         if(!params.skip_area && !params.skip_area_visualization){
             visualize_areas(singularity_key_getter.out.singularity_key_got, measure_areas.out.area_measurements,
@@ -156,12 +179,12 @@ workflow {
             visualize_cell_clusters(singularity_key_getter.out.singularity_key_got, clustering_metadata,
                 clustered_cell_file, params.sample_metadata_file)
         }
-        if(!params.skip_cluster_visualization){
-            if(!params.skip_thresholding_visualization){
+        if(!params.skip_thresholding_visualization){
+            if(!params.skip_cell_thresholding){
                 thresholded_cell_file = threshold_expression.out.thresholded_cell_data
             }
             else{
-                clustered_cell_file = params.thresholded_cell_data_file
+                thresholded_cell_file = params.thresholded_cell_data_file
             }
             if(!params.skip_segmentation){
                 cell_masks = segment_cells.out.cell_mask_tiffs.collect()

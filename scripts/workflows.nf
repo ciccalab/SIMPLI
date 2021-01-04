@@ -30,6 +30,8 @@ include {cell_cluster_visualization} from "$script_folder/processes.nf"
 include {threshold_cells} from "$script_folder/processes.nf"
 include {cell_threshold_visualization} from "$script_folder/processes.nf"
 
+include {homotypic_interaction_analysis} from "$script_folder/processes.nf"
+
 workflow singularity_key_getter {
     get_singularity_key()
     emit:
@@ -152,6 +154,17 @@ workflow threshold_expression{
         threshold_cells(singularity_key_got, annotated_cell_data, cell_thresholding_metadata)
     emit:
         thresholded_cell_data = threshold_cells.out.thresholded_cell_data
+}
+
+workflow analyse_homotypic_interactions{
+    take:
+        singularity_key_got
+        coordinates_file_name
+        homotypic_metadata
+    main:
+        homotypic_interaction_analysis(singularity_key_got, coordinates_file_name, homotypic_metadata)
+    emit:
+        homotypic_clusters = homotypic_interaction_analysis.out.homotypic_clusters
 }
 
 workflow visualize_areas{
