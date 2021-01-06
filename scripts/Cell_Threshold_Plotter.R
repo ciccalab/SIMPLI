@@ -198,7 +198,8 @@ for(pop in populations){
     dir.create(density_folder, recursive = T, showWarnings = F)
     for (marker in names(density_plots[[pop]][[sub_pop]])){
       pdf_plotter(plot = density_plots[[pop]][[sub_pop]][[marker]],
-        filename = paste0(density_folder, "/", sub_pop, "-", marker, "-density.pdf"))
+			filename = paste0(density_folder, "/", sub_pop, "-", marker, "-density.pdf"))
     }
   }
 }
+
