@@ -2,6 +2,7 @@ library(data.table)
 library(ggplot2)
 library(ggrepel)
 library(gridExtra)
+library(EBImage)
 
 ######## Heatmaps #######
 heatmapper <- function(plot_dataset, res_column, cols, high_color, mid_color, low_color)
@@ -249,19 +250,6 @@ marker_histogram_density <- function(data, marker_col, plot_title, x_label, y_la
   plt <- plt + labs(title = plot_title)
   return(plt)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ################## PDF Output ##################
 single_pdf_w <- 8.27 / 2 # About 1/6th of an A4 (inches)
