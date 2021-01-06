@@ -26,6 +26,7 @@ include {visualize_areas} from "$script_folder/workflows.nf"
 include {visualize_cell_types} from "$script_folder/workflows.nf"
 include {visualize_cell_clusters} from "$script_folder/workflows.nf"
 include {visualize_cell_thresholds} from "$script_folder/workflows.nf"
+include {visualize_homotypic_interactions} from "$script_folder/workflows.nf"
 
 workflow {
     sample_names = channel.fromPath(params.sample_metadata_file).splitCsv(header: true).map{row -> row.sample_name}
@@ -189,7 +190,7 @@ workflow {
             if(!params.skip_segmentation){
                 cell_masks = segment_cells.out.cell_mask_tiffs.collect()
             }
-            if(params.skip_segmentation){
+            else{
                 cell_masks = channel.fromPath(params.single_cell_masks_metadata)
                     .splitCsv(header:true)
                     .map{row -> row.file_name}
@@ -197,6 +198,25 @@ workflow {
             }
             visualize_cell_thresholds(singularity_key_getter.out.singularity_key_got,
                 thresholded_cell_file, params.sample_metadata_file, params.cell_thresholding_metadata, cell_masks)
+        }
+        if(!params.skip_homotypic_visualization){
+            if(!params.skip_homotypic_interactions){
+                homotypic_interactions_file = analyse_homotypic_interactions.out.collected_homotypic_interactions
+            }
+            else{
+                homotypic_interactions_file = params.homotypic_interactions_file
+            }
+            if(!params.skip_segmentation){
+                cell_masks = segment_cells.out.cell_mask_tiffs.collect()
+            }
+            else{
+                cell_masks = channel.fromPath(params.single_cell_masks_metadata)
+                    .splitCsv(header:true)
+                    .map{row -> row.file_name}
+                    .collect() 
+            }
+            visualize_homotypic_interactions(singularity_key_getter.out.singularity_key_got,
+                homotypic_interactions_file, params.homotypic_interactions_metadata, cell_masks)
         }
     }
 }

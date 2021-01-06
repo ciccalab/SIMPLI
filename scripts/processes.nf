@@ -635,7 +635,7 @@ process homotypic_interaction_analysis {
         path(coordinates_file_name)
         tuple val(cell_type_column), val(cell_type_to_cluster), val(reachability_distance), val(min_cells)
     output:
-        path("$cell_type_to_cluster/homotypic_clusters.csv", emit: homotypic_clusters) 
+        path("$cell_type_to_cluster/$cell_type_to_cluster-homotypic_clusters.csv", emit: homotypic_clusters) 
     script:
     """
     Rscript --vanilla /opt/Homotypic_spatial_analysis.R \\
@@ -645,6 +645,50 @@ process homotypic_interaction_analysis {
         $cell_type_column \\
         $cell_type_to_cluster \\
         $cell_type_to_cluster \\
-        homotypic_clusters.csv > homotypic_log.txt 2>&1
+        $cell_type_to_cluster-homotypic_clusters.csv > homotypic_analysis_log.txt 2>&1
+    """
+}
+
+process collect_homotypic_interactions {
+
+    label 'small_memory'
+    publishDir "$params.output_folder/Homotypic_interactions", mode:'copy', overwrite: true
+    
+    input:
+        path(homotypic_interactions_list)
+
+    output:
+        path("homotypic_interactions.csv", emit: collected_homotypic_interactions)
+
+    script:
+    """
+    cat $homotypic_interactions_list > homotypic_interactions.csv
+    sed -i '1!{/CellName,Metadata_sample_name,Location_Center_X,Location_Center_Y,cell_type,cluster,isseed/d;}' homotypic_interactions.csv
+    """
+}
+
+
+process homotypic_interaction_visualization {
+
+    label 'big_memory'
+    publishDir "$params.output_folder/Plots/Homotypic_Interaction_Plots", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
+
+    input:
+        val(singularity_key_got)
+        path(dbscan_file_name)
+        path(metadata_file_name)
+        path(cell_mask_list) 
+
+    output:
+        path("**/*.pdf", emit: homotypic_interaction_plots) 
+    script:
+    """
+    Rscript --vanilla /opt/Homotypic_spatial_plotting.R \\
+        $dbscan_file_name \\
+        $metadata_file_name \\
+        ./ \\
+        $cell_mask_list > homotypic_plotting_log.txt 2>&1
     """
 }
