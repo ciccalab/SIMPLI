@@ -177,7 +177,7 @@ if(length(sample_names) > 1){
 } else if (length(sample_names > 0)){
   for (pop in populations){
     pdf_plotter(filename = paste0(barplot_output_folder, "/", pop, "-barplots.pdf"),
-      plot = sample_barplot[[pop]])
+      plot = sample_barplots[[pop]])
   }
 }
 
