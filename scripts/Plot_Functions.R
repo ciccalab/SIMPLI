@@ -216,33 +216,44 @@ cell_overlayer <- function(picture, mask, cell_list, color_list)
 }
 
 ############# Density Plot
-marker_histogram_density <- function(data, marker_col, plot_title, x_label, y_label, geom = "density",
-  color = "black", fill = "grey", alpha = 0.3, log_x = T, log_y = T)
+histogram_density <- function(data, marker_col, plot_title, x_label, y_label,
+  category_col = NULL, geom = "density", color = "black", fill = "grey", alpha = 0.3, log_x = T,
+  log_y = T, x_breaks = c(0.00001, 0.0001, 0.001, 0.01, 0.1, 0.5, 1))
 {
-  x_n_breaks <- seq(0, 1, 0.05)
-  x_log_breaks <- c(0.00001, 0.0001, 0.001, 0.01, 0.1, 0.5, 1)
   plot_dataset <- copy(data)
   setnames(plot_dataset, marker_col, "marker_col")
   plot_dataset[, marker_col := marker_col + (1* 10^-5)]
+  if(!is.null(category_col)){
+    setnames(plot_dataset, category_col, "category_col")
+  }
   plt <- ggplot(plot_dataset, aes(x = marker_col)) +
     theme_classic() + theme(plot.margin = margin(t = 0, r = 0, b = 0,l = 0, unit = "pt"),
     axis.text = element_text(size = 15), axis.title = element_text(size = 15),
-    legend.text = element_text(size = 15))
+    legend.text = element_text(size = 15), legend.title = element_blank())
   if(log_x){
     plt <- plt + scale_x_continuous(name = paste("Log ", x_label), trans = "log10",
-      breaks = x_log_breaks, labels = x_log_breaks)
+      breaks = x_breaks, labels = x_breaks)
   }else{
-    plt <- plt + scale_x_continuous(name = x_label, breaks = x_n_breaks, labels = x_n_breaks)
+    plt <- plt + scale_x_continuous(name = x_label, breaks = x_breaks, labels = x_breaks)
   }
   if(log_y){
-    plt <- plt +
-      stat_bin(aes(y = ..count.. + 1), binwidth = NULL, bins = 100, fill = fill, alpha = alpha,
-        color = color, geom = geom) +
-      scale_y_continuous(name = paste("Log ", y_label), trans = "log10")
+    if(!is.null(category_col)){
+      plt <- plt + stat_bin(aes(y = ..count.. + 1, color = category_col, fill = category_col), binwidth = NULL,
+		bins = 100, alpha = alpha, geom = geom)
+    }else{
+      plt <- plt + stat_bin(aes(y = ..count.. + 1), binwidth = NULL, bins = 100, fill = fill,
+        alpha = alpha,  color = color, geom = geom)
+    }
+      plt <- plt + scale_y_continuous(name = paste("Log ", y_label), trans = "log10")
   }else{
+    if(!is.null(category_col)){
+      plt <- plt + stat_bin(aes(y = ..count.., color = category_col, fill = category_col), binwidth = NULL, bins = 100,
+		alpha = alpha, geom = geom)
+    }else{
     plt <- plt + stat_bin(aes(y = ..count..), binwidth = NULL, bins = 100, fill = fill,
-        alpha = alpha, color = color, geom = geom) +
-      scale_y_continuous(name = y_label)
+        alpha = alpha, color = color, geom = geom)
+    }
+    plt <- plt +  scale_y_continuous(name = y_label)
   }
   if(log_x | log_y){
     plt <- plt + annotation_logticks(sides = ifelse(log_x & log_y, "lb", ifelse(log_x, "b", "l")))

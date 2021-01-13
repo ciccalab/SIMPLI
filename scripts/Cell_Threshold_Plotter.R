@@ -135,7 +135,7 @@ density_plots <- lapply(populations, function(pop){
     threshold_markers <- all.vars(parse(text = threshold_metadata[cell_type == pop &
       population_name == sub_pop, threshold_expression]))
     marker_densities <- lapply(threshold_markers, function(marker){
-      marker_histogram_density(plot_dataset, marker, paste(pop, sub_pop, marker, sep = " "),
+      histogram_density(plot_dataset, marker, paste(pop, sub_pop, marker, sep = " "),
         marker, paste0(pop, " cells"), geom = "density", color = "black",
         fill = Population_Colors[[pop]][[sub_pop]], alpha = 0.3, log_x = T, log_y = T)
     })
