@@ -1,0 +1,4 @@
+cell_file1,cell_type_column1,cell_type1,cell_file2,cell_type_column2,cell_type2,color
+identification,cell_type,Dendritic_Cells,clustering,res_0.3_ids,1,red
+thresholding,Epithelial_Cells_Thresholded,Proliferating_Epithelium,identification,cell_type,Macrophages,green
+thresholding,Epithelial_Cells_Thresholded,UNASSIGNED,identification,cell_type,Macrophages,blue

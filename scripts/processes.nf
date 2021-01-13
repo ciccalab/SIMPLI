@@ -667,7 +667,6 @@ process collect_homotypic_interactions {
     """
 }
 
-
 process homotypic_interaction_visualization {
 
     label 'big_memory'
@@ -690,5 +689,74 @@ process homotypic_interaction_visualization {
         $metadata_file_name \\
         ./ \\
         $cell_mask_list > homotypic_plotting_log.txt 2>&1
+    """
+}
+
+process get_heterotypic_distances {
+
+    label 'big_memory'
+    publishDir "$params.output_folder/Heterotypic_interactions", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
+
+    input:
+        val(singularity_key_got)
+        tuple path(coordinate_file1), val(cell_type_column1), val(cell_type1),
+            path(coordinate_file2), val(cell_type_column2), val(cell_type2)
+    output:
+        path("$cell_type1-$cell_type2/$cell_type1-$cell_type2-distances.csv", emit: heterotypic_distances) 
+    script:
+    """
+    Rscript --vanilla /opt/Distance_Calculator.R \\
+        $coordinate_file1 \\
+        $cell_type_column1 \\
+        $cell_type1 \\
+        $coordinate_file2 \\
+        $cell_type_column2 \\
+        $cell_type2 \\
+        $cell_type1-$cell_type2 \\
+        $cell_type1-$cell_type2-distances.csv > heterotypic_distances_log.txt 2>&1
+    """
+}
+
+process collect_heterotypic_distances {
+    label 'small_memory'
+    publishDir "$params.output_folder/Heterotypic_interactions", mode:'copy', overwrite: true
+    
+    input:
+        path(heterotypic_interactions_list)
+
+    output:
+        path("heterotypic_interactions.csv", emit: collected_heterotypic_interactions)
+
+    script:
+    """
+    cat $heterotypic_interactions_list > heterotypic_interactions.csv
+    sed -i '1!{/id1,Metadata_sample_name,CellName1,Location_Center_X1,Location_Center_Y1,spatial_analysis_cell_type1,CellName2,Location_Center_X2,Location_Center_Y2,spatial_analysis_cell_type2,id2,distance/d;}' heterotypic_interactions.csv
+    """
+}
+
+process heterotypic_interaction_visualization {
+
+    label 'big_memory'
+    publishDir "$params.output_folder/Plots/Heterotypic_Interaction_Plots", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
+
+    input:
+        val(singularity_key_got)
+        path(distance_file_name)
+        path(metadata_file_name)
+        path(sample_file_name)
+
+    output:
+        path("**/*.pdf", emit: heterotypic_interaction_plots) 
+    script:
+    """
+    Rscript --vanilla /opt/Heterotypic_spatial_plotting.R \\
+        $distance_file_name \\
+        $metadata_file_name \\
+        $sample_file_name \\
+        ./ > heterotypic_plotting_log.txt 2>&1
     """
 }

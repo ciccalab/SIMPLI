@@ -34,6 +34,10 @@ include {homotypic_interaction_analysis} from "$script_folder/processes.nf"
 include {collect_homotypic_interactions} from "$script_folder/processes.nf"
 include {homotypic_interaction_visualization} from "$script_folder/processes.nf"
 
+include{get_heterotypic_distances} from "$script_folder/processes.nf"
+include{collect_heterotypic_distances} from "$script_folder/processes.nf"
+include {heterotypic_interaction_visualization} from "$script_folder/processes.nf"
+
 workflow singularity_key_getter {
     get_singularity_key()
     emit:
@@ -170,6 +174,17 @@ workflow analyse_homotypic_interactions{
         collected_homotypic_interactions = collect_homotypic_interactions.out.collected_homotypic_interactions
 }
 
+workflow calculate_heterotypic_distances{
+    take:
+        singularity_key_got
+        heterotypic_metadata
+    main:
+        get_heterotypic_distances(singularity_key_got, heterotypic_metadata)
+        collect_heterotypic_distances(get_heterotypic_distances.out.heterotypic_distances.collect())
+    emit:
+        collected_heterotypic_interactions = collect_heterotypic_distances.out.collected_heterotypic_interactions
+}
+
 workflow visualize_areas{
     take:
         singularity_key_got
@@ -230,5 +245,17 @@ workflow visualize_homotypic_interactions{
         homotypic_interaction_visualization(singularity_key_got, dbscan_file_name, metadata_file_name, cell_mask_list)
     emit:
         homotypic_interaction_plots = homotypic_interaction_visualization.out.homotypic_interaction_plots
+}
+
+workflow visualize_heterotypic_interactions{
+    take:
+        singularity_key_got
+        distance_file_name
+        metadata_file_name
+        sample_file_name
+    main:
+        heterotypic_interaction_visualization(singularity_key_got, distance_file_name, metadata_file_name, sample_file_name)
+    emit:
+        heterotypic_interaction_plots = heterotypic_interaction_visualization.out.heterotypic_interaction_plots
 }
 

@@ -22,11 +22,15 @@ include {threshold_expression} from "$script_folder/workflows.nf"
 
 include {analyse_homotypic_interactions} from "$script_folder/workflows.nf"
 
+include {calculate_heterotypic_distances} from "$script_folder/workflows.nf"
+
 include {visualize_areas} from "$script_folder/workflows.nf"
 include {visualize_cell_types} from "$script_folder/workflows.nf"
 include {visualize_cell_clusters} from "$script_folder/workflows.nf"
 include {visualize_cell_thresholds} from "$script_folder/workflows.nf"
 include {visualize_homotypic_interactions} from "$script_folder/workflows.nf"
+include {visualize_heterotypic_interactions} from "$script_folder/workflows.nf"
+
 
 workflow {
     sample_names = channel.fromPath(params.sample_metadata_file).splitCsv(header: true).map{row -> row.sample_name}
@@ -101,6 +105,7 @@ workflow {
             image_metadata, cell_mask_metadata)
         annotated_cell_data = identify_cell_types_mask.out.annotated_cell_data
     }    
+    
     if(!params.skip_cell_thresholding){
         if(!params.skip_cell_type_identification)
             annotated_cells = annotated_cell_data 
@@ -109,6 +114,7 @@ workflow {
         }
         threshold_expression(singularity_key_getter.out.singularity_key_got, annotated_cells, params.cell_thresholding_metadata)
     }    
+
     if(!params.skip_cell_clustering){
         if(!params.skip_cell_type_identification)
             annotated_cells = annotated_cell_data 
@@ -120,28 +126,30 @@ workflow {
             .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
             .filter{!it.contains("NA")}
         cluster_cells(singularity_key_getter.out.singularity_key_got, annotated_cells, clustering_metadata, params.sample_metadata_file)
-    }    
+    }
+
+    coord_selecter_map = ["identification": identify_cell_types_mask.out.annotated_cell_data,
+        "clustering": cluster_cells.out.clustered_cell_data,
+        "thresholding": threshold_expression.out.thresholded_cell_data].withDefault{ key -> key}
+    
     if(!params.skip_homotypic_interactions){
         homotypic_metadata = channel.fromPath(params.homotypic_interactions_metadata)
             .splitCsv(header:true)
             .map{row -> tuple(row.cell_type_column, row.cell_type_to_cluster, row.reachability_distance, row.min_cells)}
             .filter{!it.contains("NA")}
-        switch(params.homotypic_interactions_input){
-            case "identification":
-                homotypic_interactions_input = annotated_cell_data
-                break
-            case "clustering":
-                homotypic_interactions_input = cluster_cells.out.clustered_cell_data
-                break
-            case "thresholding":
-                homotypic_interactions_input = threshold_expression.out.thresholded_cell_data
-                break
-            default:
-                homotypic_interactions_input = channel.fromPath(params.homotypic_interactions_input)
-        }
+     homotypic_interactions_input = coord_selecter_map[params.homotypic_interactions_input]
         analyse_homotypic_interactions(singularity_key_getter.out.singularity_key_got,
             homotypic_interactions_input, homotypic_metadata)
     }
+    
+    if(!params.skip_heterotypic_interactions){
+        heterotypic_metadata = channel.fromPath(params.heterotypic_interactions_metadata)
+            .splitCsv(header:true)
+            .map{row -> tuple(coord_selecter_map[row.cell_file1].get(), row.cell_type_column1, row.cell_type1,
+                    coord_selecter_map[row.cell_file2].get(), row.cell_type_column2, row.cell_type2)}
+        calculate_heterotypic_distances(singularity_key_getter.out.singularity_key_got, heterotypic_metadata)
+    }
+    
     if(!params.skip_visualization){
         if(!params.skip_area && !params.skip_area_visualization){
             visualize_areas(singularity_key_getter.out.singularity_key_got, measure_areas.out.area_measurements,
@@ -218,5 +226,15 @@ workflow {
             visualize_homotypic_interactions(singularity_key_getter.out.singularity_key_got,
                 homotypic_interactions_file, params.homotypic_interactions_metadata, cell_masks)
         }
+        if(!params.skip_heterotypic_visualization){
+            if(!params.skip_heterotypic_interactions){
+                heterotypic_interactions_file = calculate_heterotypic_distances.out.collected_heterotypic_interactions
+            }
+            else{
+                heterotypic_interactions_file = params.heterotypic_interactions_file
+            }
+        }
+        visualize_heterotypic_interactions(singularity_key_getter.out.singularity_key_got,
+            heterotypic_interactions_file, params.heterotypic_interactions_metadata, params.sample_metadata_file)
     }
 }
