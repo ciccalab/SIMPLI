@@ -128,10 +128,10 @@ workflow {
         cluster_cells(singularity_key_getter.out.singularity_key_got, annotated_cells, clustering_metadata, params.sample_metadata_file)
     }
 
-    coord_selecter_map = ["identification": identify_cell_types_mask.out.annotated_cell_data,
-        "clustering": cluster_cells.out.clustered_cell_data,
-        "thresholding": threshold_expression.out.thresholded_cell_data].withDefault{ key -> key}
-    
+    coord_selecter_map = ["identification": (params.skip_cell_type_identification ? params.annotated_cell_data_file : identify_cell_types_mask.out.annotated_cell_data),
+        "clustering": (params.skip_cell_clustering ? params.clustered_cell_data_file : cluster_cells.out.clustered_cell_data),
+        "thresholding": (params.skip_cell_thresholding ? params.thresholded_cell_data_file : threshold_expression.out.thresholded_cell_data)].withDefault{ key -> key}
+
     if(!params.skip_homotypic_interactions){
         homotypic_metadata = channel.fromPath(params.homotypic_interactions_metadata)
             .splitCsv(header:true)
@@ -145,8 +145,12 @@ workflow {
     if(!params.skip_heterotypic_interactions){
         heterotypic_metadata = channel.fromPath(params.heterotypic_interactions_metadata)
             .splitCsv(header:true)
-            .map{row -> tuple(coord_selecter_map[row.cell_file1].get(), row.cell_type_column1, row.cell_type1,
-                    coord_selecter_map[row.cell_file2].get(), row.cell_type_column2, row.cell_type2)}
+            .map{row -> tuple(coord_selecter_map[row.cell_file1]?.get(),
+				row.cell_type_column1,
+				row.cell_type1,
+				coord_selecter_map[row.cell_file2]?.get(),
+				row.cell_type_column2,
+				row.cell_type2)}
         calculate_heterotypic_distances(singularity_key_getter.out.singularity_key_got, heterotypic_metadata)
     }
     
@@ -233,8 +237,8 @@ workflow {
             else{
                 heterotypic_interactions_file = params.heterotypic_interactions_file
             }
+			visualize_heterotypic_interactions(singularity_key_getter.out.singularity_key_got,
+				heterotypic_interactions_file, params.heterotypic_interactions_metadata, params.sample_metadata_file)
         }
-        visualize_heterotypic_interactions(singularity_key_getter.out.singularity_key_got,
-            heterotypic_interactions_file, params.heterotypic_interactions_metadata, params.sample_metadata_file)
     }
 }
