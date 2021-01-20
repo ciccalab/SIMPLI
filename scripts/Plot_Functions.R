@@ -85,7 +85,6 @@ Barplotter <- function(plot_dataset, x_column, annotation_column, color_column, 
 	plot_data[, percent := count / total * 100]
 	plot_data <- unique(plot_data[, .(annotation_column, color_column, percent)])
 	plot_data <- plot_data[, percent_text := paste0(round(percent), " %")]
-	plot_data[, color_column := factor(color_column, levels = names(annotation_colors))]
 	plot_data[order(color_column, decreasing = T), percent_y := cumsum(percent) - percent * 0.5, by = annotation_column]
 	plot_data <- plot_data[, .SD, keyby = color_column]
 
@@ -94,7 +93,7 @@ Barplotter <- function(plot_dataset, x_column, annotation_column, color_column, 
 		geom_text(aes(x = annotation_column, y = percent_y, label = percent_text), size = 2) +
 	    scale_x_discrete(labels = annotations, breaks = sort(unique(plot_data$annotation_column)), name = element_blank()) +
 		scale_y_continuous(name = y_axis_title) +
-		scale_fill_manual(values = annotation_colors, name = element_blank(), labels = names(annotation_colors)) +
+		scale_fill_manual(values = annotation_colors, name = element_blank()) +
 		labs(title = plot_title) +
 		theme_bw(base_size = 8, base_family = "sans") +
 		theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(), legend.position = "right",
