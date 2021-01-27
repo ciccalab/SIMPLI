@@ -13,10 +13,10 @@ More Information about the analyses that can be performed with SIMPLI and its us
 [SIMPLI command line parameters and configuration](https://github.com/ciccalab/SIMPLI/wiki/Run).
 
 ## Input
-[Supported image files and analysis metadata](https://github.com/ciccalab/SIMPLI/wiki/Input).
-
-## Output
-[Output files for all the steps in the analysis](https://github.com/ciccalab/SIMPLI/wiki/Output).
+[Supported image files and associated metadata](https://github.com/ciccalab/SIMPLI/wiki/Input).
 
 ## Analysis
-[Description of all steps of the analysis](https://github.com/ciccalab/SIMPLI/wiki/Analysis).
+[Documentation for each step of the analysis](https://github.com/ciccalab/SIMPLI/wiki/Analysis).
+
+## Example workflow
+[Description of the included example dataset and workflow ](https://github.com/ciccalab/SIMPLI/wiki/Example_Workflow).
