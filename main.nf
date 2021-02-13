@@ -6,22 +6,18 @@ include {singularity_key_getter} from "$script_folder/workflows.nf"
 include {convert_metadata_to_cp4} from "$script_folder/workflows.nf"
 
 include {convert_raw_data} from "$script_folder/workflows.nf"
-
 include {normalize_images} from "$script_folder/workflows.nf"
-
 include {preprocess_images} from "$script_folder/workflows.nf"
 
 include {measure_areas} from "$script_folder/workflows.nf"
 
 include {segment_cells} from "$script_folder/workflows.nf"
-
 include {identify_cell_types_mask} from "$script_folder/workflows.nf"
 
 include {cluster_cells} from "$script_folder/workflows.nf"
 include {threshold_expression} from "$script_folder/workflows.nf"
 
 include {analyse_homotypic_interactions} from "$script_folder/workflows.nf"
-
 include {calculate_heterotypic_distances} from "$script_folder/workflows.nf"
 
 include {visualize_areas} from "$script_folder/workflows.nf"
