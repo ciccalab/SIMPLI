@@ -632,8 +632,7 @@ process homotypic_interaction_analysis {
 
     input:
         val(singularity_key_got)
-        path(coordinates_file_name)
-        tuple val(cell_type_column), val(cell_type_to_cluster), val(reachability_distance), val(min_cells)
+        tuple path(coordinates_file_name), val(cell_type_column), val(cell_type_to_cluster), val(reachability_distance), val(min_cells)
     output:
         path("$cell_type_to_cluster/$cell_type_to_cluster-homotypic_clusters.csv", emit: homotypic_clusters) 
     script:
@@ -663,7 +662,7 @@ process collect_homotypic_interactions {
     script:
     """
     cat $homotypic_interactions_list > homotypic_interactions.csv
-    sed -i '1!{/CellName,Metadata_sample_name,Location_Center_X,Location_Center_Y,cell_type,cluster,isseed/d;}' homotypic_interactions.csv
+    sed -i '1!{/CellName,Metadata_sample_name,Location_Center_X,Location_Center_Y,spatial_analysis_cell_type,cluster,isseed/d;}' homotypic_interactions.csv
     """
 }
 
@@ -701,8 +700,8 @@ process get_heterotypic_distances {
 
     input:
         val(singularity_key_got)
-        tuple path(coordinate_file1), val(cell_type_column1), val(cell_type1),
-            path(coordinate_file2), val(cell_type_column2), val(cell_type2)
+        tuple path(coordinate_file1, stageAs: "cf1.csv"), val(cell_type_column1), val(cell_type1),
+            path(coordinate_file2, stageAs: "cf2.csv"), val(cell_type_column2), val(cell_type2)
     output:
         path("$cell_type1-$cell_type2/$cell_type1-$cell_type2-distances.csv", emit: heterotypic_distances) 
     script:

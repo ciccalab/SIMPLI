@@ -135,11 +135,9 @@ workflow {
     if(!params.skip_homotypic_interactions){
         homotypic_metadata = channel.fromPath(params.homotypic_interactions_metadata)
             .splitCsv(header:true)
-            .map{row -> tuple(row.cell_type_column, row.cell_type_to_cluster, row.reachability_distance, row.min_cells)}
+            .map{row -> tuple(coord_selecter_map[row.cell_file]?.get(), row.cell_type_column, row.cell_type_to_cluster, row.reachability_distance, row.min_cells)}
             .filter{!it.contains("NA")}
-     homotypic_interactions_input = coord_selecter_map[params.homotypic_interactions_input]
-        analyse_homotypic_interactions(singularity_key_getter.out.singularity_key_got,
-            homotypic_interactions_input, homotypic_metadata)
+        analyse_homotypic_interactions(singularity_key_getter.out.singularity_key_got, homotypic_metadata)
     }
     
     if(!params.skip_heterotypic_interactions){

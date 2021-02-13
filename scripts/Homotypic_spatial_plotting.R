@@ -25,6 +25,8 @@ dbscan_clusters <- merge(dbscan_clusters, colors_per_clustered_cell_type, by = "
 ###### Apply dbscan for each sample and cell type of interest and plot the maps ######
 cell_mask_sizes <- lapply(samples, function(sample_name){
 	cell_mask_file_name <- grep(sample_name, cell_mask_file_list, value = T)
+	print(cell_mask_file_name)
+	print(sample_name)
 	cell_mask <- load_image(cell_mask_file_name)
 	list(width = dim(cell_mask)[1], height = dim(cell_mask)[2])
 })

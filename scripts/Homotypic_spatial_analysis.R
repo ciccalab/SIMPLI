@@ -14,8 +14,8 @@ output_filename <- arguments[[7]]
 ###### Read input coordinates ######
 coordinates <- fread(coordinates_file_name)
 setnames(coordinates, cell_type_column, "spatial_analysis_cell_type")
-coordinates[, cell_type := as.character(cell_type)]
-coordinates[is.na(cell_type), cell_type := "NA"]
+coordinates[, spatial_analysis_cell_type := as.character(spatial_analysis_cell_type)]
+coordinates[is.na(spatial_analysis_cell_type), spatial_analysis_cell_type := "NA"]
 samples <- unique(coordinates$Metadata_sample_name)
 
 ###### Apply dbscan for each sample and cell type of interest ######

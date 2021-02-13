@@ -165,10 +165,9 @@ workflow threshold_expression{
 workflow analyse_homotypic_interactions{
     take:
         singularity_key_got
-        coordinates_file_name
         homotypic_metadata
     main:
-        homotypic_interaction_analysis(singularity_key_got, coordinates_file_name, homotypic_metadata)
+        homotypic_interaction_analysis(singularity_key_got, homotypic_metadata)
         collect_homotypic_interactions(homotypic_interaction_analysis.out.homotypic_clusters.collect())
     emit:
         collected_homotypic_interactions = collect_homotypic_interactions.out.collected_homotypic_interactions
