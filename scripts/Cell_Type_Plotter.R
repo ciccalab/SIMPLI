@@ -19,9 +19,10 @@ Samples[is.na(comparison), comparison := "NA" ]
 suppressWarnings(Cells[, color := NULL])
 suppressWarnings(Cells[, comparison := NULL])
 Cells <- merge(Cells, Samples, by.x = "Metadata_sample_name", by.y = "sample_name")
-Cells <- Cells[comparison != "NA",]
+sample_names <- Samples[, sample_name]
 
-sample_names <- Samples[comparison != "NA", sample_name]
+Comparison_Cells <- Cells[comparison != "NA",]
+comparison_sample_names <- Samples[comparison != "NA", sample_name]
 
 ###################### Read cell type colors from the cell type metadata  ##########################
 cell_type_color <- fread(cell_cell_type_metadata_file_name)
@@ -61,11 +62,15 @@ legend_plot <- ggplot(data = legend_table) +
 
 ###################### Barplots ##########################
 if(length(sample_names) > 0){
-	sample_barplot <- Barplotter(Cells, "Metadata_sample_name", "Metadata_sample_name", "cell_type",
+	unassigned_sample_barplot <- Barplotter(Cells, "Metadata_sample_name", "Metadata_sample_name", "cell_type",
 		color_list, "Cell type cells / total cells %")
-	if(length(sample_names) > 1){
-		comparison_barplot <- Barplotter(Cells, "Metadata_sample_name", "comparison", "cell_type",	color_list,
+	assigned_sample_barplot <- Barplotter(Cells[cell_type != "UNASSIGNED"], "Metadata_sample_name", "Metadata_sample_name",
+		"cell_type", color_list, "Cell type cells / total cells %")
+	if(length(comparison_sample_names) > 1){
+		unassigned_comparison_barplot <- Barplotter(Comparison_Cells, "Metadata_sample_name", "comparison", "cell_type", color_list,
 			"Cell type cells / total cells %")
+		assigned_comparison_barplot <- Barplotter(Comparison_Cells[cell_type != "UNASSIGNED"], "Metadata_sample_name", "comparison",
+			"cell_type", color_list, "Cell type cells / total cells %")
 	}
 }
 
@@ -73,16 +78,22 @@ if(length(sample_names) > 0){
 n_categories <- length(unique(Samples[comparison != "NA", comparison]))
 sample_colors <- Samples[, color]
 names(sample_colors) <- Samples[, color]
-cell_type_boxplots <- list()
 if(n_categories == 2){
 # Boxplots should be made only when we have 2 groups to compare
-	plot_data <- copy(Cells)		
-	plot_data[, n_cells := .N, by = c("Metadata_sample_name", "cell_type")]
-	plot_data[, total := .N, by = "Metadata_sample_name"]
-	plot_data[, percentage := n_cells / total * 100]
-	cell_type_boxplots <- list_boxplotter(plot_data, "Metadata_sample_name", "cell_type", "comparison", "percentage",
+	unassigned_plot_data <- copy(Comparison_Cells)		
+	unassigned_plot_data[, n_cells := .N, by = c("Metadata_sample_name", "cell_type")]
+	unassigned_plot_data[, total := .N, by = "Metadata_sample_name"]
+	unassigned_plot_data[, percentage := n_cells / total * 100]
+	unassigned_cell_type_boxplots <- list_boxplotter(unassigned_plot_data, "Metadata_sample_name", "cell_type", "comparison", "percentage",
 		"Cell type cells / total cells %", "color", sample_colors)
-	cell_type_boxplots <- lapply(cell_type_boxplots, function(x){x$Plot})
+	unassigned_cell_type_boxplots <- lapply(unassigned_cell_type_boxplots, function(x){x$Plot})
+	assigned_plot_data <- copy(Comparison_Cells)[cell_type != "UNASSIGNED", ]
+	assigned_plot_data[, n_cells := .N, by = c("Metadata_sample_name", "cell_type")]
+	assigned_plot_data[, total := .N, by = "Metadata_sample_name"]
+	assigned_plot_data[, percentage := n_cells / total * 100]
+	assigned_cell_type_boxplots <- list_boxplotter(assigned_plot_data, "Metadata_sample_name", "cell_type", "comparison", "percentage",
+		"Cell type cells / total cells %", "color", sample_colors)
+	assigned_cell_type_boxplots <- lapply(assigned_cell_type_boxplots, function(x){x$Plot})
 }
 
 ################ Output ######################
@@ -99,13 +110,18 @@ pdf_plotter(file.path(overlay_output_folder, "overlay_legend.pdf"), legend_plot)
 barplot_output_folder <- file.path(output_folder, "Barplots")  
 dir.create(barplot_output_folder, recursive = T, showWarnings = F)
 if(length(sample_names) > 1){
-	multi_pdf_plotter(list(sample_barplot, comparison_barplot), filename = paste0(barplot_output_folder, "/barplots.pdf"), n_col = 1, n_row = 2)
+	multi_pdf_plotter(list(unassigned_sample_barplot, unassigned_comparison_barplot), filename = paste0(barplot_output_folder, "/barplots.pdf"),
+		n_col = 1, n_row = 2)
+	multi_pdf_plotter(list(assigned_sample_barplot, assigned_comparison_barplot), filename = paste0(barplot_output_folder, "/assigned_only_barplots.pdf"),
+		n_col = 1, n_row = 2)
 } else if (length(sample_names > 0)){
-	pdf_plotter(filename = paste0(barplot_output_folder, "/barplots.pdf"), plot = sample_barplot)
+	pdf_plotter(filename = paste0(barplot_output_folder, "/barplots.pdf"), plot = unassigned_sample_barplot)
+	pdf_plotter(filename = paste0(barplot_output_folder, "/assigned_ony_barplots.pdf"), plot = assigned_sample_barplot)
 }
 # Boxplots by comparison
-if(length(cell_type_boxplots) > 0){	
+if(n_categories == 2){	
 	boxplot_output_folder <- file.path(output_folder, "Boxplots")  
 	dir.create(boxplot_output_folder, recursive = T, showWarnings = F)
-	multi_pdf_plotter(cell_type_boxplots, filename = paste0(boxplot_output_folder, "/boxplots.pdf"))
+	multi_pdf_plotter(unassigned_cell_type_boxplots, filename = paste0(boxplot_output_folder, "/boxplots.pdf"))
+	multi_pdf_plotter(assigned_cell_type_boxplots, filename = paste0(boxplot_output_folder, "/assigned_only_boxplots.pdf"))
 }
