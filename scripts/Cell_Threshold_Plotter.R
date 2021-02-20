@@ -111,7 +111,7 @@ if(n_categories == 2){
 if(length(sample_names) > 0){
   sample_barplots <- lapply(populations, function(pop){
     plot_dataset <- copy(Cells)[!is.na(eval(parse(text = paste0(pop, "_Thresholded"))))]		
-    Barplotter(plot_dataset, "Metadata_sample_name", "Metadata_sample_name",
+    stacked_barplotter(plot_dataset, "Metadata_sample_name", "Metadata_sample_name",
       paste0(pop, "_Thresholded"), Population_Colors[[pop]],
       paste0("Subpopulation type cells / ", pop, " total %"))
   })
@@ -119,7 +119,7 @@ if(length(sample_names) > 0){
   if(length(sample_names) > 1){
     comparison_barplots <- lapply(populations, function(pop){
       plot_dataset <- copy(Cells)[!is.na(eval(parse(text = paste0(pop, "_Thresholded"))))]		
-      Barplotter(plot_dataset, "Metadata_sample_name", "comparison", paste0(pop, "_Thresholded"),
+      stacked_barplotter(plot_dataset, "Metadata_sample_name", "comparison", paste0(pop, "_Thresholded"),
         Population_Colors[[pop]],  paste0("Subpopulation type cells / ", pop, " total %"))
     })
     names(comparison_barplots) <- populations

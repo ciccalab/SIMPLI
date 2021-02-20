@@ -60,17 +60,27 @@ legend_plot <- ggplot(data = legend_table) +
 		panel.grid.major = element_blank(), panel.grid.minor = element_blank(), plot.background = element_blank())
 
 
-###################### Barplots ##########################
+###################### Stacked Barplots ##########################
 if(length(sample_names) > 0){
-	unassigned_sample_barplot <- Barplotter(Cells, "Metadata_sample_name", "Metadata_sample_name", "cell_type",
+	stacked_unassigned_sample_barplot <- stacked_barplotter(Cells, "Metadata_sample_name", "Metadata_sample_name", "cell_type",
 		color_list, "Cell type cells / total cells %")
-	assigned_sample_barplot <- Barplotter(Cells[cell_type != "UNASSIGNED"], "Metadata_sample_name", "Metadata_sample_name",
+	stacked_assigned_sample_barplot <- stacked_barplotter(Cells[cell_type != "UNASSIGNED"], "Metadata_sample_name", "Metadata_sample_name",
 		"cell_type", color_list, "Cell type cells / total cells %")
 	if(length(comparison_sample_names) > 1){
-		unassigned_comparison_barplot <- Barplotter(Comparison_Cells, "Metadata_sample_name", "comparison", "cell_type", color_list,
+		stacked_unassigned_comparison_barplot <- stacked_barplotter(Comparison_Cells, "Metadata_sample_name", "comparison", "cell_type", color_list,
 			"Cell type cells / total cells %")
-		assigned_comparison_barplot <- Barplotter(Comparison_Cells[cell_type != "UNASSIGNED"], "Metadata_sample_name", "comparison",
+		stacked_assigned_comparison_barplot <- stacked_barplotter(Comparison_Cells[cell_type != "UNASSIGNED"], "Metadata_sample_name", "comparison",
 			"cell_type", color_list, "Cell type cells / total cells %")
+	}
+}
+
+###################### Dodeged Barplots ##########################
+if(length(sample_names) > 0){
+	if(length(comparison_sample_names) > 1){
+		dodged_unassigned_comparison_barplot <- dodged_barplotter(Comparison_Cells, "comparison", "cell_type", "Metadata_sample_name",
+			color_list,	"Cell type cells / total cells %")
+		dodged_assigned_comparison_barplot <- dodged_barplotter(Comparison_Cells[cell_type != "UNASSIGNED"], "comparison",
+			"cell_type", "Metadata_sample_name", color_list, "Cell type cells / total cells %")
 	}
 }
 
@@ -110,14 +120,18 @@ pdf_plotter(file.path(overlay_output_folder, "overlay_legend.pdf"), legend_plot)
 barplot_output_folder <- file.path(output_folder, "Barplots")  
 dir.create(barplot_output_folder, recursive = T, showWarnings = F)
 if(length(sample_names) > 1){
-	multi_pdf_plotter(list(unassigned_sample_barplot, unassigned_comparison_barplot), filename = paste0(barplot_output_folder, "/barplots.pdf"),
-		n_col = 1, n_row = 2)
-	multi_pdf_plotter(list(assigned_sample_barplot, assigned_comparison_barplot), filename = paste0(barplot_output_folder, "/assigned_only_barplots.pdf"),
-		n_col = 1, n_row = 2)
+	multi_pdf_plotter(list(stacked_unassigned_sample_barplot, stacked_unassigned_comparison_barplot),
+		filename = paste0(barplot_output_folder, "/stacked_barplots.pdf"), n_col = 1, n_row = 2)
+	multi_pdf_plotter(list(stacked_assigned_sample_barplot, stacked_assigned_comparison_barplot),
+		filename = paste0(barplot_output_folder, "/stacked_assigned_only_barplots.pdf"), n_col = 1, n_row = 2)
+	pdf_plotter(filename = paste0(barplot_output_folder, "/dodged_barplots.pdf"), plot = dodged_unassigned_comparison_barplot)
+	pdf_plotter(filename = paste0(barplot_output_folder, "/dodged_assigned_ony_barplots.pdf"), plot = dodged_assigned_comparison_barplot)
 } else if (length(sample_names > 0)){
-	pdf_plotter(filename = paste0(barplot_output_folder, "/barplots.pdf"), plot = unassigned_sample_barplot)
-	pdf_plotter(filename = paste0(barplot_output_folder, "/assigned_ony_barplots.pdf"), plot = assigned_sample_barplot)
+	pdf_plotter(filename = paste0(barplot_output_folder, "/stacked_barplots.pdf"), plot = stacked_unassigned_sample_barplot)
+	pdf_plotter(filename = paste0(barplot_output_folder, "/stacked_assigned_ony_barplots.pdf"), plot = stacked_assigned_sample_barplot)
 }
+
+
 # Boxplots by comparison
 if(n_categories == 2){	
 	boxplot_output_folder <- file.path(output_folder, "Boxplots")  

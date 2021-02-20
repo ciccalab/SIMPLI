@@ -64,7 +64,7 @@ gradient_dot_plotter <- function(data, x_name, y_name, marker, highcol, lowcol)
 }
 
 ######### Barplots  ############
-Barplotter <- function(plot_dataset, x_column, annotation_column, color_column, annotation_colors, y_axis_title)
+stacked_barplotter <- function(plot_dataset, x_column, annotation_column, color_column, annotation_colors, y_axis_title)
 {
 	plot_data <- copy(plot_dataset)
 	if(x_column == annotation_column){ # Plot by sample
@@ -100,6 +100,40 @@ Barplotter <- function(plot_dataset, x_column, annotation_column, color_column, 
 			panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
 			axis.line = element_line(colour = "black", size = 0.75), strip.background = element_rect(colour = NA, fill = NA))
 }
+
+
+dodged_barplotter <- function(plot_dataset, x_column, color_column, sample_column, annotation_colors, y_axis_title)
+{
+	plot_data <- copy(plot_dataset)
+	setnames(plot_data, c(x_column, color_column, sample_column), c("x_column", "color_column", "sample_column"))
+    plot_data <- unique(plot_data[, .(N = .N), by = .(x_column, color_column, sample_column)])
+    
+    annotations <- sort(unique(plot_data$x_column))
+	annotations <- sapply(annotations, function(annotation){
+		paste0(annotation, " (", length(unique(plot_data[x_column == annotation, sample_column])), ")")
+	})	
+	names(annotations) <- sort(unique(plot_data$annotation_column))
+	    
+	plot_data[, total := sum(N), by = sample_column]
+	plot_data[, perc := N / total * 100]
+	plot_data[, per_mean := mean(perc), by = .(x_column, color_column)]
+	plot_data[, se := sd(perc) / sqrt(length(perc)), by = .(x_column, color_column)]
+		    
+	plot_data <- unique(plot_data[, .(x_column, color_column, per_mean, se)])
+	my_plot <- ggplot(data = plot_data, mapping = aes(x = x_column, y = per_mean, fill = color_column,)) +
+		geom_bar(stat = "identity", position = position_dodge(), colour = "black") +
+		geom_errorbar(mapping = aes(ymin = per_mean-se, ymax = per_mean + se),
+			position = position_dodge(width = 0.9), width = 0.4, colour = "black", size = 0.75) +
+		scale_x_discrete(name = element_blank()) +
+	    scale_y_continuous(name = y_axis_title) +
+		scale_fill_manual(values = annotation_colors, name = element_blank()) +
+			theme_bw(base_size = 16, base_family = "sans") +
+			theme(plot.title = element_text(hjust = 0.5), legend.title = element_blank(), legend.position = "right",
+				panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+				axis.line = element_line(colour = "black", size = 0.75), strip.background = element_rect(colour = NA, fill = NA))
+	  return(my_plot)
+}  
+
 
 ####### Boxplots #######
 threshold_e = 0.01
