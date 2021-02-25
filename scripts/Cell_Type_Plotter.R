@@ -47,13 +47,15 @@ cell_overlays <- lapply(sample_names, function(sample){
 names(cell_overlays) <- sample_names
 
 legend_table <- data.table(cell_type = names(color_list), color = color_list)
-legend_table[, X := (.I-1)%%round(sqrt(.N))*round(sqrt(.N)) + 1]
-legend_table[, text_X := X + round(sqrt(.N)) - 0.5]
-legend_table[, Y := -(0:round(sqrt(.N))), by = X]
+legend_table[, X := 2 + 2 * (.I %% ceiling(sqrt(.N)))]
+legend_table[, text_X := X - 0.35]
+legend_table[, Y := 1 + .N - (1:.N), by = X]
 legend_plot <- ggplot(data = legend_table) +
 	geom_tile(mapping = aes(x = X, y = Y, fill = cell_type), width = 0.5, height = 0.5, color = "black") +
-	geom_text(mapping = aes(x = text_X, y = Y, label = cell_type), hjust = "right", size = 3) +
+	geom_text(mapping = aes(x = text_X, y = Y, label = cell_type), hjust = "right", size = 1) +
 	scale_fill_manual(values = color_list, guide = "none") +
+	xlim(0, max(legend_table$X + 1)) +	
+	ylim(0, max(legend_table$Y + 1)) +	
 	coord_equal() +
 	theme(axis.line=element_blank(), axis.text = element_blank(), axis.title = element_blank(),
 		axis.ticks = element_blank(), panel.background = element_blank(), panel.border = element_blank(),
