@@ -1,22 +1,44 @@
 # SIMPLI: Single-cell Identification from Multiplexed Images
 
-SIMPLI: Single-cell Identification from Multiplexed Images is a image processing pipeline for the analysis of highly multiplexed histological imaging data. It performs measurements of areas positive for user defined combination of markers and single-cell data analysis. The single cell data analysis includes: cell segmentation, expression based cell type identification and unsupervised clustering.
+SIMPLI is a image processing pipeline for the analysis of highly multiplexed histological imaging data.  
+SIMPLI can perform:
 
-[//]: # (<img src="assets/SIMPLI.png" width="800" height="600">)
+1. **Raw-data processing.**
+2. **Single-cell analysis:**
+  + Cell segmentation.
+  + Cell phenotyping:
+    + Unsupervised clustering.
+    + Expression thresholding.
+  + Spatial analysis:
+    + Homotypic interactions.
+    + Heterotypic interactions.
+3. **Pixel-based analysis.** 
+    
+<img src="assets/Fig1.png" width="829" height="500">
 
-More Information about the analyses that can be performed with SIMPLI and its use can be found in the [wiki](https://github.com/ciccalab/SIMPLI/wiki). 
+## Documentation
+More Information about SIMPLI and its use can be found in the [wiki](https://github.com/ciccalab/SIMPLI/wiki). 
 
-## Installation
-[SIMPLI installation](https://github.com/ciccalab/SIMPLI/wiki/Installation).
+- ### Installation
+[SIMPLI installation](https://github.com/ciccalab/SIMPLI/wiki/Installation)
 
-## Running SIMPLI
-[SIMPLI command line parameters and configuration](https://github.com/ciccalab/SIMPLI/wiki/Run).
+- ### Running SIMPLI
+[SIMPLI command line parameters and configuration](https://github.com/ciccalab/SIMPLI/wiki/Run)
 
-## Input
-[Supported image files and associated metadata](https://github.com/ciccalab/SIMPLI/wiki/Input).
+- ### Input
+[Supported image files and associated metadata](https://github.com/ciccalab/SIMPLI/wiki/Input)
 
-## Analysis
+- ### Analysis
 [Documentation for each step of the analysis](https://github.com/ciccalab/SIMPLI/wiki/Analysis).
 
-## Example workflow
+- ### Example workflow
 [Description of the included example dataset and workflow ](https://github.com/ciccalab/SIMPLI/wiki/Example_Workflow).
+
+## Citation
+If you used SIMPLI for your analysis please cite:
+
+
+SIMPLI is a software developed in the [Ciccarelli group](https://www.crick.ac.uk/research/labs/francesca-ciccarelli).  
+We are part of The School of Cancer Studies of King's College London and of The Francis Crick Institute.  
+
+Created and maintained by Michele Bortolomeazzi: michele.bortolomeazzi@kcl.ac.uk
