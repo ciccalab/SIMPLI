@@ -4,20 +4,6 @@ SIMPLI is a platform agnostic pipeline for the analysis of highly multiplexed hi
     
 <img src="assets/Fig1.png" width="829" height="500">
 
-### Features
-SIMPLI has an highly configurable modular structure, allowing the user to set up *ad-hoc* pipelines.  
-SIMPLI can perform:
-1. Raw-data processing
-2. Single-cell analysis:
-    - 2.1 Cell segmentation.
-    - 2.2 Cell phenotyping:
-         + Unsupervised clustering.
-         + Expression thresholding.
-    - 2.3. Spatial analysis:
-         + Homotypic interactions.
-         + Heterotypic interactions.
-3. Pixel-based analysis 
-
 ## Documentation
 More Information about SIMPLI and its use can be found in the [wiki](https://github.com/ciccalab/SIMPLI/wiki). 
 
