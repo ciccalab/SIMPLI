@@ -1,18 +1,6 @@
-# SIMPLI: Single-cell Identification from Multiplexed Images
+# SIMPLI: Single-cell Identification from MultiPLexed Images
 
-SIMPLI is a image processing pipeline for the analysis of highly multiplexed histological imaging data.  
-SIMPLI can perform:
-
-1. **Raw-data processing.**
-2. **Single-cell analysis:**
-  + Cell segmentation.
-  + Cell phenotyping:
-    + Unsupervised clustering.
-    + Expression thresholding.
-  + Spatial analysis:
-    + Homotypic interactions.
-    + Heterotypic interactions.
-3. **Pixel-based analysis.** 
+SIMPLI is a platform agnostic pipeline for the analysis of highly multiplexed histological imaging data.  
     
 <img src="assets/Fig1.png" width="829" height="500">
 
