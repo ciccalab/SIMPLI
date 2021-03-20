@@ -1,18 +1,6 @@
-# SIMPLI: Single-cell Identification from Multiplexed Images
+# SIMPLI: Single-cell Identification from MultiPLexed Images
 
-SIMPLI is a image processing pipeline for the analysis of highly multiplexed histological imaging data.  
-SIMPLI can perform:
-
-1. **Raw-data processing.**
-2. **Single-cell analysis:**
-  + Cell segmentation.
-  + Cell phenotyping:
-    + Unsupervised clustering.
-    + Expression thresholding.
-  + Spatial analysis:
-    + Homotypic interactions.
-    + Heterotypic interactions.
-3. **Pixel-based analysis.** 
+SIMPLI is a platform agnostic pipeline for the analysis of highly multiplexed histological imaging data.  
     
 <img src="assets/Fig1.png" width="829" height="500">
 
@@ -20,19 +8,22 @@ SIMPLI can perform:
 More Information about SIMPLI and its use can be found in the [wiki](https://github.com/ciccalab/SIMPLI/wiki). 
 
 - ### Installation
-[SIMPLI installation](https://github.com/ciccalab/SIMPLI/wiki/Installation)
+    + [SIMPLI installation](https://github.com/ciccalab/SIMPLI/wiki/Installation)
 
 - ### Running SIMPLI
-[SIMPLI command line parameters and configuration](https://github.com/ciccalab/SIMPLI/wiki/Run)
+    + [SIMPLI command line parameters and configuration](https://github.com/ciccalab/SIMPLI/wiki/Run)
 
-- ### Input
-[Supported image files and associated metadata](https://github.com/ciccalab/SIMPLI/wiki/Input)
+- ### SIMPLI analysis workflow 
+    + [Documentation for every step of the workflow](https://github.com/ciccalab/SIMPLI/wiki/Run)
 
-- ### Analysis
-[Documentation for each step of the analysis](https://github.com/ciccalab/SIMPLI/wiki/Analysis).
+## Quick start
+To try SIMPLI:
+1. Install [Singularity](https://sylabs.io/guides/3.7/admin-guide/installation.html)
+2. Install [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation)
+3. Run:  `nextflow run ciccalab/SIMPLI -profile test`
 
-- ### Example workflow
-[Description of the included example dataset and workflow ](https://github.com/ciccalab/SIMPLI/wiki/Example_Workflow).
+This will run SIMPLI on minimal example dataset distributed in this repository.
+For more details on the example dataset and the associated analysis workflow see the [example-workflow page](https://github.com/ciccalab/SIMPLI/wiki/Analysis).
 
 ## Citation
 If you used SIMPLI for your analysis please cite:
