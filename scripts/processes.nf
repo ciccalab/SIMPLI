@@ -128,7 +128,7 @@ process normalize_tiffs {
     input:
         val(singularity_key_got)
         val(sample_name)
-        path(converted_metadata_file)
+        path(tiff_input_metadata_file)
 
     output:
         path("$sample_name*normalized*tiff", emit: normalized_tiff_images)
@@ -139,7 +139,7 @@ process normalize_tiffs {
     """
     Rscript --vanilla /opt/Tiff_normalizer.R \\
         $sample_name \\
-        $converted_metadata_file \\
+        $tiff_input_metadata_file \\
         $params.tiff_type \\
         ./ \\
         ${sample_name}-normalized_tiff_metadata.csv \\

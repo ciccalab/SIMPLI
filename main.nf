@@ -34,8 +34,8 @@ workflow {
     if(params.raw_metadata_file && !params.skip_conversion){
         convert_raw_data(singularity_key_getter.out.singularity_key_got)
     }    
-    if((params.converted_metadata_file || !params.skip_conversion) && !params.skip_normalization){
-        normalization_metadata = (params.skip_conversion) ? channel.fromPath(params.converted_metadata_file) : convert_raw_data.out.converted_tiff_metadata
+    if((params.tiff_input_metadata_file || !params.skip_conversion) && !params.skip_normalization){
+        normalization_metadata = (params.skip_conversion) ? channel.fromPath(params.tiff_input_metadata_file) : convert_raw_data.out.converted_tiff_metadata
         normalize_images(singularity_key_getter.out.singularity_key_got, sample_names, normalization_metadata)
     }    
     if(!params.skip_preprocessing){
