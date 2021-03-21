@@ -32,17 +32,17 @@ def get_arguments():
 def parse_channel_metadata(file_name):
 	"""
 	Parses The channel metadata file. Assumes the files has an header with 2 columns:
-		channel_metal = Metal the channel is associated to. Used to select which channels to extract from the IMC acquisition
+		channel_marker = Metal the channel is associated to. Used to select which channels to extract from the IMC acquisition
 		channel_label = Marker associated to the meta. Used to give meaningful names to the single tiff files.
 	Returns a list of dicts, one dict per line of the metadata file, containing the values for the two columns.	
 	"""
 	with open(file_name) as metadata_file:
 		reader = csv.DictReader(metadata_file)
-		if "channel_metal" not in reader.fieldnames or "channel_label" not in reader.fieldnames:
-			print('"channel_metal" or "channel_label" missing in the channel metadata header:')
+		if "channel_marker" not in reader.fieldnames or "channel_label" not in reader.fieldnames:
+			print('"channel_marker" or "channel_label" missing in the channel metadata header:')
 			print("Channel metadata header: " + " ".join(reader.fieldnames))
 			sys.exit(1)
-		channel_metadata = {row["channel_metal"] : row["channel_label"] for row in reader} 
+		channel_metadata = {row["channel_marker"] : row["channel_label"] for row in reader} 
 	return channel_metadata
 
 def get_txt_aquisition(file_name):
@@ -66,14 +66,14 @@ def output_tiffs(acquisition, output_path, sample_name, roi_name, channel_metada
 	For each channel a 16bit tiff image in imagej compatible format is extracted.
 	The tiff files are named with this pattern: samplename-label-raw.tiff
 	Returns a list of dicts, one per tiff file, with the following metadata:
-	sample_name, roi_name, metal, label, raw_tiff_file_name (absolute path)
+	sample_name, roi_name, marker, label, raw_tiff_file_name (absolute path)
 	"""
 	single_metadata = []
 	for metal, label in channel_metadata.items():
 		tiff_file_name = os.path.abspath(os.path.join(output_path, sample_name + "-" + label + "-raw.tiff"))
 		tiff_image_writer = acquisition.get_image_writer(tiff_file_name, metals = [metal], mass = None)
 		tiff_image_writer.save_image(mode = "imagej", compression = 0, dtype = numpy.int16().dtype, bigtiff = False)
-		single_metadata.append({"sample_name" : sample_name, "roi_name" : roi_name, "metal" : metal, "label" : label,
+		single_metadata.append({"sample_name" : sample_name, "roi_name" : roi_name, "marker" : metal, "label" : label,
 			"file_name" : tiff_file_name})
 	return single_metadata	
 
@@ -84,14 +84,14 @@ def output_ome_tiff(acquisition, output_path, sample_name, roi_name, channel_met
 	For each channel a 16bit tiff image in imagej compatible format is extracted.
 	The ome tiff file is named with this pattern: samplename-all_raw.ome.tiff
 	Returns a list of dicts, one per tiff file, with the following metadata:
-	sample_name, roi_name, metal, label, raw_tiff_file_name (absolute path)
+	sample_name, roi_name, marker, label, raw_tiff_file_name (absolute path)
 	"""
 	tiff_file_name = os.path.abspath(os.path.join(output_path, sample_name + "-all_raw.ome.tiff"))
 	tiff_image_writer = acquisition.get_image_writer(tiff_file_name, metals = channel_metadata.keys(), mass = None)
 	tiff_image_writer.save_image(mode = "ome", compression = 0, dtype = numpy.int16().dtype, bigtiff = False)
-	single_metadata = [{"sample_name" : sample_name, "roi_name" : roi_name, "metal" : metal, "label" : label,
+	ome_metadata = [{"sample_name" : sample_name, "roi_name" : roi_name, "marker" : metal, "label" : label,
 		"file_name" : tiff_file_name} for metal, label in channel_metadata.items()]
-	return single_metadata	
+	return ome_metadata	
 					
 if __name__ == "__main__":
 	sample_name, roi_name, raw_path, output_type, single_tiff_path, channel_metadata_file, \
@@ -116,13 +116,13 @@ if __name__ == "__main__":
 		sys.exit(1)
 	
 	if output_type == "single":	
-		single_tiff_metadata = output_tiffs(acquisition, single_tiff_path, sample_name, roi_name, channel_metadata)
+		tiff_metadata = output_tiffs(acquisition, single_tiff_path, sample_name, roi_name, channel_metadata)
 	elif output_type == "ome":	
-		single_tiff_metadata = output_ome_tiff(acquisition, single_tiff_path, sample_name, roi_name, channel_metadata)
+		tiff_metadata = output_ome_tiff(acquisition, single_tiff_path, sample_name, roi_name, channel_metadata)
 	else:
 		print(f'output_type selected: {output_type} not ome or single!')
 		sys.exit(1)
 	with open(output_metadata_file, mode = 'w') as output_metadata:
-		metadata_writer = csv.DictWriter(output_metadata, fieldnames = single_tiff_metadata[0].keys())
+		metadata_writer = csv.DictWriter(output_metadata, fieldnames = tiff_metadata[0].keys())
 		metadata_writer.writeheader()
-		metadata_writer.writerows(single_tiff_metadata)
+		metadata_writer.writerows(tiff_metadata)

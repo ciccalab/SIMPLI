@@ -33,7 +33,7 @@ metadata_maker <- function(name)
   metadata[, file_name := NULL]
   cp_metadata <- dcast(metadata, sample_name ~ label, value.var = cast_columns)
   metadata_columns <- colnames(metadata)[!(colnames(metadata) %in% cast_columns)]
-  metadata_columns <- metadata_columns[!(metadata_columns %in% c("sample_name", "label", "metal"))]
+  metadata_columns <- metadata_columns[!(metadata_columns %in% c("sample_name", "label", "marker"))]
   if (length(metadata_columns) > 0) {
     metadata <- unique(metadata[, c("sample_name", metadata_columns), with = F])
     cp_metadata <- merge(cp_metadata, metadata, by = "sample_name")
