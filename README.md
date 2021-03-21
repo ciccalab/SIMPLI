@@ -32,4 +32,4 @@ If you used SIMPLI for your analysis please cite:
 SIMPLI is a software developed in the [Ciccarelli group](https://www.crick.ac.uk/research/labs/francesca-ciccarelli).  
 We are part of The School of Cancer Studies of King's College London and of The Francis Crick Institute.  
 
-Created and maintained by Michele Bortolomeazzi: michele.bortolomeazzi@kcl.ac.uk
+SIMPLI is maintained and developed by Michele Bortolomeazzi: michele.bortolomeazzi@kcl.ac.uk
