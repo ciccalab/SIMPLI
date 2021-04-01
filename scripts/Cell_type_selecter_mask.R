@@ -17,7 +17,7 @@ out_file_name <- args[[5]]
 cells <- fread(unannotated_cells_file_name)                                                                             
 cells[, CellName := paste0(Metadata_sample_name, "-", ObjectNumber)]
 
-############################# Marker combinationsi and Thresholds ###########################                                           
+############################# Marker combinations and Thresholds ###########################                                           
 # Expects a .csv file with 3 columns:                                                                                   
 # - cell_type                                                                                                           
 # - threshold_marker                                                                                                    
