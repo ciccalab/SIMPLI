@@ -2,7 +2,7 @@ SIMPLI Licence Agreement
 
 ©2021 The Francis Crick Institute
 
-SIMPLI: [single sentence description].
+SIMPLI: SIMPLI (Single-cell Identification from MultiPLexed Images), is a tool that combines processing of raw images, extraction of cell data, and spatially resolved quantification of cell types or functional states into a single highly configurable pipeline.  
 
 All files in this distribution are part of SIMPLI.
 SIMPLI is available upon request from: francesca.ciccarelli@crick.ac.uk
