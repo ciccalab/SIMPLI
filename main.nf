@@ -149,9 +149,14 @@ workflow {
     }
     
     if(!params.skip_visualization){
-        if(!params.skip_area && !params.skip_area_visualization){
-            visualize_areas(singularity_key_getter.out.singularity_key_got, measure_areas.out.area_measurements,
-                params.sample_metadata_file)
+        if(!params.skip_area_visualization){
+            if(params.skip_area){
+				area_measurements = params.area_measurements_file
+			}
+            if(!params.skip_area){
+				area_measurements = measure_areas.out.area_measurements
+            }
+            visualize_areas(singularity_key_getter.out.singularity_key_got, area_measurements, params.sample_metadata_file)
         }
         if(!params.skip_type_visualization){
             if(!params.skip_segmentation){
