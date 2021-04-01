@@ -33,3 +33,7 @@ SIMPLI is a software developed in the [Ciccarelli group](https://www.crick.ac.uk
 We are part of The School of Cancer Studies of King's College London and of The Francis Crick Institute.  
 
 SIMPLI is maintained and developed by Michele Bortolomeazzi: michele.bortolomeazzi@kcl.ac.uk
+
+## License
+SIMPLI is released under the *CRICK Non-commercial Licence Agreement v 2.0.*. No permission is required from the rights-holder for non-commercial research uses. Commercial use will require a license from the rights-holder. For further information see the [license](https://raw.githubusercontent.com/ciccalab/SIMPLI/master/LICENSE) or contact translation@crick.ac.uk. 
+
