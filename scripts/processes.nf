@@ -106,7 +106,7 @@ process collect_raw_tiff_metadata {
     script:
     """
     cat $metadata_list > raw_tiff_metadata.csv
-    sed -i '1!{/sample_name,roi_name,metal,label,file_name/d;}' raw_tiff_metadata.csv
+    sed -i '1!{/sample_name,roi_name,marker,label,file_name/d;}' raw_tiff_metadata.csv
     """
 }
 
@@ -168,7 +168,7 @@ process collect_normalized_tiff_metadata {
     script:
     """
     cat $metadata_list > normalized_tiff_metadata.csv
-    sed -i '1!{/sample_name,metal,label,Frame,URL/d;}' normalized_tiff_metadata.csv
+    sed -i '1!{/sample_name,marker,label,Frame,URL/d;}' normalized_tiff_metadata.csv
     """
 }
 
