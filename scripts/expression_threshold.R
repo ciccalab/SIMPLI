@@ -27,6 +27,7 @@ for (pop in unique(thresholds$cell_type)){
         eval(parse(text = eval(tresh_col)))), by = index]
   }
 }
+thresholded_cells[, index := NULL]
 
 ########### Output
 fwrite(file = out_file_name, x = thresholded_cells)
