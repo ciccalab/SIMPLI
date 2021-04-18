@@ -35,5 +35,8 @@ coordinates[, distance := ((Location_Center_X1 - Location_Center_X2)^2 + (Locati
 
 coordinates <- coordinates[, .SD[distance == min(distance)], by = id1]
 
+coordinates[, id1 := NULL]
+coordinates[, id2 := NULL]
+
 dir.create(output_folder, recursive = T, showWarnings = F)
 fwrite(file = paste0(output_folder, "/", output_filename), x = coordinates)

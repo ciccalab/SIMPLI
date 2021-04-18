@@ -731,7 +731,7 @@ process collect_heterotypic_distances {
     script:
     """
     cat $heterotypic_interactions_list > heterotypic_interactions.csv
-    sed -i '1!{/id1,Metadata_sample_name,CellName1,Location_Center_X1,Location_Center_Y1,spatial_analysis_cell_type1,CellName2,Location_Center_X2,Location_Center_Y2,spatial_analysis_cell_type2,id2,distance/d;}' heterotypic_interactions.csv
+    sed -i '1!{/Metadata_sample_name,CellName1,Location_Center_X1,Location_Center_Y1,spatial_analysis_cell_type1,CellName2,Location_Center_X2,Location_Center_Y2,spatial_analysis_cell_type2,distance/d;}' heterotypic_interactions.csv
     """
 }
 

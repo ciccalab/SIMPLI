@@ -255,7 +255,7 @@ histogram_density <- function(data, marker_col, plot_title, x_label, y_label,
 {
   plot_dataset <- copy(data)
   setnames(plot_dataset, marker_col, "marker_col")
-  plot_dataset[, marker_col := marker_col + (1* 10^-5)]
+  plot_dataset[, marker_col := marker_col + (1 * 10^-5)]
   if(!is.null(category_col)){
     setnames(plot_dataset, category_col, "category_col")
   }
