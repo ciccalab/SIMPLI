@@ -26,8 +26,11 @@ This will run SIMPLI on minimal example dataset distributed in this repository.
 For more details on the example dataset and the associated analysis workflow see the [example-workflow page](https://github.com/ciccalab/SIMPLI/wiki/Analysis).
 
 ## Citation
-If you used SIMPLI for your analysis please cite:
+If you used SIMPLI for your analysis please cite our [preprint](https://doi.org/10.1101/2021.04.01.437886):
 
+**A SIMPLI (Single-cell Identification from MultiPLexed Images) approach for spatially resolved tissue phenotyping at single-cell resolution**  
+*Michele Bortolomeazzi, Lucia Montorsi, Damjan Temelkovski, Mohamed Reda Keddar, Amelia Acha-Sagredo, Michael J. Pitcher, Gianluca Basso, Luigi Laghi, Manuel Rodriguez-Justo, Jo Spencer, Francesca D. Ciccarelli
+bioRxiv 2021.04.01.437886; doi: https://doi.org/10.1101/2021.04.01.437886*
 
 SIMPLI is a software developed in the [Ciccarelli group](https://www.crick.ac.uk/research/labs/francesca-ciccarelli).  
 We are part of The School of Cancer Studies of King's College London and of The Francis Crick Institute.  
