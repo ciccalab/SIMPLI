@@ -25,6 +25,9 @@ To try SIMPLI:
 This will run SIMPLI on minimal example dataset distributed in this repository.
 For more details on the example dataset and the associated analysis workflow see the [example-workflow page](https://github.com/ciccalab/SIMPLI/wiki/Analysis).
 
+The expected installation time on a desktop computer (Ubuntu 21.04) is of about 20 minutes. 
+The expected run time with the example run on a desktop computer (Ubuntu 21.04) is of about 45 minutes. 
+
 ## Citation
 If you used SIMPLI for your analysis please cite our [preprint](https://doi.org/10.1101/2021.04.01.437886):
 
