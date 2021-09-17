@@ -66,6 +66,7 @@ process convert_raw_data_to_tiffs {
     input:
         val(singularity_key_got)
         tuple val(sample_name), val(roi_name), path(raw_path)
+		path(channel_metadata_file)
 
     output:
         path("$sample_name*raw*tiff", emit: raw_tiff_images)
@@ -80,7 +81,7 @@ process convert_raw_data_to_tiffs {
         $raw_path \\
         $params.tiff_type \\
         ./ \\
-        $params.channel_metadata \\
+        $channel_metadata_file \\
         ${sample_name}-raw_tiff_metadata.csv > extract_log.txt 2>&1
     """
 }

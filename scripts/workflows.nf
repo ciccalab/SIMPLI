@@ -58,11 +58,12 @@ workflow convert_metadata_to_cp4{
 workflow convert_raw_data{
     take:
         singularity_key_got
+		channel_metadata_path
     main:
         raw_file_metadata = channel.fromPath(params.raw_metadata_file)
             .splitCsv(header:true)
             .map{row -> tuple(row.sample_name, row.roi_name, file(row.file_name))}
-        convert_raw_data_to_tiffs(singularity_key_got, raw_file_metadata)
+        convert_raw_data_to_tiffs(singularity_key_got, raw_file_metadata, channel_metadata_path)
         collect_raw_tiff_metadata(convert_raw_data_to_tiffs.out.raw_tiff_metadata_by_sample.collect())
     emit:
         tiff_images = convert_raw_data_to_tiffs.out.raw_tiff_images

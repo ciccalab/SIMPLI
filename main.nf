@@ -32,7 +32,7 @@ workflow {
     sample_names = channel.fromPath(params.sample_metadata_file).splitCsv(header: true).map{row -> row.sample_name}
     singularity_key_getter()
     if(params.raw_metadata_file && !params.skip_conversion){
-        convert_raw_data(singularity_key_getter.out.singularity_key_got)
+        convert_raw_data(singularity_key_getter.out.singularity_key_got, params.channel_metadata)
     }    
     if((params.tiff_input_metadata_file || !params.skip_conversion) && !params.skip_normalization){
         normalization_metadata = (params.skip_conversion) ? channel.fromPath(params.tiff_input_metadata_file) : convert_raw_data.out.converted_tiff_metadata
