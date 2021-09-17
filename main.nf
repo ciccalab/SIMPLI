@@ -124,14 +124,25 @@ workflow {
         cluster_cells(singularity_key_getter.out.singularity_key_got, annotated_cells, clustering_metadata, params.sample_metadata_file)
     }
 
-    coord_selecter_map = ["identification": (params.skip_cell_type_identification ? params.annotated_cell_data_file : identify_cell_types_mask.out.annotated_cell_data),
-        "clustering": (params.skip_cell_clustering ? params.clustered_cell_data_file : cluster_cells.out.clustered_cell_data),
-        "thresholding": (params.skip_cell_thresholding ? params.thresholded_cell_data_file : threshold_expression.out.thresholded_cell_data)].withDefault{ key -> key}
+    coord_selecter_map = [
+        "identification": (params.skip_cell_type_identification ? params.annotated_cell_data_file :
+            identify_cell_types_mask.out.annotated_cell_data),
+        "clustering": (params.skip_cell_clustering ? params.clustered_cell_data_file :
+            cluster_cells.out.clustered_cell_data),
+        "thresholding": (params.skip_cell_thresholding ? params.thresholded_cell_data_file :
+            threshold_expression.out.thresholded_cell_data)
+            ].withDefault{ key -> key}
 
     if(!params.skip_homotypic_interactions){
         homotypic_metadata = channel.fromPath(params.homotypic_interactions_metadata)
             .splitCsv(header:true)
-            .map{row -> tuple(coord_selecter_map[row.cell_file]?.get(), row.cell_type_column, row.cell_type_to_cluster, row.reachability_distance, row.min_cells)}
+            .map{row -> tuple(
+                coord_selecter_map[row.cell_file].getClass() == String ? coord_selecter_map[row.cell_file] : 
+                    coord_selecter_map[row.cell_file]?.get(),
+                row.cell_type_column,
+                row.cell_type_to_cluster,
+                row.reachability_distance,
+                row.min_cells)}
             .filter{!it.contains("NA")}
         analyse_homotypic_interactions(singularity_key_getter.out.singularity_key_got, homotypic_metadata)
     }
@@ -139,10 +150,13 @@ workflow {
     if(!params.skip_heterotypic_interactions){
         heterotypic_metadata = channel.fromPath(params.heterotypic_interactions_metadata)
             .splitCsv(header:true)
-            .map{row -> tuple(coord_selecter_map[row.cell_file1]?.get(),
+            .map{row -> tuple(
+                coord_selecter_map[row.cell_file1].getClass() == String ? coord_selecter_map[row.cell_file1] :
+                    coord_selecter_map[row.cell_file1]?.get(),
 				row.cell_type_column1,
 				row.cell_type1,
-				coord_selecter_map[row.cell_file2]?.get(),
+				coord_selecter_map[row.cell_file2].getClass() == String ? coord_selecter_map[row.cell_file2] :
+                    coord_selecter_map[row.cell_file2]?.get(),
 				row.cell_type_column2,
 				row.cell_type2)}
         calculate_heterotypic_distances(singularity_key_getter.out.singularity_key_got, heterotypic_metadata)
