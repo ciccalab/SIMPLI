@@ -8,36 +8,37 @@ IncludeCmd: yes
 
 %post
 
-# Get the dependencies for building python 3.8.3
-	apt-get update
-	apt-get -y upgrade
-	apt-get -y install \
-		build-essential \
-		checkinstall \
-		libreadline-gplv2-dev \
-		libncursesw5-dev \
-		libssl-dev \
-	    libsqlite3-dev \
-		tk-dev \
-		libgdbm-dev \
-		libc6-dev \
-		libbz2-dev \
-		libffi-dev \
-		zlib1g-dev \
-        liblzma-dev \
-		wget
-# Install python 3.8.3
-	wget https://www.python.org/ftp/python/3.8.3/Python-3.8.3.tar.xz
-	tar xvf Python-3.8.3.tar.xz 
-	cd Python-3.8.3
-	./configure --enable-optimizations
-	make install
-	cd /
+#############################################################################################################
+## Prepare the containe with updates + python
+##############################################################################################################
 
+# make directory to mount the data
+	mkdir /data
+
+# Install python 3.8 
+
+apt update
+apt install -y software-properties-common
+add-apt-repository ppa:deadsnakes/ppa
+apt update
+apt -y upgrade
+apt install -y wget
+apt install -y python3.8-dev python3.8-distutils
+
+wget https://bootstrap.pypa.io/get-pip.py
+python3.8 get-pip.py
+rm get-pip.py
+
+#############################################################################################################
+##  Install imctools v1.0.7
+##############################################################################################################
 # Install imctools 
 	python3.8 -m pip install --force-reinstall --upgrade pip setuptools wheel
 	python3.8 -m pip install imctools==1.0.7
 
-# make directory to mount the data
-	mkdir /data
+#############################################################################################################
+##  Install Stardist v0.7.3 and tensorflow 2.6.0
+##############################################################################################################
+python3.8 -m pip install tensorflow==2.6.0
+python3.8 -m pip install stardist==0.7.3
 
