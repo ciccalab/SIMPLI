@@ -1,0 +1,77 @@
+BootStrap: docker
+From: ubuntu:xenial
+IncludeCmd: yes
+
+#############################################################################################################
+## Prepare the containe with updates + python
+##############################################################################################################
+
+
+%post
+apt update
+apt install -y software-properties-common
+add-apt-repository ppa:deadsnakes/ppa
+apt update
+apt -y upgrade
+apt install -y python3.8-dev python3.8-distutils openjdk-8-jdk-headless libmysqlclient-dev libnotify-dev libsdl2-dev
+
+# make directory to mount the data
+	mkdir /data
+
+#############################################################################################################
+## Install CellProfiler v4.2.1 and ImcPluginsCP v4.2.1
+##############################################################################################################
+
+# See:
+# https://github.com/CellProfiler/CellProfiler/wiki/Source-installation-%28Ubuntu-16.04-LTS%29
+# https://github.com/BodenmillerGroup/ImcPluginsCP
+
+apt-get install -y \
+	freeglut3 \
+	freeglut3-dev \
+	libgl1-mesa-dev \
+    libglu1-mesa-dev \
+	libgstreamer-plugins-base1.0-dev \
+	libgtk-3-dev \
+	libgtk2.0-dev \
+	libjpeg-dev \
+	libnotify-dev \
+	libsdl2-dev \
+	libsm-dev \
+	libtiff-dev \
+	libwebkitgtk-3.0-dev \
+	libwebkitgtk-dev \
+	libxtst-dev
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export PATH=$PATH:/home/ubuntu/.local/bin
+
+apt install -y \
+	wget \
+	git
+
+wget https://bootstrap.pypa.io/get-pip.py
+python3.8 get-pip.py
+rm get-pip.py
+
+wget https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
+python3.8 -m pip install wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
+
+python3.8 -m pip install Cython==0.29.24
+
+cd /opt
+git clone https://github.com/CellProfiler/CellProfiler.git
+cd CellProfiler
+git checkout v4.2.1
+python3.8 -m pip install .
+
+# ImcPluginsCP are installed just by copying them into the CellProfiler/plugins folder
+cd /opt
+git clone https://github.com/BodenmillerGroup/ImcPluginsCP.git
+cd ImcPluginsCP
+git checkout v4.2.1
+cd /opt
+cp ImcPluginsCP/plugins/*.py /opt/CellProfiler/plugins
+rm /opt/CellProfiler/plugins/deprecated_*
+rm /opt/CellProfiler/plugins/loadimagesfromomero.py
+rm -r ImcPluginsCP
