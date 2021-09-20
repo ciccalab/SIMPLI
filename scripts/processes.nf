@@ -13,7 +13,7 @@ if (params.cp4_segmentation_cppipe){
 process cp4_format_convert {
     
     label 'mid_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt"
     
     input:
@@ -45,7 +45,7 @@ process convert_raw_data_to_tiffs {
 
     label 'big_memory'
     publishDir "$image_folder/Raw/$sample_name", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_imctools:reupload'
+    container = 'library://michelebortol/default/simpli_imctools_stardist:test'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
@@ -106,7 +106,7 @@ process collect_raw_tiff_metadata {
 process normalize_tiffs {
     
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
     
     publishDir "$image_folder/Normalized/$sample_name", mode:'copy', overwrite: true
@@ -169,13 +169,12 @@ process collect_normalized_tiff_metadata {
 process image_preprocessing {
 
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_cp4_imcplugins:plugins'
-    containerOptions = "--bind $cp4_preprocessing_pipeline_folder:/mnt,$workflow.launchDir/:/data"
+    container = 'library://michelebortol/default/simpli_cp_imcplugins:cleaned'
+	containerOptions = "--bind $cp4_preprocessing_pipeline_folder:/mnt,$workflow.launchDir/:/data"
 
     publishDir "$image_folder/Preprocessed/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
-       
        tuple val(sample_name), path(cp4_normalized_metadata) 
 
     output:
@@ -213,7 +212,7 @@ process image_preprocessing {
 process process_preprocessed_metadata {
 
     label 'mid_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     publishDir "$image_folder/Preprocessed/", mode:'copy', overwrite: true
@@ -244,7 +243,7 @@ process process_preprocessed_metadata {
 process measure_positive_areas {
 
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     publishDir "$params.output_folder", mode:'copy', overwrite: true
@@ -277,7 +276,7 @@ process area_visualization {
 
     label 'mid_memory'
     publishDir "$params.output_folder/Plots/Area_Plots/", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
@@ -307,7 +306,7 @@ process area_visualization {
 process cell_segmentation {
 
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_cp4_imcplugins:plugins'
+    container = 'library://michelebortol/default/simpli_cp_imcplugins:cleaned'
     containerOptions = "--bind $cp4_segmentation_pipeline_folder:/mnt,$workflow.launchDir/:/data"
 
     publishDir"$params.output_folder/Segmentation/$sample_name", mode:'copy', overwrite: true
@@ -373,7 +372,7 @@ process collect_single_cell_data {
 
 process cell_type_identification_mask {
     label 'big_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     publishDir "$params.output_folder", mode:'copy', overwrite: true
@@ -415,7 +414,7 @@ process cell_type_visualization {
 
     label 'big_memory'
     publishDir "$params.output_folder/Plots/Cell_Type_Plots", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
@@ -450,7 +449,7 @@ process cell_clustering {
 
     label 'huge_memory'
     publishDir "$params.output_folder/Cell_Clusters", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
@@ -486,7 +485,7 @@ process collect_clustering_data {
 
     label 'mid_memory'
     publishDir "$params.output_folder/", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
     
     input:
@@ -510,7 +509,7 @@ process collect_clustering_data {
 
 process threshold_cells {
     label 'mid_memory'
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     publishDir "$params.output_folder", mode:'copy', overwrite: true
@@ -543,7 +542,7 @@ process cell_cluster_visualization {
 
     label 'big_memory'
     publishDir "$params.output_folder/Plots/Cell_Cluster_Plots", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
@@ -581,7 +580,7 @@ process cell_threshold_visualization {
 
     label 'big_memory'
     publishDir "$params.output_folder/Plots/Cell_Threshold_Plots", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
@@ -613,7 +612,7 @@ process homotypic_interaction_analysis {
 
     label 'big_memory'
     publishDir "$params.output_folder/Homotypic_interactions", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
@@ -656,7 +655,7 @@ process homotypic_interaction_visualization {
 
     label 'big_memory'
     publishDir "$params.output_folder/Plots/Homotypic_Interaction_Plots", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
@@ -681,7 +680,7 @@ process get_heterotypic_distances {
 
     label 'big_memory'
     publishDir "$params.output_folder/Heterotypic_interactions", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
@@ -725,7 +724,7 @@ process heterotypic_interaction_visualization {
 
     label 'big_memory'
     publishDir "$params.output_folder/Plots/Heterotypic_Interaction_Plots", mode:'copy', overwrite: true
-    container = 'library://michelebortol/default/simpli_rbioconductor:dbscan'
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
