@@ -9,20 +9,6 @@ if (params.cp4_segmentation_cppipe){
     cp4_segmentation_pipeline_folder = file(params.cp4_segmentation_cppipe).getParent()
     cp4_segmentation_pipeline = file(params.cp4_segmentation_cppipe).getName() 
 }
-/* Gets the Singularity key to verify the containers used by the pipeline */
-
-process get_singularity_key {
-
-    label 'small_memory'
-
-    output:
-        val(true, emit: singularity_key_got)
-                            
-    script:
-    """
-    singularity keys pull 25892DAEC49C3AAA9691A5CF8661311A5FB2DD90
-    """                             
-}
 
 process cp4_format_convert {
     
@@ -31,7 +17,6 @@ process cp4_format_convert {
     containerOptions = "--bind $script_folder:/opt"
     
     input:
-        val(singularity_key_got)
         val(output_suffix)
         path(metadata_files_to_convert)
 
@@ -64,7 +49,7 @@ process convert_raw_data_to_tiffs {
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
-        val(singularity_key_got)
+        
         tuple val(sample_name), val(roi_name), path(raw_path)
 		path(channel_metadata_file)
 
@@ -127,7 +112,7 @@ process normalize_tiffs {
     publishDir "$image_folder/Normalized/$sample_name", mode:'copy', overwrite: true
     
     input:
-        val(singularity_key_got)
+        
         val(sample_name)
         path(tiff_input_metadata_file)
 
@@ -190,7 +175,7 @@ process image_preprocessing {
     publishDir "$image_folder/Preprocessed/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
-       val(singularity_key_got)
+       
        tuple val(sample_name), path(cp4_normalized_metadata) 
 
     output:
@@ -265,7 +250,7 @@ process measure_positive_areas {
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
-        val(singularity_key_got)
+        
         path(tiff_metadata) 
         path(area_metadata)
     
@@ -296,7 +281,7 @@ process area_visualization {
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
-        val(singularity_key_got)
+        
         path(area_file) 
         path(sample_metadata_file)
 
@@ -328,7 +313,7 @@ process cell_segmentation {
     publishDir"$params.output_folder/Segmentation/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
-        val(singularity_key_got)
+        
         tuple val(sample_name), path(cp4_preprocessed_metadata) 
 
     output:
@@ -394,7 +379,7 @@ process cell_type_identification_mask {
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
-        val(singularity_key_got)
+        
         path(unannotated_cell_data_file) 
         path(cell_threshold_metadata_file)
         path(image_metadata_file)
@@ -434,7 +419,7 @@ process cell_type_visualization {
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
-        val(singularity_key_got)
+        
         path(annotated_cell_file)
         path(sample_metadata_file)
         path(cell_metadata_file)
@@ -469,7 +454,7 @@ process cell_clustering {
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
-        val(singularity_key_got)
+        
         path(annotated_cell_file)
         tuple val(cell_type), val(markers), val(resolutions)
         path(sample_metadata_file)
@@ -531,7 +516,7 @@ process threshold_cells {
     publishDir "$params.output_folder", mode:'copy', overwrite: true
     
     input:
-        val(singularity_key_got)
+        
         path(annotated_cell_data_file) 
         path(cell_threshold_metadata_file)
     
@@ -562,7 +547,7 @@ process cell_cluster_visualization {
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
-        val(singularity_key_got)
+        
         tuple val(cell_type), val(markers), val(resolutions)
         path(clustered_cell_file)
         path(sample_metadata_file)
@@ -600,7 +585,7 @@ process cell_threshold_visualization {
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
-        val(singularity_key_got)
+        
         path(thresholded_cell_file)
         path(sample_metadata_file)
         path(threshold_metadata_file)
@@ -632,7 +617,7 @@ process homotypic_interaction_analysis {
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
-        val(singularity_key_got)
+        
         tuple path(coordinates_file_name), val(cell_type_column), val(cell_type_to_cluster), val(reachability_distance), val(min_cells)
     output:
         path("$cell_type_to_cluster/$cell_type_to_cluster-homotypic_clusters.csv", emit: homotypic_clusters) 
@@ -675,7 +660,7 @@ process homotypic_interaction_visualization {
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
-        val(singularity_key_got)
+        
         path(dbscan_file_name)
         path(metadata_file_name)
         path(cell_mask_list) 
@@ -700,7 +685,7 @@ process get_heterotypic_distances {
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
-        val(singularity_key_got)
+        
         tuple path(coordinate_file1, stageAs: "cf1.csv"), val(cell_type_column1), val(cell_type1),
             path(coordinate_file2, stageAs: "cf2.csv"), val(cell_type_column2), val(cell_type2)
     output:
@@ -744,7 +729,6 @@ process heterotypic_interaction_visualization {
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
-        val(singularity_key_got)
         path(distance_file_name)
         path(metadata_file_name)
         path(sample_file_name)

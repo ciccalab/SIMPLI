@@ -2,7 +2,6 @@ nextflow.enable.dsl=2
 
 script_folder = "$baseDir/scripts"
 
-include {singularity_key_getter} from "$script_folder/workflows.nf"
 include {convert_metadata_to_cp4} from "$script_folder/workflows.nf"
 
 include {convert_raw_data} from "$script_folder/workflows.nf"
@@ -30,25 +29,25 @@ include {visualize_heterotypic_interactions} from "$script_folder/workflows.nf"
 
 workflow {
     sample_names = channel.fromPath(params.sample_metadata_file).splitCsv(header: true).map{row -> row.sample_name}
-    singularity_key_getter()
     if(params.raw_metadata_file && !params.skip_conversion){
-        convert_raw_data(singularity_key_getter.out.singularity_key_got, params.channel_metadata)
+        convert_raw_data(params.channel_metadata)
     }    
     if((params.tiff_input_metadata_file || !params.skip_conversion) && !params.skip_normalization){
-        normalization_metadata = (params.skip_conversion) ? channel.fromPath(params.tiff_input_metadata_file) : convert_raw_data.out.converted_tiff_metadata
-        normalize_images(singularity_key_getter.out.singularity_key_got, sample_names, normalization_metadata)
+        normalization_metadata = (params.skip_conversion) ? channel.fromPath(params.tiff_input_metadata_file) :
+			convert_raw_data.out.converted_tiff_metadata
+        normalize_images(sample_names, normalization_metadata)
     }    
     if(!params.skip_preprocessing){
         if(!params.skip_normalization){
             preprocessing_metadata = normalize_images.out.cp4_normalized_tiff_metadata_by_sample
         }
         else if(params.skip_normalization && !params.skip_conversion){
-            convert_metadata_to_cp4(singularity_key_getter.out.singularity_key_got, "-cp4_metadata.csv", convert_raw_data.out.converted_tiff_metadata.collect()) 
+            convert_metadata_to_cp4("-cp4_metadata.csv", convert_raw_data.out.converted_tiff_metadata.collect()) 
             preprocessing_metadata = convert_metadata_to_cp4.out.cp4_metadata.flatten()
         }    
         else{
             metadata_to_convert = channel.fromPath(params.normalized_metadata_file)
-            convert_metadata_to_cp4(singularity_key_getter.out.singularity_key_got, "-cp4_metadata.csv", metadata_to_convert) 
+            convert_metadata_to_cp4("-cp4_metadata.csv", metadata_to_convert) 
             preprocessing_metadata = convert_metadata_to_cp4.out.cp4_metadata.flatten()
         }
         preprocessing_metadata = preprocessing_metadata
@@ -57,7 +56,7 @@ workflow {
                 return tuple(key, file)
             }
             .groupTuple()
-        preprocess_images(singularity_key_getter.out.singularity_key_got, preprocessing_metadata) 
+        preprocess_images(preprocessing_metadata) 
     }    
     if(!params.skip_area){
         if(!params.skip_preprocessing){
@@ -66,13 +65,13 @@ workflow {
         else{
             area_measurement_metadata = params.preprocessed_metadata_file
         }
-        measure_areas(singularity_key_getter.out.singularity_key_got, area_measurement_metadata, params.area_measurements_metadata)
+        measure_areas(area_measurement_metadata, params.area_measurements_metadata)
     }    
     if(!params.skip_segmentation){
         if(!params.skip_preprocessing)
             segmentation_metadata = preprocess_images.out.cp4_preprocessed_tiff_metadata_by_sample
         else{
-            convert_metadata_to_cp4(singularity_key_getter.out.singularity_key_got, "-cp4_metadata.csv", params.preprocessed_metadata_file) 
+            convert_metadata_to_cp4("-cp4_metadata.csv", params.preprocessed_metadata_file) 
             segmentation_metadata = convert_metadata_to_cp4.out.cp4_metadata
         }
         segmentation_metadata = segmentation_metadata.flatten()
@@ -81,7 +80,7 @@ workflow {
                 return tuple(key, file)
              }
             .groupTuple()
-        segment_cells(singularity_key_getter.out.singularity_key_got, segmentation_metadata)
+        segment_cells(segmentation_metadata)
     }    
     if(!params.skip_cell_type_identification){
         if(!params.skip_segmentation){
@@ -97,7 +96,7 @@ workflow {
         else{
             image_metadata = params.preprocessed_metadata_file
         }
-        identify_cell_types_mask(singularity_key_getter.out.singularity_key_got, unannotated_cells, params.cell_masking_metadata,
+        identify_cell_types_mask(unannotated_cells, params.cell_masking_metadata,
             image_metadata, cell_mask_metadata)
         annotated_cell_data = identify_cell_types_mask.out.annotated_cell_data
     }    
@@ -108,7 +107,7 @@ workflow {
         else{
             annotated_cells = params.annotated_cell_data_file
         }
-        threshold_expression(singularity_key_getter.out.singularity_key_got, annotated_cells, params.cell_thresholding_metadata)
+        threshold_expression(annotated_cells, params.cell_thresholding_metadata)
     }    
 
     if(!params.skip_cell_clustering){
@@ -121,7 +120,7 @@ workflow {
             .splitCsv(header:true)
             .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
             .filter{!it.contains("NA")}
-        cluster_cells(singularity_key_getter.out.singularity_key_got, annotated_cells, clustering_metadata, params.sample_metadata_file)
+        cluster_cells(annotated_cells, clustering_metadata, params.sample_metadata_file)
     }
 
     coord_selecter_map = [
@@ -144,7 +143,7 @@ workflow {
                 row.reachability_distance,
                 row.min_cells)}
             .filter{!it.contains("NA")}
-        analyse_homotypic_interactions(singularity_key_getter.out.singularity_key_got, homotypic_metadata)
+        analyse_homotypic_interactions(homotypic_metadata)
     }
     
     if(!params.skip_heterotypic_interactions){
@@ -159,7 +158,7 @@ workflow {
                     coord_selecter_map[row.cell_file2]?.get(),
 				row.cell_type_column2,
 				row.cell_type2)}
-        calculate_heterotypic_distances(singularity_key_getter.out.singularity_key_got, heterotypic_metadata)
+        calculate_heterotypic_distances(heterotypic_metadata)
     }
     
     if(!params.skip_visualization){
@@ -170,7 +169,7 @@ workflow {
             if(!params.skip_area){
 				area_measurements = measure_areas.out.area_measurements
             }
-            visualize_areas(singularity_key_getter.out.singularity_key_got, area_measurements, params.sample_metadata_file)
+            visualize_areas(area_measurements, params.sample_metadata_file)
         }
         if(!params.skip_type_visualization){
             if(!params.skip_segmentation){
@@ -188,7 +187,7 @@ workflow {
             if(params.skip_cell_type_identification){
                 cell_types = params.annotated_cell_data_file
             }
-            visualize_cell_types(singularity_key_getter.out.singularity_key_got, cell_types,
+            visualize_cell_types(cell_types,
                 params.sample_metadata_file, params.cell_masking_metadata, cell_masks)
         }
         if(!params.skip_cluster_visualization){
@@ -202,8 +201,7 @@ workflow {
                 .splitCsv(header:true)
                 .map{row -> tuple(row.cell_type, row.clustering_markers, row.clustering_resolutions)}
                 .filter{!it.contains("NA")}
-            visualize_cell_clusters(singularity_key_getter.out.singularity_key_got, clustering_metadata,
-                clustered_cell_file, params.sample_metadata_file)
+            visualize_cell_clusters(clustering_metadata, clustered_cell_file, params.sample_metadata_file)
         }
         if(!params.skip_thresholding_visualization){
             if(!params.skip_cell_thresholding){
@@ -221,8 +219,8 @@ workflow {
                     .map{row -> row.file_name}
                     .collect() 
             }
-            visualize_cell_thresholds(singularity_key_getter.out.singularity_key_got,
-                thresholded_cell_file, params.sample_metadata_file, params.cell_thresholding_metadata, cell_masks)
+            visualize_cell_thresholds(thresholded_cell_file, params.sample_metadata_file,
+				params.cell_thresholding_metadata, cell_masks)
         }
         if(!params.skip_homotypic_visualization){
             if(!params.skip_homotypic_interactions){
@@ -240,8 +238,8 @@ workflow {
                     .map{row -> row.file_name}
                     .collect() 
             }
-            visualize_homotypic_interactions(singularity_key_getter.out.singularity_key_got,
-                homotypic_interactions_file, params.homotypic_interactions_metadata, cell_masks)
+            visualize_homotypic_interactions(homotypic_interactions_file,
+				params.homotypic_interactions_metadata, cell_masks)
         }
         if(!params.skip_heterotypic_visualization){
             if(!params.skip_heterotypic_interactions){
@@ -250,8 +248,8 @@ workflow {
             else{
                 heterotypic_interactions_file = params.heterotypic_interactions_file
             }
-			visualize_heterotypic_interactions(singularity_key_getter.out.singularity_key_got,
-				heterotypic_interactions_file, params.heterotypic_interactions_metadata, params.sample_metadata_file)
+			visualize_heterotypic_interactions(heterotypic_interactions_file,
+				params.heterotypic_interactions_metadata, params.sample_metadata_file)
         }
     }
 }
