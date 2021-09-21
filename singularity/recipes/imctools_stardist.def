@@ -2,10 +2,6 @@ BootStrap: docker
 From: ubuntu:xenial
 IncludeCmd: yes
 
-# See:
-# https://github.com/CellProfiler/CellProfiler/wiki/Source-installation-%28Ubuntu-16.04-LTS%29
-# https://github.com/BodenmillerGroup/ImcPluginsCP
-
 %post
 
 #############################################################################################################
@@ -13,7 +9,7 @@ IncludeCmd: yes
 ##############################################################################################################
 
 # make directory to mount the data
-	mkdir /data
+mkdir /data
 
 # Install python 3.8 
 
@@ -33,12 +29,16 @@ rm get-pip.py
 ##  Install imctools v1.0.7
 ##############################################################################################################
 # Install imctools 
-	python3.8 -m pip install --force-reinstall --upgrade pip setuptools wheel
-	python3.8 -m pip install imctools==1.0.7
+python3.8 -m pip install --force-reinstall --upgrade pip setuptools wheel
+python3.8 -m pip install imctools==1.0.7
+
+##############################################################################################################
+# scikit-image v0.18.3
+##############################################################################################################
+python3.8 -m pip install scikit-image==0.18.3
 
 #############################################################################################################
-##  Install Stardist v0.7.3 and tensorflow 2.6.0
+##  Install Stardist v0.7.3
 ##############################################################################################################
-python3.8 -m pip install tensorflow==2.6.0
 python3.8 -m pip install stardist==0.7.3
 
