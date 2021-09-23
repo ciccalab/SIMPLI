@@ -303,7 +303,7 @@ process area_visualization {
     - Copies the results to "$params.output_folder/Segmentation/$sample_name" 
 */
 
-process cell_segmentation {
+process cp_cell_segmentation {
 
     label 'big_memory'
     container = 'library://michelebortol/default/simpli_cp_imcplugins:cleaned'

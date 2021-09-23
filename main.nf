@@ -10,7 +10,7 @@ include {preprocess_images} from "$script_folder/workflows.nf"
 
 include {measure_areas} from "$script_folder/workflows.nf"
 
-include {segment_cells} from "$script_folder/workflows.nf"
+include {cp_segment_cells} from "$script_folder/workflows.nf"
 include {identify_cell_types_mask} from "$script_folder/workflows.nf"
 
 include {cluster_cells} from "$script_folder/workflows.nf"
@@ -67,7 +67,7 @@ workflow {
         }
         measure_areas(area_measurement_metadata, params.area_measurements_metadata)
     }    
-    if(!params.skip_segmentation){
+    if(!params.skip_cp_segmentation){
         if(!params.skip_preprocessing)
             segmentation_metadata = preprocess_images.out.cp4_preprocessed_tiff_metadata_by_sample
         else{
@@ -80,12 +80,12 @@ workflow {
                 return tuple(key, file)
              }
             .groupTuple()
-        segment_cells(segmentation_metadata)
+        cp_segment_cells(segmentation_metadata)
     }    
     if(!params.skip_cell_type_identification){
-        if(!params.skip_segmentation){
-            unannotated_cells = segment_cells.out.unannotated_cell_data
-            cell_mask_metadata = segment_cells.out.cell_mask_metadata
+        if(!params.skip_cp_segmentation){
+            unannotated_cells = cp_segment_cells.out.unannotated_cell_data
+            cell_mask_metadata = cp_segment_cells.out.cell_mask_metadata
         }    
         else{
             unannotated_cells = params.single_cell_data_file
@@ -172,10 +172,10 @@ workflow {
             visualize_areas(area_measurements, params.sample_metadata_file)
         }
         if(!params.skip_type_visualization){
-            if(!params.skip_segmentation){
-                cell_masks = segment_cells.out.cell_mask_tiffs.collect()
+            if(!params.skip_cp_segmentation){
+                cell_masks = cp_segment_cells.out.cell_mask_tiffs.collect()
             }
-            if(params.skip_segmentation){
+            if(params.skip_cp_segmentation){
                 cell_masks = channel.fromPath(params.single_cell_masks_metadata)
                     .splitCsv(header:true)
                     .map{row -> row.file_name}
@@ -210,8 +210,8 @@ workflow {
             else{
                 thresholded_cell_file = params.thresholded_cell_data_file
             }
-            if(!params.skip_segmentation){
-                cell_masks = segment_cells.out.cell_mask_tiffs.collect()
+            if(!params.skip_cp_segmentation){
+                cell_masks = cp_segment_cells.out.cell_mask_tiffs.collect()
             }
             else{
                 cell_masks = channel.fromPath(params.single_cell_masks_metadata)
@@ -229,8 +229,8 @@ workflow {
             else{
                 homotypic_interactions_file = params.homotypic_interactions_file
             }
-            if(!params.skip_segmentation){
-                cell_masks = segment_cells.out.cell_mask_tiffs.collect()
+            if(!params.skip_cp_segmentation){
+                cell_masks = cp_segment_cells.out.cell_mask_tiffs.collect()
             }
             else{
                 cell_masks = channel.fromPath(params.single_cell_masks_metadata)

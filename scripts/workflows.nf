@@ -16,7 +16,7 @@ include {process_preprocessed_metadata} from "$script_folder/processes.nf"
 include {measure_positive_areas} from "$script_folder/processes.nf"
 include {area_visualization} from "$script_folder/processes.nf"
 
-include {cell_segmentation} from "$script_folder/processes.nf"
+include {cp_cell_segmentation} from "$script_folder/processes.nf"
 include {collect_single_cell_data} from "$script_folder/processes.nf"
 
 include {cell_type_identification_mask} from "$script_folder/processes.nf"
@@ -96,15 +96,15 @@ workflow measure_areas{
         area_measurements = measure_positive_areas.out.area_measurements
 }
 
-workflow segment_cells{
+workflow cp_segment_cells{
     take:
         segmentation_metadata_files
     main:
-        cell_segmentation(segmentation_metadata_files)
-        collect_single_cell_data(cell_segmentation.out.cell_data_csv_by_sample.collect(),
-            cell_segmentation.out.cell_mask_tiffs.collect())
+        cp_cell_segmentation(segmentation_metadata_files)
+        collect_single_cell_data(cp_cell_segmentation.out.cell_data_csv_by_sample.collect(),
+            cp_cell_segmentation.out.cell_mask_tiffs.collect())
     emit:
-        cell_mask_tiffs = cell_segmentation.out.cell_mask_tiffs
+        cell_mask_tiffs = cp_cell_segmentation.out.cell_mask_tiffs
         unannotated_cell_data = collect_single_cell_data.out.unannotated_cell_data
         cell_mask_metadata = collect_single_cell_data.out.cell_mask_metadata
 }
