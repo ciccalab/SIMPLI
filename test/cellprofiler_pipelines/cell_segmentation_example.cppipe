@@ -1,6 +1,6 @@
 CellProfiler Pipeline: http://www.cellprofiler.org
 Version:5
-DateRevision:407
+DateRevision:421
 GitHash:
 ModuleCount:9
 HasImagePlaneDetails:False
@@ -39,7 +39,7 @@ ImageMath:[module_num:2|svn_version:'Unknown'|variable_revision_number:5|show_wi
     Multiply the third image by:1.0
     Measurement:
 
-IdentifyPrimaryObjects:[module_num:3|svn_version:'Unknown'|variable_revision_number:14|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+IdentifyPrimaryObjects:[module_num:3|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:DNA1
     Name the primary objects to be identified:Nuclei
     Typical diameter of objects, in pixel units (Min,Max):5,12
@@ -55,8 +55,6 @@ IdentifyPrimaryObjects:[module_num:3|svn_version:'Unknown'|variable_revision_num
     Automatically calculate minimum allowed distance between local maxima?:Yes
     Handling of objects if excessive number of objects identified:Continue
     Maximum number of objects:500
-    Display accepted local maxima?:No
-    Select maxima color:Blue
     Use advanced settings?:Yes
     Threshold setting version:12
     Threshold strategy:Global
@@ -122,12 +120,12 @@ MeasureObjectSizeShape:[module_num:7|svn_version:'Unknown'|variable_revision_num
     Calculate the Zernike features?:No
     Calculate the advanced features?:No
 
-SaveImages:[module_num:8|svn_version:'Unknown'|variable_revision_number:15|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:8|svn_version:'Unknown'|variable_revision_number:16|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:Image
     Select the image to save:CellImage
     Select method for constructing file names:Single name
     Select image name for file prefix:None
-    Enter single file name:\g<sample_name>-Cell_Mask
+    Enter single file name:\g<sample_name>-CellProfiler4-Cell_Mask
     Number of digits:4
     Append a suffix to the image file name?:No
     Text to append to the image name:
@@ -140,6 +138,7 @@ SaveImages:[module_num:8|svn_version:'Unknown'|variable_revision_number:15|show_
     Create subfolders in the output folder?:No
     Base image folder:Elsewhere...|
     How to save the series:T (Time)
+    Save with lossless compression?:No
 
 ExportToSpreadsheet:[module_num:9|svn_version:'Unknown'|variable_revision_number:13|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select the column delimiter:Comma (",")
@@ -162,5 +161,5 @@ ExportToSpreadsheet:[module_num:9|svn_version:'Unknown'|variable_revision_number
     Overwrite existing files without warning?:Yes
     Data to export:Cells
     Combine these object measurements with those of the previous object?:No
-    File name:\g<sample_name>-Cells.csv
+    File name:\g<sample_name>-CellProfiler4-Cells.csv
     Use the object name for the file name?:No

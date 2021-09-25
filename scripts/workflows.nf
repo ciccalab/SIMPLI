@@ -17,6 +17,7 @@ include {measure_positive_areas} from "$script_folder/processes.nf"
 include {area_visualization} from "$script_folder/processes.nf"
 
 include {cp_cell_segmentation} from "$script_folder/processes.nf"
+include {sd_cell_segmentation} from "$script_folder/processes.nf"
 include {collect_single_cell_data} from "$script_folder/processes.nf"
 
 include {cell_type_identification_mask} from "$script_folder/processes.nf"
@@ -102,13 +103,28 @@ workflow cp_segment_cells{
     main:
         cp_cell_segmentation(segmentation_metadata_files)
         collect_single_cell_data(cp_cell_segmentation.out.cell_data_csv_by_sample.collect(),
-            cp_cell_segmentation.out.cell_mask_tiffs.collect())
+            cp_cell_segmentation.out.cell_mask_tiffs.collect(), "CellProfiler4")
     emit:
         cell_mask_tiffs = cp_cell_segmentation.out.cell_mask_tiffs
         unannotated_cell_data = collect_single_cell_data.out.unannotated_cell_data
         cell_mask_metadata = collect_single_cell_data.out.cell_mask_metadata
 }
 
+workflow sd_segment_cells{
+    take:
+        segmentation_metadata_files
+		model_name
+		model_path
+		model_labels
+    main:
+        sd_cell_segmentation(segmentation_metadata_files, model_name, model_path, model_labels)
+        collect_single_cell_data(sd_cell_segmentation.out.cell_data_csv_by_sample.collect(),
+            sd_cell_segmentation.out.cell_mask_tiffs.collect(), "StarDist")
+    emit:
+        cell_mask_tiffs = sd_cell_segmentation.out.cell_mask_tiffs
+        unannotated_cell_data = collect_single_cell_data.out.unannotated_cell_data
+        cell_mask_metadata = collect_single_cell_data.out.cell_mask_metadata
+}
 
 workflow identify_cell_types_mask{
     take:

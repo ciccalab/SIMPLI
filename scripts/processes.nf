@@ -9,6 +9,10 @@ if (params.cp4_segmentation_cppipe){
     cp4_segmentation_pipeline_folder = file(params.cp4_segmentation_cppipe).getParent()
     cp4_segmentation_pipeline = file(params.cp4_segmentation_cppipe).getName() 
 }
+if (params.cp4_segmentation_cppipe){
+    cp4_segmentation_pipeline_folder = file(params.cp4_segmentation_cppipe).getParent()
+    cp4_segmentation_pipeline = file(params.cp4_segmentation_cppipe).getName() 
+}
 
 process cp4_format_convert {
     
@@ -309,15 +313,15 @@ process cp_cell_segmentation {
     container = 'library://michelebortol/default/simpli_cp_imcplugins:cleaned'
     containerOptions = "--bind $cp4_segmentation_pipeline_folder:/mnt,$workflow.launchDir/:/data"
 
-    publishDir"$params.output_folder/Segmentation/$sample_name", mode:'copy', overwrite: true
+    publishDir"$params.output_folder/CellProfiler4_Segmentation/$sample_name", mode:'copy', overwrite: true
                                                                                                 
     input:
         
         tuple val(sample_name), path(cp4_preprocessed_metadata) 
 
     output:
-        path("${sample_name}-Cells.csv", emit: cell_data_csv_by_sample)
-        path("${sample_name}-Cell_Mask.tiff", emit: cell_mask_tiffs)
+        path("${sample_name}-CellProfiler4-Cells.csv", emit: cell_data_csv_by_sample)
+        path("${sample_name}-CellProfiler4-Cell_Mask.tiff", emit: cell_mask_tiffs)
 
 script:
     """
@@ -333,6 +337,38 @@ script:
     """
 }
 
+process sd_cell_segmentation {
+
+    label 'big_memory'
+    container = 'library://michelebortol/default/simpli_imctools_stardist:test'
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
+
+    publishDir"$params.output_folder/StarDist_Segmentation/$sample_name", mode:'copy', overwrite: true
+                                                                                                
+    input:
+        tuple val(sample_name), path(cp4_preprocessed_metadata)
+		val(sd_model_name)
+		val(sd_model_path)
+		val(sd_model_labels)
+
+    output:
+        path("${sample_name}-StarDist-Cells.csv", emit: cell_data_csv_by_sample)
+        path("${sample_name}-StarDist-Cell_Mask.tiff", emit: cell_mask_tiffs)
+
+script:
+    """
+	python3.8 /opt/stardist_segment.py \\
+		$sample_name \\
+		$cp4_preprocessed_metadata \\
+		$sd_model_name \\
+		$sd_model_path \\
+		$sd_model_labels \\
+		${sample_name}-StarDist-Cells.csv \\
+		${sample_name}-StarDist-Cell_Mask.tiff \\
+		> stardist_segmentation_log.txt 2>&1
+    """
+}
+
 /* Collects all the cell_data_csv single cell data files:
     - Concatenates them into unannotated_cells.csv
     - Removes extra header lines from the middle of the file, as each of the
@@ -342,26 +378,28 @@ script:
 process collect_single_cell_data {
 
     label 'small_memory'
-    publishDir"$params.output_folder/Segmentation", mode:'copy', overwrite: true
     
     input:
         path(cell_data_list)
         path(cell_mask_list)
-    
+		val(source)
+
+    publishDir"$params.output_folder/${source}_Segmentation", mode:'copy', overwrite: true
+
     output:
-        path("unannotated_cells.csv", emit: unannotated_cell_data)
-        path("cell_mask_metadata.csv", emit: cell_mask_metadata)
+        path("${source}-unannotated_cells.csv", emit: unannotated_cell_data)
+        path("${source}-cell_mask_metadata.csv", emit: cell_mask_metadata)
 
     script:
     """
-    cat $cell_data_list > unannotated_cells.csv
-    sed -i '1!{/ImageNumber,ObjectNumber,.*/d;}' unannotated_cells.csv
+    cat $cell_data_list > ${source}-unannotated_cells.csv
+    sed -i '1!{/.*ObjectNumber.*/d;}' ${source}-unannotated_cells.csv
 
-    echo "sample_name,label,file_name" > cell_mask_metadata.csv
+    echo "sample_name,label,file_name" > ${source}-cell_mask_metadata.csv
     readlink -e $cell_mask_list > filename.csv
-    sed "s@.*/\\(.*\\)-\\Cell_Mask\\.tiff@\\1@" filename.csv > sample.csv
-    sed "s@.*-\\(Cell_Mask\\).tiff@\\1@" filename.csv > label.csv
-    paste -d , sample.csv label.csv filename.csv >> cell_mask_metadata.csv
+    sed "s@.*/\\(.*\\)-.*-\\Cell_Mask\\.tiff@\\1@" filename.csv > sample.csv
+    sed "s@.*-.*-\\(Cell_Mask\\).tiff@\\1@" filename.csv > label.csv
+    paste -d , sample.csv label.csv filename.csv >> ${source}-cell_mask_metadata.csv
     rm filename.csv label.csv
     """
 }
