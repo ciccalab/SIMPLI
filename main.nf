@@ -85,7 +85,8 @@ workflow {
 			cp_segment_cells(segmentation_metadata)
 		}
         if(!params.skip_sd_segmentation){
-			sd_segment_cells(segmentation_metadata, params.sd_model_name, params.sd_model_path, params.sd_model_labels)
+			sd_segment_cells(segmentation_metadata, params.sd_labels_to_segment, params.sd_model_name,
+				params.sd_model_path, params.sd_prob_thresh, params.sd_nms_thresh)
 		}
     }    
     if(!params.skip_cell_type_identification){

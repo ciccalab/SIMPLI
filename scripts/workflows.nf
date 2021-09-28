@@ -113,11 +113,13 @@ workflow cp_segment_cells{
 workflow sd_segment_cells{
     take:
         segmentation_metadata_files
+		labels_to_segment
 		model_name
 		model_path
-		model_labels
+		prob_thresh
+		nms_thresh
     main:
-        sd_cell_segmentation(segmentation_metadata_files, model_name, model_path, model_labels)
+        sd_cell_segmentation(segmentation_metadata_files, labels_to_segment, model_name, model_path, prob_thresh, nms_thresh)
         collect_single_cell_data(sd_cell_segmentation.out.cell_data_csv_by_sample.collect(),
             sd_cell_segmentation.out.cell_mask_tiffs.collect(), "StarDist")
     emit:

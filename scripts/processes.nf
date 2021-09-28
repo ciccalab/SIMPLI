@@ -347,9 +347,11 @@ process sd_cell_segmentation {
                                                                                                 
     input:
         tuple val(sample_name), path(cp4_preprocessed_metadata)
+		val(sd_labels_to_segment)
 		val(sd_model_name)
 		val(sd_model_path)
-		val(sd_model_labels)
+		val(sd_prob_thresh)
+		val(sd_nms_thresh)
 
     output:
         path("${sample_name}-StarDist-Cells.csv", emit: cell_data_csv_by_sample)
@@ -360,9 +362,11 @@ script:
 	python3.8 /opt/stardist_segment.py \\
 		$sample_name \\
 		$cp4_preprocessed_metadata \\
+		$sd_labels_to_segment \\
 		$sd_model_name \\
 		$sd_model_path \\
-		$sd_model_labels \\
+		$sd_prob_thresh\\
+		$sd_nms_thresh \\
 		${sample_name}-StarDist-Cells.csv \\
 		${sample_name}-StarDist-Cell_Mask.tiff \\
 		> stardist_segmentation_log.txt 2>&1

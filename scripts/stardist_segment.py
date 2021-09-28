@@ -18,23 +18,27 @@ def get_arguments():
 	Assumes at 7 and returns 7 positional command line arguments:
 		sample_name = Name of the sample
 		tiff_metadata_file = Path to the tiff metadata
+		labels = Labels of the images to use as input in the same order as it is assumed by the model (comma separated)
 		model_name = Model to use for the segmentation (name of default model or name of a pretrained one)
 		model_path = Path to the model (name of default model or path to a pretrained one)
-		labels = Labels of the images to use as input in the same order as it is assumed by the model (comma separated)
+		prob_thresh = Probability threshold
+		nms_thresh =  Overlap threshold to be used for NMS 
 		output_table_file = Path to the output table
 		output_mask_file = Path to output the cell mask
 	"""
 	parser = argparse.ArgumentParser(description = "Performs 2D segmentation with stardist.")
 	parser.add_argument("sample_name", help = "name of the sample")
 	parser.add_argument("tiff_metadata_file", help = "path to the raw data .mcd/.txt file")
+	parser.add_argument("labels", help = "markers to include in the image on which the segmentation is performed")
 	parser.add_argument("model_name", help = "model to use for the segmentation (name of default model or name of a pretrained one)")
 	parser.add_argument("model_path", help = "path to the model (name of default model or path to a pretrained one)")
-	parser.add_argument("labels", help = "path to a folder for single tiff output (comma separated)")
+	parser.add_argument("prob_thresh", help = "probability threshold")
+	parser.add_argument("nms_thresh", help = "overlap threshold to be used for NMS")
 	parser.add_argument("output_table_file", help = "path to the file for the cell data output")
 	parser.add_argument("output_mask_file", help = "path to the file for the cell mask output")
 	args = parser.parse_args()
 	return args.sample_name, args.tiff_metadata_file, args.labels, args.model_name, args.model_path, \
-		args.output_table_file, args.output_mask_file
+		args.prob_thresh, args.nms_thresh, args.output_table_file, args.output_mask_file
 
 def parse_labels(label):
 	"""
@@ -88,13 +92,13 @@ def load_model(model_to_load, model_path = "default"):
 	"""
 	if model_path == "default":
 		return StarDist2D.from_pretrained(model_to_load)
-	return StarDist2D(config == None, name = model_to_load, basedir = model_path)
+	return StarDist2D(name = model_to_load, basedir = model_path)
 
-def predict(model_to_use, target_image):
+def predict(model_to_use, target_image, prob, nms):
 	"""
 	Predicts the cells and returns the cell mask
 	"""
-	labels, details = model_to_use.predict_instances(target_image, axes = "XYC") #YXC
+	labels, details = model_to_use.predict_instances(target_image, axes = "XYC", prob_thresh = prob, nms_thresh = nms) #YXC
 	return  numpy.moveaxis(labels, 0, 1) #XYC 
 
 def extract_features(cell_label_image, tiff_image_metadata, sample):
@@ -154,8 +158,22 @@ def write_mask(cell_mask, cell_mask_filename):
 
 if __name__ == "__main__":
 	sample_name, tiff_metadata_file, label_str, model_name, model_path, \
-		output_table_file, output_mask_file = get_arguments()
+		prob_thresh, nms_thresh, output_table_file, output_mask_file = get_arguments()
 	print(f"The selected sample name is: {sample_name}")
+
+	try:
+		prob_thresh = float(prob_thresh)
+		print(f"The selected probability threshold is: {prob_thresh}")
+	except ValueError:
+		prob_thresh = None
+		print(f"Using the model's default value for the probability threshold")
+
+	try:
+		nms_thresh = float(nms_thresh)
+		print(f"The selected NMS threshold is: {nms_thresh}")
+	except ValueError:
+		nms_thresh = None
+		print(f"Using the model's default value for NMS")
 
 	if not os.path.isfile(tiff_metadata_file):
 		print(f'The tiff metadata file path specified does not exist: {tiff_metadata_file}')
@@ -177,7 +195,7 @@ if __name__ == "__main__":
 	print(f"Target image done.")
 	
 	print(f"Segentation start.")
-	label_image = predict(model, segmentation_image)
+	label_image = predict(model, segmentation_image, prob_thresh, nms_thresh)
 	print(f"Segentation end.")
 	
 	print(f"Feature extraction start.")
