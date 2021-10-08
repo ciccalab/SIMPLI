@@ -28,7 +28,7 @@ def get_arguments():
 	"""
 	parser = argparse.ArgumentParser(description = "Performs 2D segmentation with stardist.")
 	parser.add_argument("sample_name", help = "name of the sample")
-	parser.add_argument("tiff_metadata_file", help = "path to the raw data .mcd/.txt file")
+	parser.add_argument("tiff_metadata_file", help = "path to the preprocessed image metadadata file")
 	parser.add_argument("labels", help = "markers to include in the image on which the segmentation is performed")
 	parser.add_argument("model_name", help = "model to use for the segmentation (name of default model or name of a pretrained one)")
 	parser.add_argument("model_path", help = "path to the model (name of default model or path to a pretrained one)")
