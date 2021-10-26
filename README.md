@@ -14,7 +14,7 @@ More Information about SIMPLI and its use can be found in the [wiki](https://git
     + [SIMPLI command line parameters and configuration](https://github.com/ciccalab/SIMPLI/wiki/Run)
 
 - ### SIMPLI analysis workflow 
-    + [Documentation for every step of the workflow](https://github.com/ciccalab/SIMPLI/wiki/Run)
+    + [Documentation for every step of the workflow](https://github.com/ciccalab/SIMPLI/wiki/Analysis)
 
 ## Quick start
 To try SIMPLI:
