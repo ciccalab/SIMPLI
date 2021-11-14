@@ -36,7 +36,10 @@ include {homotypic_interaction_visualization} from "$script_folder/processes.nf"
 
 include{get_heterotypic_distances} from "$script_folder/processes.nf"
 include{collect_heterotypic_distances} from "$script_folder/processes.nf"
+include{permute_heterotypic_distances} from "$script_folder/processes.nf"
 include{heterotypic_interaction_visualization} from "$script_folder/processes.nf"
+include{permuted_interaction_visualization} from "$script_folder/processes.nf"
+
 
 workflow convert_metadata_to_cp4{
     take:
@@ -178,11 +181,24 @@ workflow analyse_homotypic_interactions{
 workflow calculate_heterotypic_distances{
     take:
         heterotypic_metadata
+        metadata_file_name
     main:
         get_heterotypic_distances(heterotypic_metadata)
         collect_heterotypic_distances(get_heterotypic_distances.out.heterotypic_distances.collect())
     emit:
         collected_heterotypic_interactions = collect_heterotypic_distances.out.collected_heterotypic_interactions
+}
+
+workflow permute_heterotypic_interactions{
+    take:
+        permutations
+        distance_file_name
+        metadata_file_name
+        sample_file_name
+    main:
+        permute_heterotypic_distances(permutations, distance_file_name, metadata_file_name, sample_file_name)
+    emit:
+        permuted_heterotypic_interactions = permute_heterotypic_distances.out.permuted_heterotypic_interactions
 }
 
 workflow visualize_areas{
@@ -253,3 +269,14 @@ workflow visualize_heterotypic_interactions{
         heterotypic_interaction_plots = heterotypic_interaction_visualization.out.heterotypic_interaction_plots
 }
 
+workflow visualize_permuted_interactions{
+    take:
+        distance_file_name
+        shuffled_distance_file_name
+        metadata_file_name
+        sample_file_name
+    main:
+        permuted_interaction_visualization(distance_file_name, shuffled_distance_file_name, metadata_file_name, sample_file_name)
+    emit:
+        permuted_interaction_plots = permuted_interaction_visualization.out.permuted_interaction_plots
+}

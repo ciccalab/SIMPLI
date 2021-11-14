@@ -295,6 +295,28 @@ histogram_density <- function(data, marker_col, plot_title, x_label, y_label,
   return(plt)
 }
 
+################# Permutation plot  ###############################################
+permutation_density <- function(random_data, observed_data, x_col, plot_title, x_label, y_label, color)
+{
+	random_plot_data <- copy(random_data)
+    observed_plot_data <- copy(observed_data)
+	setnames(random_plot_data, x_col, "x_col")
+	setnames(observed_plot_data, x_col, "x_col")
+	my_breaks <- round(seq(min(c(random_plot_data$x_col, observed_plot_data$x_col)),
+		max(c(random_plot_data$x_col, observed_plot_data$x_col))))
+	plt <- ggplot(random_plot_data) +
+		geom_line(aes(x = x_col, y = ..count..), stat = 'bin', bins = 50, colour = color) +
+		geom_histogram(aes(x = x_col, y = ..count..), alpha = 0.2, bins = 50, fill = color) +
+		geom_vline(aes(xintercept = median(x_col)), colour = color) +
+		geom_vline(data = observed_plot_data, aes(xintercept = median(x_col)), color = "black", linetype = "dashed") +
+		scale_x_continuous(name = x_label, breaks = my_breaks) +
+		scale_y_continuous(name = y_label) +
+		theme_classic() + theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0,
+			unit = "pt"), axis.text = element_text(size = 8), axis.title = element_text(size = 8),
+			legend.text = element_text(size = 8), legend.title = element_blank()) +
+        labs(title = plot_title, subtitle = paste0("FDR = ", round_format_n(observed_plot_data$fdr)))
+}
+
 ################## PDF Output ##################
 single_pdf_w <- 8.27 / 2 # About 1/6th of an A4 (inches)
 single_pdf_h <- 11.69 / 3

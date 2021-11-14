@@ -762,6 +762,32 @@ process collect_heterotypic_distances {
     """
 }
 
+process permute_heterotypic_distances {
+
+    label 'big_memory'
+    publishDir "$params.output_folder/Heterotypic_interactions", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
+
+    input:
+        val(permutations)
+        path(distance_file_name)
+        path(metadata_file_name)
+        path(sample_file_name)
+
+    output:
+        path("permuted_distances.csv", emit: permuted_heterotypic_interactions) 
+    script:
+    """
+    Rscript --vanilla /opt/permute_distances.R \\
+        $permutations \\
+        $distance_file_name \\
+        $metadata_file_name \\
+        $sample_file_name \\
+        ./ > permute_heterotypic_distances_log.txt 2>&1
+    """
+}
+
 process heterotypic_interaction_visualization {
 
     label 'big_memory'
@@ -783,5 +809,31 @@ process heterotypic_interaction_visualization {
         $metadata_file_name \\
         $sample_file_name \\
         ./ > heterotypic_plotting_log.txt 2>&1
+    """
+}
+
+process permuted_interaction_visualization {
+
+    label 'big_memory'
+    publishDir "$params.output_folder/Plots/Heterotypic_Interaction_Plots", mode:'copy', overwrite: true
+    container = 'library://michelebortol/default/simpli_r_bioconductor:cleaned'
+    containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
+
+    input:
+        path(distance_file_name)
+        path(shuffled_distance_file_name)
+        path(metadata_file_name)
+        path(sample_file_name)
+
+    output:
+        path("**/*.pdf", emit: permuted_interaction_plots) 
+    script:
+    """
+    Rscript --vanilla /opt/Permuted_spatial_plotting.R \\
+        $distance_file_name \\
+        $shuffled_distance_file_name \\
+        $metadata_file_name \\
+        $sample_file_name \\
+        ./ > permuted_plotting_log.txt 2>&1
     """
 }

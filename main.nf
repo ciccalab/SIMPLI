@@ -19,6 +19,7 @@ include {threshold_expression} from "$script_folder/workflows.nf"
 
 include {analyse_homotypic_interactions} from "$script_folder/workflows.nf"
 include {calculate_heterotypic_distances} from "$script_folder/workflows.nf"
+include {permute_heterotypic_interactions} from "$script_folder/workflows.nf"
 
 include {visualize_areas} from "$script_folder/workflows.nf"
 include {visualize_cell_types} from "$script_folder/workflows.nf"
@@ -26,7 +27,7 @@ include {visualize_cell_clusters} from "$script_folder/workflows.nf"
 include {visualize_cell_thresholds} from "$script_folder/workflows.nf"
 include {visualize_homotypic_interactions} from "$script_folder/workflows.nf"
 include {visualize_heterotypic_interactions} from "$script_folder/workflows.nf"
-
+include {visualize_permuted_interactions} from "$script_folder/workflows.nf"
 
 workflow {
     sample_names = channel.fromPath(params.sample_metadata_file).splitCsv(header: true).map{row -> row.sample_name}
@@ -169,9 +170,20 @@ workflow {
                     coord_selecter_map[row.cell_file2]?.get(),
 				row.cell_type_column2,
 				row.cell_type2)}
-        calculate_heterotypic_distances(heterotypic_metadata)
+        calculate_heterotypic_distances(heterotypic_metadata, params.heterotypic_interactions_metadata)
     }
-    
+
+    if(!params.skip_permuted_interactions){
+        if(!params.skip_heterotypic_interactions){
+            heterotypic_interactions_file = calculate_heterotypic_distances.out.collected_heterotypic_interactions
+        }
+        else{
+            heterotypic_interactions_file = params.heterotypic_interactions_file
+        }
+        permute_heterotypic_interactions(params.permutations, heterotypic_interactions_file,
+            params.heterotypic_interactions_metadata, params.sample_metadata_file)
+    }
+  
     if(!params.skip_visualization){
         if(!params.skip_area_visualization){
             if(params.skip_area){
@@ -269,6 +281,22 @@ workflow {
                 heterotypic_interactions_file = params.heterotypic_interactions_file
             }
 			visualize_heterotypic_interactions(heterotypic_interactions_file,
+				params.heterotypic_interactions_metadata, params.sample_metadata_file)
+        }
+        if(!params.skip_permuted_visualization){
+            if(!params.skip_permuted_interactions){
+                shuffled_interactions_file = permute_heterotypic_interactions.out.permuted_heterotypic_interactions
+            }
+            else{
+                shuffled_interactions_file = params.shuffled_interactions_file
+            }
+            if(!params.skip_heterotypic_interactions){
+                heterotypic_interactions_file = calculate_heterotypic_distances.out.collected_heterotypic_interactions
+            }
+            else{
+                heterotypic_interactions_file = params.heterotypic_interactions_file
+            }
+			visualize_permuted_interactions(heterotypic_interactions_file, shuffled_interactions_file,
 				params.heterotypic_interactions_metadata, params.sample_metadata_file)
         }
     }
