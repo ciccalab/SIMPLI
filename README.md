@@ -1,3 +1,8 @@
+
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5807239.svg)](https://doi.org/10.5281/zenodo.5807229)
+
+
 # SIMPLI: Single-cell Identification from MultiPLexed Images
 
 SIMPLI is a platform agnostic pipeline for the analysis of highly multiplexed histological imaging data.  
