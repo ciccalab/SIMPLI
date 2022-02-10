@@ -36,9 +36,10 @@ The expected run time with the example run on a desktop computer (Ubuntu 21.04) 
 ## Citation
 If you used SIMPLI for your analysis please cite our [preprint](https://doi.org/10.1101/2021.04.01.437886):
 
-**A SIMPLI (Single-cell Identification from MultiPLexed Images) approach for spatially resolved tissue phenotyping at single-cell resolution**  
-*Michele Bortolomeazzi, Lucia Montorsi, Damjan Temelkovski, Mohamed Reda Keddar, Amelia Acha-Sagredo, Michael J. Pitcher, Gianluca Basso, Luigi Laghi, Manuel Rodriguez-Justo, Jo Spencer, Francesca D. Ciccarelli
-bioRxiv 2021.04.01.437886; doi: https://doi.org/10.1101/2021.04.01.437886*
+**A SIMPLI (Single-cell Identification from MultiPLexed Images) approach for spatially-resolved tissue phenotyping at single-cell resolution**  
+*Michele Bortolomeazzi, Lucia Montorsi, Damjan Temelkovski, Mohamed Reda Keddar, Amelia Acha-Sagredo, Michael J. Pitcher, Gianluca Basso, Luigi Laghi, Manuel Rodriguez-Justo, Jo Spencer & Francesca D. Ciccarelli*  
+Nature Communications volume 13, Article number: 781 (2022)  
+DOI: https://doi.org/10.1038/s41467-022-28470-x
 
 SIMPLI is a software developed in the [Ciccarelli group](https://www.crick.ac.uk/research/labs/francesca-ciccarelli).  
 We are part of The School of Cancer Studies of King's College London and of The Francis Crick Institute.  
