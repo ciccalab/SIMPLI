@@ -117,7 +117,7 @@ process normalize_tiffs {
     
     input:
         
-        val(sample_name)
+        each(sample_name)
         path(tiff_input_metadata_file)
 
     output:
