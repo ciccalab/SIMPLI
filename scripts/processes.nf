@@ -491,7 +491,7 @@ process cell_clustering {
 
     label 'huge_memory'
     publishDir "$params.output_folder/Cell_Clusters", mode:'copy', overwrite: true
-    container = 'library://simpli_imaging/default/simpli_r_bioconductor:cleanedd'
+    container = 'library://simpli_imaging/default/simpli_r_bioconductor:cleaned'
     containerOptions = "--bind $script_folder:/opt,$workflow.launchDir/:/data"
 
     input:
