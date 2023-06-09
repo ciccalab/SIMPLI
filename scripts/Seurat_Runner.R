@@ -21,7 +21,7 @@ clustering_data <- fread(cell_file_name)
 clustering_data <- clustering_data[cell_type == cell_type_target]
 clustering_data[, ncells := .N, by = Metadata_sample_name]
 clustering_data <- clustering_data[ncells > 1]
-clustering_data[, ncell := NULL]
+clustering_data[, ncells := NULL]
 
 samples <- fread(sample_file_name)
 samples[is.na(comparison), comparison :=  "NA"]
