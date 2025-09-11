@@ -5,6 +5,8 @@ import csv
 import numpy
 import tifffile
 import skimage
+import time
+import random
 
 from functools import partial
 from csbdeep.utils import normalize
@@ -90,9 +92,25 @@ def load_model(model_to_load, model_path = "default"):
 		- stardist.models.StarDist2D
 		- StarDist2D(config = None, name = "pretrained", basedir = model_to_load)
 	"""
-	if model_path == "default":
-		return StarDist2D.from_pretrained(model_to_load)
-	return StarDist2D(name = model_to_load, basedir = model_path)
+	
+    # Avoid issue with multiple nextflow processes trying to read the same model at once:
+	# https://github.com/ciccalab/SIMPLI/issues/13 -> https://github.com/stardist/stardist/issues/93
+	tries = 0
+	loaded_model = False
+	while not loaded_model and tries < 100:
+		try:
+			tries +=1
+			if model_path == "default":
+				model = StarDist2D.from_pretrained(model_to_load)
+			else:
+				model = StarDist2D(name = model_to_load, basedir = model_path)
+			if model:
+				loaded_model = True
+		except Exception as ex:
+			print(ex)
+			random_delay = random.uniform(5, 10)
+			time.sleep(random_delay)
+	return model
 
 def predict(model_to_use, target_image, prob, nms):
 	"""
